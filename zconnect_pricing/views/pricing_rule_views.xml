@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Pricing Rule List View ──────────────────────────────────────── -->
+    <record id="view_zconnect_pricing_rule_list" model="ir.ui.view">
+        <field name="name">zconnect.pricing.rule.list</field>
+        <field name="model">zconnect.pricing.rule</field>
+        <field name="arch" type="xml">
+            <list string="Pricing Rules" decoration-muted="not active">
+                <field name="name"/>
+                <field name="vehicle_category" widget="badge"/>
+                <field name="base_fare" widget="monetary"/>
+                <field name="price_per_km" widget="monetary"/>
+                <field name="price_per_kg" widget="monetary"/>
+                <field name="minimum_fare" widget="monetary"/>
+                <field name="effective_from"/>
+                <field name="effective_to"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Pricing Rule Form View ──────────────────────────────────────── -->
+    <record id="view_zconnect_pricing_rule_form" model="ir.ui.view">
+        <field name="name">zconnect.pricing.rule.form</field>
+        <field name="model">zconnect.pricing.rule</field>
+        <field name="arch" type="xml">
+            <form string="Pricing Rule">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name" string="Rule / Tariff Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Standard Motorcycle Tariff 2026"/>
+                        </h1>
+                    </div>
+                    <group col="2">
+                        <group string="Classification &amp; Scope">
+                            <field name="vehicle_category"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Validity Period">
+                            <field name="effective_from"/>
+                            <field name="effective_to"/>
+                        </group>
+                    </group>
+
+                    <group col="2">
+                        <group string="Rate Configuration">
+                            <field name="base_fare" widget="monetary"/>
+                            <field name="price_per_km" widget="monetary"/>
+                            <field name="price_per_kg" widget="monetary"/>
+                            <field name="minimum_fare" widget="monetary"/>
+                        </group>
+                        <group string="Tariff Description">
+                            <field name="description" placeholder="Internal notes or rationale for this pricing schedule..." nolabel="1"/>
+                        </group>
+                    </group>
+
+                    <!-- ── Interactive UI Demonstration & Test Calculator ── -->
+                    <notebook>
+                        <page string="Live Quote Test Calculator" name="test_calculator">
+                            <group col="2">
+                                <group string="Simulation Parameters">
+                                    <field name="test_distance_km"/>
+                                    <field name="test_weight_kg"/>
+                                    <field name="test_zone_id" options="{'no_create': True}"/>
+                                    <div>
+                                        <button name="action_test_quote" type="object"
+                                                string="Calculate Test Quote"
+                                                class="btn-primary"
+                                                icon="fa-calculator"/>
+                                    </div>
+                                </group>
+                                <group string="Calculation Result">
+                                    <field name="test_result_subtotal" widget="monetary"/>
+                                    <field name="test_result_total" widget="monetary" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                            <group string="Component Breakdown">
+                                <field name="test_result_breakdown" nolabel="1" readonly="1"
+                                       style="font-family: monospace; white-space: pre; background-color: #f8f9fa; padding: 10px; border-radius: 4px;"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Pricing Rule Search View ────────────────────────────────────── -->
+    <record id="view_zconnect_pricing_rule_search" model="ir.ui.view">
+        <field name="name">zconnect.pricing.rule.search</field>
+        <field name="model">zconnect.pricing.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="vehicle_category"/>
+                <separator/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Vehicle Category" name="group_vehicle_category"
+                            context="{'group_by': 'vehicle_category'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── Action ──────────────────────────────────────────────────────── -->
+    <record id="action_zconnect_pricing_rule" model="ir.actions.act_window">
+        <field name="name">Pricing Rules</field>
+        <field name="res_model">zconnect.pricing.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_zconnect_pricing_rule_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first pricing rule
+            </p>
+            <p>
+                Configure base fare, distance rates, cargo weight rates, and minimum fares per vehicle category.
+            </p>
+        </field>
+    </record>
+
+</odoo>

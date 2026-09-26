@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_zconnect_dispatch_root"
+              name="Dispatch"
+              web_icon="zconnect_dispatch,static/description/icon.png"
+              sequence="25"
+              groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_driver"/>
+
+    <menuitem id="menu_zconnect_dispatch_assignments"
+              name="Assignments"
+              parent="menu_zconnect_dispatch_root"
+              action="action_zconnect_dispatch_assignment"
+              sequence="10"/>
+</odoo>

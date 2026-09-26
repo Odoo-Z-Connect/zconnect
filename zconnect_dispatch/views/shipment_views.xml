@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_zconnect_shipment_form_inherit_dispatch" model="ir.ui.view">
+        <field name="name">zconnect.shipment.form.inherit.dispatch</field>
+        <field name="model">zconnect.shipment</field>
+        <field name="inherit_id" ref="zconnect_shipment.view_zconnect_shipment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_confirm']" position="after">
+                <button name="%(action_zconnect_dispatch_offer_wizard)d" type="action"
+                        string="Offer Assignment"
+                        class="btn-primary"
+                        groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"
+                        invisible="state != 'confirmed'"/>
+                        
+                <button name="action_start_pickup" type="object"
+                        string="Start Pickup"
+                        class="btn-primary"
+                        groups="zconnect_base.group_zconnect_driver,zconnect_base.group_zconnect_dispatcher"
+                        invisible="state != 'assigned'"/>
+                        
+                <button name="action_mark_picked_up" type="object"
+                        string="Mark Picked Up"
+                        class="btn-primary"
+                        groups="zconnect_base.group_zconnect_driver,zconnect_base.group_zconnect_dispatcher"
+                        invisible="state != 'en_route_pickup'"/>
+                        
+                <button name="action_start_delivery" type="object"
+                        string="Start Delivery"
+                        class="btn-primary"
+                        groups="zconnect_base.group_zconnect_driver,zconnect_base.group_zconnect_dispatcher"
+                        invisible="state != 'picked_up'"/>
+                        
+                <button name="action_mark_near_delivery" type="object"
+                        string="Mark Near Delivery"
+                        class="btn-primary"
+                        groups="zconnect_base.group_zconnect_driver,zconnect_base.group_zconnect_dispatcher"
+                        invisible="state != 'in_transit'"/>
+            </xpath>
+            
+            <xpath expr="//notebook" position="inside">
+                <page string="Dispatch Operations" name="dispatch" groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_driver">
+                    <group col="2">
+                        <group string="Current Assignment">
+                            <field name="active_assignment_id" context="{'form_view_ref': 'zconnect_dispatch.view_zconnect_dispatch_assignment_form'}"/>
+                            <field name="current_driver_id"/>
+                            <field name="current_vehicle_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

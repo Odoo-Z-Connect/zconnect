@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="redirect_form">
+        <form t-att-action="return_url" method="post" class="mt-3">
+            <input type="hidden" name="reference" t-att-value="reference"/>
+            <input type="hidden" name="amount" t-att-value="amount"/>
+            <input type="hidden" name="status" value="paid"/>
+            
+            <div class="alert alert-info">
+                <strong>Paynow PoC:</strong> You are about to pay <strong><t t-esc="amount"/> <t t-esc="currency"/></strong> via Paynow (EcoCash / Visa).
+                Since this is a Proof of Concept demo, clicking the button below will securely simulate a successful Paynow payment.
+            </div>
+            
+            <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">
+                <i class="fa fa-lock"/> Complete Payment via Paynow
+            </button>
+        </form>
+    </template>
+</odoo>

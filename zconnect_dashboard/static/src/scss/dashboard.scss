@@ -1,0 +1,1128 @@
+// ===================================================================
+// ZCONNECT OPERATIONS DASHBOARD — PREMIUM LOGISTICS UI DESIGN SYSTEM
+// ===================================================================
+
+.zc-light-dashboard {
+    // Modern Sans Typography Stack
+    --zc-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+    
+    // Core Layered Backgrounds
+    --zc-bg: #F3F5F8;
+    --zc-surface: #FFFFFF;
+    --zc-surface-soft: #F8FAFC;
+    --zc-border: #E2E8F0;
+    --zc-border-light: #F1F5F9;
+    --zc-border-hover: #CBD5E1;
+    
+    // Text Hierarchy
+    --zc-text: #172033;
+    --zc-text-muted: #667085;
+    --zc-text-sub: #98A2B3;
+    
+    // Semantic Palette Tokens
+    --zc-primary: #4F46E5;
+    --zc-primary-hover: #4338CA;
+    --zc-primary-soft: rgba(79, 70, 229, 0.10);
+    
+    --zc-blue: #2563EB;
+    --zc-blue-soft: rgba(37, 99, 235, 0.10);
+    
+    --zc-success: #10B981;
+    --zc-success-soft: rgba(16, 185, 129, 0.10);
+    
+    --zc-warning: #F59E0B;
+    --zc-warning-soft: rgba(245, 158, 11, 0.10);
+    
+    --zc-danger: #EF4444;
+    --zc-danger-soft: rgba(239, 68, 68, 0.10);
+    
+    --zc-purple: #8B5CF6;
+    --zc-purple-soft: rgba(139, 92, 246, 0.10);
+    
+    --zc-cyan: #06B6D4;
+    --zc-cyan-soft: rgba(6, 182, 212, 0.10);
+    
+    --zc-orange: #F97316;
+    --zc-orange-soft: rgba(249, 115, 22, 0.10);
+
+    // Shipment State Color System
+    --zc-status-draft: #64748B;
+    --zc-status-quoted: #6366F1;
+    --zc-status-awaiting-payment: #F59E0B;
+    --zc-status-confirmed: #3B82F6;
+    --zc-status-assigned: #8B5CF6;
+    --zc-status-en-route: #F97316;
+    --zc-status-picked-up: #06B6D4;
+    --zc-status-in-transit: #2563EB;
+    --zc-status-near-delivery: #F59E0B;
+    --zc-status-delivered: #10B981;
+    --zc-status-cancelled: #EF4444;
+    --zc-status-exception: #DC2626;
+
+    background-color: var(--zc-bg);
+    color: var(--zc-text);
+    font-family: var(--zc-font);
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 100%;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    .zc-page-container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 24px 28px 48px 28px;
+    }
+
+    // -------------------------------------------------------------
+    // Typography Hierarchy
+    // -------------------------------------------------------------
+    .zc-header-title {
+        font-family: var(--zc-font);
+        font-size: 28px;
+        font-weight: 750;
+        color: var(--zc-text);
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+    }
+
+    .zc-header-subtitle {
+        font-size: 13px;
+        font-weight: 450;
+        color: var(--zc-text-muted);
+        margin-top: 4px;
+    }
+
+    .zc-section-title {
+        font-family: var(--zc-font);
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--zc-text);
+        letter-spacing: -0.01em;
+    }
+
+    .zc-section-sub {
+        font-size: 12px;
+        font-weight: 450;
+        color: var(--zc-text-muted);
+    }
+
+    .zc-card-header {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--zc-text);
+        letter-spacing: -0.01em;
+    }
+
+    .zc-card-link {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--zc-primary);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: color 0.15s ease;
+
+        &:hover {
+            color: var(--zc-primary-hover);
+            text-decoration: underline;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Premium White Card System
+    // -------------------------------------------------------------
+    .zc-card {
+        background: var(--zc-surface);
+        border: 1px solid var(--zc-border);
+        border-radius: 16px;
+        box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05), 0 1px 2px rgba(16, 24, 40, 0.03);
+        padding: 20px 22px;
+        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+
+        &.cursor-pointer:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
+            border-color: var(--zc-border-hover);
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Controls: Segmented Date Filter & Action Buttons
+    // -------------------------------------------------------------
+    .zc-date-pill-group {
+        display: inline-flex;
+        background: #EAEFF5;
+        border: 1px solid var(--zc-border);
+        border-radius: 10px;
+        padding: 3px;
+        gap: 2px;
+    }
+
+    .zc-date-pill {
+        background: transparent;
+        border: none;
+        color: var(--zc-text-muted);
+        font-family: var(--zc-font);
+        font-size: 12px;
+        font-weight: 550;
+        padding: 6px 13px;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+
+        &:hover {
+            color: var(--zc-text);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        &.active {
+            background: var(--zc-primary);
+            color: #FFFFFF;
+            font-weight: 600;
+            box-shadow: 0 1px 2px rgba(79, 70, 229, 0.25);
+        }
+    }
+
+    .zc-btn-secondary {
+        background: #FFFFFF;
+        border: 1px solid #DDE3EC;
+        color: var(--zc-text);
+        font-family: var(--zc-font);
+        font-size: 13px;
+        font-weight: 550;
+        height: 36px;
+        padding: 0 14px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        transition: all 0.15s ease;
+
+        &:hover {
+            background: #F8FAFC;
+            border-color: var(--zc-border-hover);
+            color: var(--zc-text);
+        }
+    }
+
+    .zc-btn-primary {
+        background: var(--zc-primary);
+        border: 1px solid var(--zc-primary);
+        color: #FFFFFF;
+        font-family: var(--zc-font);
+        font-size: 13px;
+        font-weight: 600;
+        height: 36px;
+        padding: 0 15px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 1px 2px rgba(79, 70, 229, 0.25);
+        transition: all 0.15s ease;
+
+        &:hover {
+            background: var(--zc-primary-hover);
+            border-color: var(--zc-primary-hover);
+            color: #FFFFFF;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Semantic Tinted Icon Containers (40x40px, 12px squircle)
+    // -------------------------------------------------------------
+    .zc-icon-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        &.zc-badge-indigo { background-color: var(--zc-primary-soft); color: var(--zc-primary); }
+        &.zc-badge-blue   { background-color: var(--zc-blue-soft);    color: var(--zc-blue); }
+        &.zc-badge-green  { background-color: var(--zc-success-soft); color: var(--zc-success); }
+        &.zc-badge-amber  { background-color: var(--zc-warning-soft); color: var(--zc-warning); }
+        &.zc-badge-red    { background-color: var(--zc-danger-soft);  color: var(--zc-danger); }
+        &.zc-badge-orange { background-color: var(--zc-orange-soft);  color: var(--zc-orange); }
+        &.zc-badge-purple { background-color: var(--zc-purple-soft);  color: var(--zc-purple); }
+
+        &.zc-badge-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Primary KPI Cards (Executive White Cards with Semantic Accent)
+    // -------------------------------------------------------------
+    .zc-kpi-card {
+        background: #FFFFFF !important;
+        border: 1px solid var(--zc-border) !important;
+        border-radius: 16px !important;
+        padding: 24px !important;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03) !important;
+        transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 220ms ease, border-color 220ms ease !important;
+
+        .zc-icon-badge {
+            width: 48px !important;
+            height: 48px !important;
+            border-radius: 14px !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 220ms ease, box-shadow 220ms ease;
+            position: relative;
+            
+            svg {
+                width: 24px;
+                height: 24px;
+                stroke-width: 2px;
+            }
+        }
+
+        .zc-kpi-arrow {
+            display: inline-flex;
+            align-items: center;
+            color: #94A3B8 !important;
+            opacity: 0.6;
+            transition: transform 0.22s ease, color 0.22s ease, opacity 0.22s ease;
+        }
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+            border-color: #E2E8F0 !important;
+
+            .zc-icon-badge {
+                transform: scale(1.08);
+            }
+            .zc-kpi-arrow {
+                transform: translateX(4px);
+                color: var(--zc-text) !important;
+                opacity: 1;
+            }
+        }
+
+        &:active {
+            transform: translateY(-1px);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--zc-primary);
+            outline-offset: 2px;
+        }
+
+        .zc-kpi-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-top: 18px;
+            margin-bottom: 6px;
+            color: #64748B !important;
+        }
+
+        .zc-kpi-number {
+            font-family: var(--zc-font);
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: #0F172A !important;
+        }
+
+        .zc-kpi-subtext {
+            font-size: 13.5px;
+            font-weight: 500;
+            margin-top: 8px;
+            color: #64748B !important;
+        }
+
+        // Semantic Accent Variants:
+        &.zc-kpi-indigo {
+            .zc-icon-badge {
+                background-color: #EEF2FF !important;
+                color: #4F46E5 !important;
+                box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.1) inset !important;
+            }
+            &:hover {
+                border-color: #E0E7FF !important;
+                .zc-icon-badge { box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15), 0 0 0 1px rgba(79, 70, 229, 0.1) inset !important; }
+            }
+        }
+
+        &.zc-kpi-blue {
+            .zc-icon-badge {
+                background-color: #EFF6FF !important;
+                color: #2563EB !important;
+                box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1) inset !important;
+            }
+            &:hover {
+                border-color: #DBEAFE !important;
+                .zc-icon-badge { box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15), 0 0 0 1px rgba(37, 99, 235, 0.1) inset !important; }
+            }
+        }
+
+        &.zc-kpi-amber {
+            .zc-icon-badge {
+                background-color: #FFF7ED !important;
+                color: #EA580C !important;
+                box-shadow: 0 0 0 1px rgba(234, 88, 12, 0.1) inset !important;
+            }
+            &:hover {
+                border-color: #FFEDD5 !important;
+                .zc-icon-badge { box-shadow: 0 4px 12px rgba(234, 88, 12, 0.15), 0 0 0 1px rgba(234, 88, 12, 0.1) inset !important; }
+            }
+        }
+
+        &.zc-kpi-green {
+            .zc-icon-badge {
+                background-color: #ECFDF5 !important;
+                color: #059669 !important;
+                box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.1) inset !important;
+            }
+            &:hover {
+                border-color: #D1FAE5 !important;
+                .zc-icon-badge { box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15), 0 0 0 1px rgba(5, 150, 105, 0.1) inset !important; }
+            }
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Financial Overview Colored Cards
+    // -------------------------------------------------------------
+    .zc-fin-card {
+        border-radius: 12px;
+        padding: 14px 16px;
+        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+        }
+
+        .zc-fin-label {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .zc-fin-amount {
+            font-family: var(--zc-font);
+            font-size: 22px;
+            font-weight: 800;
+            margin-top: 4px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .zc-fin-sub {
+            font-size: 11px;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        &.zc-fin-green {
+            background: linear-gradient(145deg, #F0FDF4 0%, #DCFCE7 100%);
+            border: 1px solid #BBF7D0;
+            .zc-icon-badge { background-color: #FFFFFF; color: #059669; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+            .zc-fin-label { color: #047857; }
+            .zc-fin-amount { color: #064E3B; }
+            .zc-fin-sub { color: #059669; }
+            &:hover { border-color: #86EFAC; }
+        }
+
+        &.zc-fin-amber {
+            background: linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 100%);
+            border: 1px solid #FDE68A;
+            .zc-icon-badge { background-color: #FFFFFF; color: #D97706; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+            .zc-fin-label { color: #B45309; }
+            .zc-fin-amount { color: #78350F; }
+            .zc-fin-sub { color: #D97706; }
+            &:hover { border-color: #FCD34D; }
+        }
+
+        &.zc-fin-red {
+            background: linear-gradient(145deg, #FEF2F2 0%, #FEE2E2 100%);
+            border: 1px solid #FECACA;
+            .zc-icon-badge { background-color: #FFFFFF; color: #DC2626; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+            .zc-fin-label { color: #B91C1C; }
+            .zc-fin-amount { color: #7F1D1D; }
+            .zc-fin-sub { color: #DC2626; }
+            &:hover { border-color: #FCA5A5; }
+        }
+
+        &.zc-fin-indigo {
+            background: linear-gradient(145deg, #EEF2FF 0%, #E0E7FE 100%);
+            border: 1px solid #C7D2FE;
+            .zc-icon-badge { background-color: #FFFFFF; color: #4F46E5; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+            .zc-fin-label { color: #4338CA; }
+            .zc-fin-amount { color: #312E81; }
+            .zc-fin-sub { color: #4F46E5; }
+            &:hover { border-color: #A5B4FC; }
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Live Operations Fleet Tiles (Vibrant Capacity Cards)
+    // -------------------------------------------------------------
+    .zc-ops-tile {
+        border-radius: 12px;
+        padding: 12px 14px;
+        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 24, 40, 0.08);
+        }
+
+        .zc-ops-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            line-height: 1.2;
+        }
+
+        .zc-ops-val {
+            font-family: var(--zc-font);
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-top: 3px;
+        }
+
+        .zc-ops-sub {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        &.zc-ops-green {
+            background: linear-gradient(145deg, #F0FDF4 0%, #DCFCE7 100%);
+            border: 1px solid #BBF7D0;
+            .zc-icon-badge { background-color: #FFFFFF; color: #059669; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+            .zc-ops-label { color: #047857; }
+            .zc-ops-val { color: #064E3B; }
+            .zc-ops-sub { color: #059669; }
+            &:hover { border-color: #86EFAC; }
+        }
+
+        &.zc-ops-orange {
+            background: linear-gradient(145deg, #FFF7ED 0%, #FFEDD5 100%);
+            border: 1px solid #FED7AA;
+            .zc-icon-badge { background-color: #FFFFFF; color: #EA580C; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+            .zc-ops-label { color: #C2410C; }
+            .zc-ops-val { color: #7C2D12; }
+            .zc-ops-sub { color: #EA580C; }
+            &:hover { border-color: #FB923C; }
+        }
+
+        &.zc-ops-blue {
+            background: linear-gradient(145deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 1px solid #BFDBFE;
+            .zc-icon-badge { background-color: #FFFFFF; color: #2563EB; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+            .zc-ops-label { color: #1D4ED8; }
+            .zc-ops-val { color: #1E3A8A; }
+            .zc-ops-sub { color: #2563EB; }
+            &:hover { border-color: #60A5FA; }
+        }
+
+        &.zc-ops-purple {
+            background: linear-gradient(145deg, #FAF5FF 0%, #F3E8FF 100%);
+            border: 1px solid #E9D5FF;
+            .zc-icon-badge { background-color: #FFFFFF; color: #7C3AED; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+            .zc-ops-label { color: #6D28D9; }
+            .zc-ops-val { color: #4C1D95; }
+            .zc-ops-sub { color: #7C3AED; }
+            &:hover { border-color: #D8B4FE; }
+        }
+    }
+
+    .zc-metric-shortcut {
+        border-radius: 8px;
+        padding: 8px 10px;
+        transition: background-color 0.15s ease;
+
+        &:hover {
+            background-color: var(--zc-surface-soft);
+        }
+
+        .zc-ms-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--zc-text-muted);
+        }
+
+        .zc-ms-num {
+            font-family: var(--zc-font);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--zc-text);
+        }
+
+        .zc-ms-arrow {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--zc-primary);
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Shipment Activity Chart
+    // -------------------------------------------------------------
+    .zc-chart-wrapper {
+        position: relative;
+    }
+
+    .zc-chart-legend {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 12px;
+        font-weight: 550;
+        color: var(--zc-text-muted);
+
+        .zc-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .zc-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+
+            &.zc-dot-bookings { background-color: var(--zc-primary); }
+            &.zc-dot-delivered { background-color: var(--zc-success); }
+        }
+    }
+
+    .zc-chart-grid {
+        stroke: #F1F5F9;
+        stroke-width: 1;
+        stroke-dasharray: 4 4;
+    }
+
+    .zc-line-bookings {
+        fill: none;
+        stroke: var(--zc-primary);
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .zc-line-delivered {
+        fill: none;
+        stroke: var(--zc-success);
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .zc-chart-xaxis {
+        font-size: 11px;
+        font-weight: 550;
+        color: var(--zc-text-muted);
+    }
+
+    // -------------------------------------------------------------
+    // Shipment Pipeline Stepper Flow
+    // -------------------------------------------------------------
+    .zc-pipeline-stepper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+
+        .zc-pipe-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            min-width: 72px;
+            padding: 8px 6px;
+            border-radius: 10px;
+            transition: transform 0.18s ease, background-color 0.18s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+                background-color: var(--zc-surface-soft);
+            }
+
+            &:focus-visible {
+                outline: 2px solid var(--zc-primary);
+                outline-offset: 2px;
+            }
+
+            &.zc-pipe-empty {
+                .zc-pipe-icon-box {
+                    opacity: 0.40;
+                    filter: grayscale(40%);
+                }
+                .zc-pipe-name {
+                    color: var(--zc-text-sub);
+                }
+                .zc-pipe-count {
+                    color: var(--zc-text-muted);
+                    opacity: 0.6;
+                }
+            }
+
+            &.zc-pipe-active {
+                .zc-pipe-icon-box {
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+                }
+                .zc-pipe-name {
+                    color: var(--zc-text);
+                    font-weight: 700;
+                }
+                .zc-pipe-count {
+                    color: var(--zc-text);
+                    font-weight: 800;
+                }
+            }
+        }
+
+        .zc-pipe-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 13px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .zc-pipe-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            margin-top: 8px;
+            white-space: nowrap;
+        }
+
+        .zc-pipe-count {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--zc-text);
+        }
+
+        .zc-pipe-arrow {
+            color: #CBD5E1;
+            margin-bottom: 24px;
+            flex-shrink: 0;
+        }
+    }
+
+    .zc-pipe-progress-track {
+        height: 6px;
+        border-radius: 9999px;
+        overflow: hidden;
+        background-color: #F1F5F9;
+        display: flex;
+    }
+
+    // -------------------------------------------------------------
+    // Table & Modern SaaS Data Rows
+    // -------------------------------------------------------------
+    .zc-table-wrapper {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--zc-border);
+    }
+
+    .zc-table {
+        margin-bottom: 0;
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+            font-family: var(--zc-font);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--zc-text-muted);
+            background-color: var(--zc-surface-soft);
+            border-bottom: 1px solid var(--zc-border);
+            padding: 12px 14px;
+            white-space: nowrap;
+        }
+
+        td {
+            font-size: 13px;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--zc-border-light);
+            vertical-align: middle;
+            height: 58px;
+        }
+
+        tbody tr {
+            background-color: #FFFFFF;
+            transition: background-color 150ms ease, box-shadow 150ms ease;
+
+            &:hover {
+                background-color: #F8FAFC;
+                box-shadow: inset 3px 0 0 0 var(--zc-primary);
+
+                .zc-shipment-code {
+                    color: var(--zc-primary-hover);
+                }
+            }
+
+            &:last-child td {
+                border-bottom: none;
+            }
+        }
+    }
+
+    .zc-shipment-code {
+        font-family: var(--zc-font);
+        font-weight: 700;
+        color: var(--zc-primary);
+        font-size: 13px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .zc-customer-name {
+        font-weight: 600;
+        color: var(--zc-text);
+    }
+
+    .zc-amount-col {
+        font-weight: 700;
+        color: var(--zc-text);
+    }
+
+    .zc-avatar-initials {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: var(--zc-primary-soft);
+        color: var(--zc-primary);
+        font-size: 10px;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    // -------------------------------------------------------------
+    // Reusable Status Pills (10-14% tinted bg, solid text, border)
+    // -------------------------------------------------------------
+    .zc-pill {
+        font-family: var(--zc-font);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 9px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        white-space: nowrap;
+        line-height: 1.3;
+
+        .zc-pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        // Payment Pills
+        &.zc-pill-paid {
+            background-color: rgba(16, 185, 129, 0.12);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            .zc-pill-dot { background-color: #10B981; }
+        }
+
+        &.zc-pill-pending {
+            background-color: rgba(245, 158, 11, 0.12);
+            color: #D97706;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            .zc-pill-dot { background-color: #F59E0B; }
+        }
+
+        &.zc-pill-failed {
+            background-color: rgba(239, 68, 68, 0.12);
+            color: #DC2626;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            .zc-pill-dot { background-color: #EF4444; }
+        }
+
+        &.zc-pill-unpaid {
+            background-color: rgba(100, 116, 139, 0.10);
+            color: #475569;
+            border: 1px solid rgba(100, 116, 139, 0.20);
+            .zc-pill-dot { background-color: #64748B; }
+        }
+
+        // Shipment State Pills
+        &.zc-pill-delivered {
+            background-color: rgba(16, 185, 129, 0.12);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            .zc-pill-dot { background-color: #10B981; }
+        }
+
+        &.zc-pill-intransit {
+            background-color: rgba(37, 99, 235, 0.12);
+            color: #1D4ED8;
+            border: 1px solid rgba(37, 99, 235, 0.25);
+            .zc-pill-dot { background-color: #2563EB; }
+        }
+
+        &.zc-pill-pickedup {
+            background-color: rgba(6, 182, 212, 0.12);
+            color: #0E7490;
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            .zc-pill-dot { background-color: #06B6D4; }
+        }
+
+        &.zc-pill-neardelivery {
+            background-color: rgba(245, 158, 11, 0.12);
+            color: #D97706;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            .zc-pill-dot { background-color: #F59E0B; }
+        }
+
+        &.zc-pill-confirmed {
+            background-color: rgba(59, 130, 246, 0.12);
+            color: #1D4ED8;
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            .zc-pill-dot { background-color: #3B82F6; }
+        }
+
+        &.zc-pill-assigned {
+            background-color: rgba(139, 92, 246, 0.12);
+            color: #6D28D9;
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            .zc-pill-dot { background-color: #8B5CF6; }
+        }
+
+        &.zc-pill-enroute {
+            background-color: rgba(249, 115, 22, 0.12);
+            color: #C2410C;
+            border: 1px solid rgba(249, 115, 22, 0.25);
+            .zc-pill-dot { background-color: #F97316; }
+        }
+
+        &.zc-pill-exception {
+            background-color: rgba(220, 38, 38, 0.12);
+            color: #B91C1C;
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            .zc-pill-dot { background-color: #DC2626; }
+        }
+
+        &.zc-pill-cancelled {
+            background-color: rgba(239, 68, 68, 0.12);
+            color: #B91C1C;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            .zc-pill-dot { background-color: #EF4444; }
+        }
+
+        &.zc-pill-neutral {
+            background-color: rgba(100, 116, 139, 0.10);
+            color: #475569;
+            border: 1px solid rgba(100, 116, 139, 0.20);
+            .zc-pill-dot { background-color: #64748B; }
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Active Delivery Card
+    // -------------------------------------------------------------
+    .zc-active-delivery-card {
+        background: var(--zc-surface-soft);
+        border: 1px solid var(--zc-border);
+        border-radius: 12px;
+        padding: 16px;
+        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            border-color: var(--zc-border-hover);
+            background: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(16, 24, 40, 0.06);
+        }
+
+        .zc-deliv-route {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--zc-text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .zc-route-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Quick Actions Buttons
+    // -------------------------------------------------------------
+    .zc-action-btn {
+        background: #FFFFFF;
+        border: 1px solid var(--zc-border);
+        border-radius: 10px;
+        font-family: var(--zc-font);
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--zc-text);
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        transition: all 0.15s ease;
+        text-align: left;
+        width: 100%;
+
+        &:hover {
+            border-color: var(--zc-border-hover);
+            background: var(--zc-surface-soft);
+            color: var(--zc-text);
+            transform: translateX(2px);
+        }
+
+        &.zc-action-btn-primary {
+            background: var(--zc-primary);
+            border-color: var(--zc-primary);
+            color: #FFFFFF;
+            box-shadow: 0 1px 2px rgba(79, 70, 229, 0.2);
+
+            &:hover {
+                background: var(--zc-primary-hover);
+                border-color: var(--zc-primary-hover);
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Attention Checklist
+    // -------------------------------------------------------------
+    .zc-checklist-item {
+        background: var(--zc-surface-soft);
+        border: 1px solid var(--zc-border-light);
+        border-radius: 10px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12.5px;
+        font-weight: 500;
+        color: var(--zc-text);
+        transition: background-color 0.15s ease;
+
+        &.zc-checklist-success {
+            background-color: rgba(16, 185, 129, 0.04);
+            border-color: rgba(16, 185, 129, 0.18);
+        }
+
+        &.zc-checklist-warning {
+            background-color: rgba(239, 68, 68, 0.04);
+            border-color: rgba(239, 68, 68, 0.18);
+        }
+
+        &:hover {
+            background-color: #F1F5F9;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Loading Skeletons
+    // -------------------------------------------------------------
+    .zc-skeleton {
+        background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 37%, #F1F5F9 63%);
+        background-size: 400% 100%;
+        animation: zc-shimmer 1.4s ease infinite;
+        border-radius: 12px;
+    }
+
+    .zc-skel-header { height: 44px; width: 100%; }
+    .zc-skel-kpi { height: 116px; width: 100%; }
+    .zc-skel-panel { height: 260px; width: 100%; }
+
+    @keyframes zc-shimmer {
+        0% { background-position: 100% 50%; }
+        100% { background-position: 0 50%; }
+    }
+
+    // -------------------------------------------------------------
+    // Accessibility Focus Styles & Motion Compliance
+    // -------------------------------------------------------------
+    :focus-visible {
+        outline: 2px solid var(--zc-primary);
+        outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, ::before, ::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Responsive Breakpoints
+    // -------------------------------------------------------------
+    @media (max-width: 1200px) {
+        .zc-page-container {
+            padding: 20px 20px 40px 20px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .zc-page-container {
+            padding: 16px 14px 32px 14px;
+        }
+
+        .zc-header-title {
+            font-size: 22px;
+        }
+
+        .zc-date-pill-group {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .zc-kpi-number {
+            font-size: 24px;
+        }
+
+        .zc-pipeline-stepper {
+            justify-content: flex-start;
+            gap: 12px;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Inherit the standard Fleet vehicle form view.
+        Adds a "ZConnect Logistics" group to the existing form.
+        No standard Fleet fields are replaced or removed.
+        View inheritance ID: fleet.fleet_vehicle_view_form (verified from Odoo 19 source).
+    -->
+    <record id="view_fleet_vehicle_form_zconnect" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.zconnect.logistics</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="priority" eval="30"/>
+        <field name="arch" type="xml">
+            <!-- Insert ZConnect Logistics tab into the existing notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page string="ZConnect Logistics" name="zconnect_logistics">
+                    <group col="2">
+                        <group string="Logistics Classification">
+                            <field name="zconnect_vehicle_category"/>
+                            <field name="zconnect_operational_status"/>
+                            <field name="zconnect_service_area"/>
+                        </group>
+                        <group string="Cargo Capacity">
+                            <field name="zconnect_payload_capacity_kg"/>
+                            <field name="zconnect_volume_capacity_cbm"/>
+                        </group>
+                    </group>
+                    <group string="Operational Notes">
+                        <field name="zconnect_logistics_notes" nolabel="1" colspan="2"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

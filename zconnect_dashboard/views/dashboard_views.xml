@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_zconnect_dashboard" model="ir.actions.client">
+        <field name="name">ZConnect Operations Dashboard</field>
+        <field name="tag">zconnect_dashboard.main</field>
+        <field name="target">main</field>
+    </record>
+
+    <!-- Menu Item under ZConnect Root, Sequence 5 (Top) -->
+    <menuitem id="menu_zconnect_dashboard"
+              name="Dashboard"
+              parent="zconnect_base.menu_zconnect_root"
+              action="action_zconnect_dashboard"
+              sequence="5"
+              groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"/>
+</odoo>

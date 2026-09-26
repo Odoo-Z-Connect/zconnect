@@ -1,0 +1,20 @@
+{
+    'name': 'Zimbabwe Connect - Dispatch',
+    'version': '1.0',
+    'category': 'Logistics',
+    'summary': 'Dispatch and Driver Assignment for Zimbabwe Connect',
+    'depends': ['zconnect_base', 'zconnect_fleet', 'zconnect_driver', 'zconnect_shipment'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/security.xml',
+        'data/sequences.xml',
+        'wizard/offer_assignment_wizard_views.xml',
+        'wizard/reject_assignment_wizard_views.xml',
+        'views/dispatch_assignment_views.xml',
+        'views/shipment_views.xml',
+        'views/menu_views.xml',
+    ],
+    'installable': True,
+    'application': False,
+    'license': 'LGPL-3',
+}

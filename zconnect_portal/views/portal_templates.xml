@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_zconnect" name="Show Shipments and Assignments" customize_show="True" inherit_id="portal.portal_my_home" priority="40">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Shipments</t>
+                <t t-set="url" t-value="'/my/shipments'"/>
+                <t t-set="placeholder_count" t-value="'zconnect_shipment_count'"/>
+            </t>
+            <t t-if="is_zconnect_driver">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Assignments</t>
+                    <t t-set="url" t-value="'/my/assignments'"/>
+                    <t t-set="placeholder_count" t-value="'zconnect_assignment_count'"/>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_shipments" name="My Shipments">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Shipments</t>
+            </t>
+            <div class="mb-3">
+                <a href="/my/shipments/new" class="btn btn-primary">New Shipment</a>
+            </div>
+            <t t-if="not shipments">
+                <p>There are currently no shipments for your account.</p>
+            </t>
+            <t t-if="shipments" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Shipment #</th>
+                        <th>Created</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="shipments" t-as="shipment">
+                        <tr>
+                            <td><a t-attf-href="/my/shipments/#{shipment.id}"><t t-esc="shipment.name"/></a></td>
+                            <td><t t-esc="shipment.create_date" t-options="{'widget': 'date'}"/></td>
+                            <td><t t-esc="shipment.state"/></td>
+                            <td><t t-esc="shipment.total_amount"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_shipment_detail" name="Shipment Detail">
+        <t t-call="portal.portal_layout">
+            <h3><t t-esc="shipment.name"/></h3>
+            <ul>
+                <li>Status: <t t-esc="shipment.state"/></li>
+                <li>Payment: <t t-esc="shipment.payment_state"/></li>
+                <li>Amount: <t t-esc="shipment.total_amount"/></li>
+            </ul>
+            <t t-if="shipment.state == 'draft'">
+                <form t-attf-action="/my/shipments/#{shipment.id}/confirm" method="post">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                </form>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_new_shipment" name="New Shipment">
+        <t t-call="portal.portal_layout">
+            <h3>New Shipment</h3>
+            <form action="/my/shipments/create" method="post">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="mb-3">
+                    <label>Pickup Address</label>
+                    <input type="text" name="pickup_address" class="form-control" required="1"/>
+                </div>
+                <div class="mb-3">
+                    <label>Delivery Address</label>
+                    <input type="text" name="delivery_address" class="form-control" required="1"/>
+                </div>
+                <!-- Simplified for POC -->
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </t>
+    </template>
+
+    <template id="portal_my_assignments" name="My Assignments">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Assignments</t>
+            </t>
+            <t t-if="not assignments">
+                <p>There are currently no assignments.</p>
+            </t>
+            <t t-if="assignments" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Assignment #</th>
+                        <th>Shipment</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="assignments" t-as="assignment">
+                        <tr>
+                            <td><a t-attf-href="/my/assignments/#{assignment.id}"><t t-esc="assignment.name"/></a></td>
+                            <td><t t-esc="assignment.shipment_id.name"/></td>
+                            <td><t t-esc="assignment.state"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_assignment_detail" name="Assignment Detail">
+        <t t-call="portal.portal_layout">
+            <h3><t t-esc="assignment.name"/></h3>
+            <ul>
+                <li>Status: <t t-esc="assignment.state"/></li>
+                <li>Shipment: <t t-esc="assignment.shipment_id.name"/></li>
+            </ul>
+            <t t-if="assignment.state == 'offered'">
+                <form t-attf-action="/my/assignments/#{assignment.id}/accept" method="post" class="d-inline">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <button type="submit" class="btn btn-success">Accept</button>
+                </form>
+                <form t-attf-action="/my/assignments/#{assignment.id}/reject" method="post" class="d-inline">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" name="reason" value="Rejected via Portal"/>
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                </form>
+            </t>
+        </t>
+    </template>
+</odoo>

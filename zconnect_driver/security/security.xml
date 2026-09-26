@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Driver-level record rule: a Driver user can only see their own profile -->
+        <record id="rule_driver_own_profile" model="ir.rule">
+            <field name="name">ZConnect Driver: own profile only</field>
+            <field name="model_id" ref="model_zconnect_driver"/>
+            <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+            <field name="groups" eval="[Command.link(ref('zconnect_base.group_zconnect_driver'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Dispatcher and above: see all driver profiles -->
+        <record id="rule_dispatcher_all_drivers" model="ir.rule">
+            <field name="name">ZConnect Dispatcher: all driver profiles</field>
+            <field name="model_id" ref="model_zconnect_driver"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[Command.link(ref('zconnect_base.group_zconnect_dispatcher'))]"/>
+        </record>
+
+        <!-- Document record rule: Driver sees only their own documents -->
+        <record id="rule_driver_own_documents" model="ir.rule">
+            <field name="name">ZConnect Driver: own documents only</field>
+            <field name="model_id" ref="model_zconnect_driver_document"/>
+            <field name="domain_force">[('driver_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="groups" eval="[Command.link(ref('zconnect_base.group_zconnect_driver'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+</odoo>

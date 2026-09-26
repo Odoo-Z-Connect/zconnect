@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zconnect_shipment_admin,zconnect.shipment admin,model_zconnect_shipment,zconnect_base.group_zconnect_admin,1,1,1,1
+access_zconnect_shipment_manager,zconnect.shipment manager,model_zconnect_shipment,zconnect_base.group_zconnect_manager,1,1,1,1
+access_zconnect_shipment_dispatcher,zconnect.shipment dispatcher,model_zconnect_shipment,zconnect_base.group_zconnect_dispatcher,1,1,1,0
+access_zconnect_shipment_finance,zconnect.shipment finance,model_zconnect_shipment,zconnect_base.group_zconnect_finance,1,0,0,0
+access_zconnect_shipment_driver,zconnect.shipment driver,model_zconnect_shipment,zconnect_base.group_zconnect_driver,1,0,0,0
+access_zconnect_shipment_customer,zconnect.shipment customer,model_zconnect_shipment,zconnect_base.group_zconnect_customer,1,1,1,0

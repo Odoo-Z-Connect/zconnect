@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend ZConnect root menu to add Drivers section -->
+    <menuitem id="menu_zconnect_drivers"
+              name="Drivers"
+              parent="zconnect_base.menu_zconnect_root"
+              action="action_zconnect_driver"
+              sequence="20"
+              groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"/>
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zconnect_pricing_rule_admin,zconnect.pricing.rule admin,model_zconnect_pricing_rule,zconnect_base.group_zconnect_admin,1,1,1,1
+access_zconnect_pricing_rule_manager,zconnect.pricing.rule manager,model_zconnect_pricing_rule,zconnect_base.group_zconnect_manager,1,1,1,1
+access_zconnect_pricing_rule_dispatcher,zconnect.pricing.rule dispatcher,model_zconnect_pricing_rule,zconnect_base.group_zconnect_dispatcher,1,0,0,0
+access_zconnect_pricing_rule_finance,zconnect.pricing.rule finance,model_zconnect_pricing_rule,zconnect_base.group_zconnect_finance,1,0,0,0
+access_zconnect_pricing_zone_admin,zconnect.pricing.zone admin,model_zconnect_pricing_zone,zconnect_base.group_zconnect_admin,1,1,1,1
+access_zconnect_pricing_zone_manager,zconnect.pricing.zone manager,model_zconnect_pricing_zone,zconnect_base.group_zconnect_manager,1,1,1,1
+access_zconnect_pricing_zone_dispatcher,zconnect.pricing.zone dispatcher,model_zconnect_pricing_zone,zconnect_base.group_zconnect_dispatcher,1,0,0,0
+access_zconnect_pricing_zone_finance,zconnect.pricing.zone finance,model_zconnect_pricing_zone,zconnect_base.group_zconnect_finance,1,0,0,0

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Configuration Menu ──────────────────────────────────────────── -->
+    <menuitem id="menu_zconnect_configuration"
+              name="Configuration"
+              parent="zconnect_base.menu_zconnect_root"
+              sequence="90"
+              groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_finance,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"/>
+
+    <!-- ── Pricing Submenu ─────────────────────────────────────────────── -->
+    <menuitem id="menu_zconnect_pricing_root"
+              name="Pricing"
+              parent="menu_zconnect_configuration"
+              sequence="10"/>
+
+    <menuitem id="menu_zconnect_pricing_rules"
+              name="Pricing Rules"
+              parent="menu_zconnect_pricing_root"
+              action="action_zconnect_pricing_rule"
+              sequence="10"/>
+
+    <menuitem id="menu_zconnect_pricing_zones"
+              name="Pricing Zones"
+              parent="menu_zconnect_pricing_root"
+              action="action_zconnect_pricing_zone"
+              sequence="20"/>
+
+</odoo>

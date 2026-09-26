@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zconnect_dashboard_dispatcher,zconnect.dashboard.dispatcher,model_zconnect_dashboard,zconnect_base.group_zconnect_dispatcher,1,0,0,0
+access_zconnect_dashboard_manager,zconnect.dashboard.manager,model_zconnect_dashboard,zconnect_base.group_zconnect_manager,1,0,0,0
+access_zconnect_dashboard_admin,zconnect.dashboard.admin,model_zconnect_dashboard,zconnect_base.group_zconnect_admin,1,0,0,0

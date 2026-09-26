@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Shipments Main Menu (Top Level under ZConnect root) ────────── -->
+    <menuitem id="menu_zconnect_shipments"
+              name="Shipments"
+              parent="zconnect_base.menu_zconnect_root"
+              action="action_zconnect_shipment"
+              sequence="10"
+              groups="zconnect_base.group_zconnect_customer,zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_finance,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"/>
+
+</odoo>

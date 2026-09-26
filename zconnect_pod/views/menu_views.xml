@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_zconnect_pod_root" name="Proof of Delivery" parent="zconnect_dispatch.menu_zconnect_dispatch_root" sequence="20" action="action_zconnect_pod" groups="zconnect_base.group_zconnect_driver,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin,zconnect_base.group_zconnect_dispatcher"/>
+</odoo>

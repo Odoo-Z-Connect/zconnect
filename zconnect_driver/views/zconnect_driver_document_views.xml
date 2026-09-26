@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Document List View ──────────────────────────────────────────── -->
+    <record id="view_zconnect_driver_document_list" model="ir.ui.view">
+        <field name="name">zconnect.driver.document.list</field>
+        <field name="model">zconnect.driver.document</field>
+        <field name="arch" type="xml">
+            <list string="Driver Documents"
+                  decoration-danger="is_expired"
+                  decoration-warning="verification_status == 'pending'">
+                <field name="driver_id"/>
+                <field name="document_type"/>
+                <field name="document_number"/>
+                <field name="expiry_date"/>
+                <field name="verification_status" widget="badge"
+                       decoration-success="verification_status == 'approved'"
+                       decoration-warning="verification_status == 'pending'"
+                       decoration-danger="verification_status == 'rejected'"/>
+                <field name="verified_by"/>
+                <field name="is_expired" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Document Form View ──────────────────────────────────────────── -->
+    <record id="view_zconnect_driver_document_form" model="ir.ui.view">
+        <field name="name">zconnect.driver.document.form</field>
+        <field name="model">zconnect.driver.document</field>
+        <field name="arch" type="xml">
+            <form string="Driver Document">
+                <header>
+                    <button name="action_approve" type="object"
+                            string="Approve Document"
+                            class="btn-success"
+                            groups="zconnect_base.group_zconnect_manager"
+                            invisible="verification_status == 'approved'"/>
+                    <button name="action_reject" type="object"
+                            string="Reject / Invalidate"
+                            class="btn-danger"
+                            groups="zconnect_base.group_zconnect_manager"
+                            invisible="verification_status == 'rejected'"/>
+                    <field name="verification_status" widget="statusbar"
+                           statusbar_visible="pending,approved"/>
+                </header>
+                <sheet>
+                    <group col="2">
+                        <group string="Document Details">
+                            <field name="driver_id" options="{'no_quick_create': True}"/>
+                            <field name="document_type"/>
+                            <field name="document_number"/>
+                            <field name="issue_date"/>
+                            <field name="expiry_date"/>
+                        </group>
+                        <group string="Verification">
+                            <field name="verified_by" readonly="1"/>
+                            <field name="verified_at" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Document Attachment">
+                        <field name="attachment" widget="binary" filename="attachment_filename" nolabel="1"/>
+                        <field name="attachment_filename" invisible="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+</odoo>

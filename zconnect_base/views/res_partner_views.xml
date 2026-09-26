@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Partner Form View -->
+    <record id="view_partner_form_zconnect_base" model="ir.ui.view">
+        <field name="name">res.partner.form.zconnect.base</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority" eval="30"/>
+        <field name="arch" type="xml">
+            <!-- Add ZConnect Logistics Page inside Notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page string="ZConnect Logistics" name="zconnect_logistics">
+                    <group string="Logistics Roles">
+                        <group name="zconnect_customer_info" string="Customer Profile">
+                            <field name="zconnect_is_customer" widget="boolean_toggle"/>
+                            <field name="zconnect_customer_code" invisible="not zconnect_is_customer"/>
+                        </group>
+                        <group name="zconnect_driver_info" string="Driver Profile">
+                            <field name="zconnect_is_driver" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Partner Search View -->
+    <record id="view_res_partner_filter_zconnect_base" model="ir.ui.view">
+        <field name="name">res.partner.select.zconnect.base</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='type_person']" position="before">
+                <filter string="ZConnect Customers" name="zconnect_customer" domain="[('zconnect_is_customer', '=', True)]"/>
+                <filter string="ZConnect Drivers" name="zconnect_driver" domain="[('zconnect_is_driver', '=', True)]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

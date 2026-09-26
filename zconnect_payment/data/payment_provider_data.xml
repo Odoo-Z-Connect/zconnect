@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_paynow" model="payment.provider">
+        <field name="name">Paynow (EcoCash &amp; Visa)</field>
+        <field name="code">paynow</field>
+        <field name="state">test</field>
+        <field name="redirect_form_view_id" ref="payment_paynow.redirect_form"/>
+        <field name="allow_tokenization">False</field>
+        <field name="allow_express_checkout">False</field>
+    </record>
+</odoo>

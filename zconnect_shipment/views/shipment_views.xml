@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Shipment List View ──────────────────────────────────────────── -->
+    <record id="view_zconnect_shipment_list" model="ir.ui.view">
+        <field name="name">zconnect.shipment.list</field>
+        <field name="model">zconnect.shipment</field>
+        <field name="arch" type="xml">
+            <list string="Shipments"
+                  decoration-muted="state == 'cancelled'"
+                  decoration-danger="state == 'exception'"
+                  decoration-success="state == 'delivered'"
+                  decoration-info="state in ('confirmed', 'assigned', 'in_transit')"
+                  decoration-warning="state == 'awaiting_payment'">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="pickup_address"/>
+                <field name="delivery_address"/>
+                <field name="vehicle_category" widget="badge"/>
+                <field name="total_amount" widget="monetary"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="payment_state" widget="badge"
+                       decoration-success="payment_state == 'paid'"
+                       decoration-warning="payment_state == 'pending'"
+                       decoration-danger="payment_state == 'failed'"
+                       decoration-muted="payment_state == 'unpaid'"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'delivered'"
+                       decoration-info="state in ('confirmed', 'assigned', 'in_transit')"
+                       decoration-warning="state in ('quoted', 'awaiting_payment')"
+                       decoration-danger="state == 'exception'"
+                       decoration-muted="state in ('draft', 'cancelled')"/>
+                <field name="create_date" string="Booked Date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Shipment Form View ──────────────────────────────────────────── -->
+    <record id="view_zconnect_shipment_form" model="ir.ui.view">
+        <field name="name">zconnect.shipment.form</field>
+        <field name="model">zconnect.shipment</field>
+        <field name="arch" type="xml">
+            <form string="Shipment">
+                <header>
+                    <button name="action_calculate_quote" type="object"
+                            string="Calculate Fare Quote"
+                            class="btn-primary"
+                            icon="fa-calculator"
+                            invisible="state not in ('draft', 'quoted')"/>
+
+                    <button name="action_prepare_payment" type="object"
+                            string="Proceed to Payment"
+                            class="btn-primary"
+                            invisible="state != 'quoted'"/>
+
+                    <button name="action_confirm" type="object"
+                            string="Confirm Shipment"
+                            class="btn-success"
+                            icon="fa-check"
+                            invisible="state not in ('awaiting_payment', 'quoted')"/>
+
+                    <button name="action_mark_exception" type="object"
+                            string="Flag Exception"
+                            class="btn-warning"
+                            groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_manager"
+                            invisible="state not in ('confirmed', 'assigned', 'en_route_pickup', 'picked_up', 'in_transit', 'near_delivery')"/>
+
+                    <button name="action_cancel" type="object"
+                            string="Cancel Shipment"
+                            class="btn-secondary"
+                            invisible="state in ('delivered', 'cancelled')"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,quoted,awaiting_payment,confirmed,assigned,in_transit,delivered"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger" invisible="state != 'cancelled'"/>
+                    <widget name="web_ribbon" title="Delivered" bg_color="text-bg-success" invisible="state != 'delivered'"/>
+                    <widget name="web_ribbon" title="Exception" bg_color="text-bg-warning" invisible="state != 'exception'"/>
+
+                    <div class="oe_title">
+                        <label for="name" string="Shipment Reference"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group col="2">
+                        <group string="Customer Information">
+                            <field name="customer_id" options="{'no_quick_create': True}" readonly="state not in ('draft', 'quoted')"/>
+                            <field name="customer_phone"/>
+                            <field name="customer_email"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Payment &amp; Financial Status">
+                            <field name="payment_state" widget="badge"
+                                   decoration-success="payment_state == 'paid'"
+                                   decoration-warning="payment_state == 'pending'"
+                                   decoration-danger="payment_state == 'failed'"
+                                   decoration-muted="payment_state == 'unpaid'"/>
+                            <field name="total_amount" widget="monetary" class="oe_subtotal_footer_separator"/>
+                            <field name="is_pricing_confirmed" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- Page 1: Route & Geographic Details -->
+                        <page string="Route &amp; Addresses" name="route">
+                            <group col="2">
+                                <group string="Pickup Location">
+                                    <field name="pickup_address" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="pickup_contact_name" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="pickup_contact_phone" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="pickup_latitude" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="pickup_longitude" readonly="state not in ('draft', 'quoted')"/>
+                                </group>
+                                <group string="Delivery Destination">
+                                    <field name="delivery_address" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="delivery_contact_name" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="delivery_contact_phone" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="delivery_latitude" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="delivery_longitude" readonly="state not in ('draft', 'quoted')"/>
+                                </group>
+                            </group>
+                            <group col="2">
+                                <group string="Trip Parameters">
+                                    <field name="distance_km" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="zone_id" options="{'no_create': True}" readonly="state not in ('draft', 'quoted')"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Page 2: Package / Cargo Information -->
+                        <page string="Cargo &amp; Package" name="package">
+                            <group col="2">
+                                <group string="Cargo Specifications">
+                                    <field name="shipment_category" readonly="state not in ('draft', 'quoted')"/>
+                                    <field name="weight_kg" readonly="state not in ('draft', 'quoted')"/>
+                                    <label for="length_cm" string="Dimensions (L x W x H cm)"/>
+                                    <div class="o_row">
+                                        <field name="length_cm" placeholder="Length" readonly="state not in ('draft', 'quoted')"/>
+                                        <span>×</span>
+                                        <field name="width_cm" placeholder="Width" readonly="state not in ('draft', 'quoted')"/>
+                                        <span>×</span>
+                                        <field name="height_cm" placeholder="Height" readonly="state not in ('draft', 'quoted')"/>
+                                    </div>
+                                    <field name="volume_cbm"/>
+                                </group>
+                                <group string="Package Image / Scan">
+                                    <field name="package_image" widget="image" class="oe_avatar" nolabel="1"/>
+                                </group>
+                            </group>
+                            <group string="Description &amp; Handling Instructions">
+                                <field name="description" placeholder="Describe contents of the package..." nolabel="1" readonly="state not in ('draft', 'quoted')"/>
+                                <field name="special_instructions" placeholder="Delivery gate instructions, fragility notes..." nolabel="1" readonly="state not in ('draft', 'quoted')"/>
+                            </group>
+                        </page>
+
+                        <!-- Page 3: Vehicle Requirements -->
+                        <page string="Vehicle Requirements" name="vehicle">
+                            <group col="2">
+                                <group string="Required Logistics Tier">
+                                    <field name="vehicle_category" readonly="state not in ('draft', 'quoted')"/>
+                                </group>
+                                <group string="Assigned Fleet Vehicle (Operations)">
+                                    <field name="vehicle_id" options="{'no_create': True}"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Page 4: Immutable Pricing Breakdown & Snapshot -->
+                        <page string="Pricing Breakdown" name="pricing">
+                            <group col="2">
+                                <group string="Tariff Breakdown">
+                                    <field name="base_fare" widget="monetary"/>
+                                    <field name="distance_charge" widget="monetary"/>
+                                    <field name="weight_charge" widget="monetary"/>
+                                    <field name="zone_charge" widget="monetary"/>
+                                    <field name="subtotal" widget="monetary"/>
+                                    <field name="minimum_fare" widget="monetary"/>
+                                    <field name="total_amount" widget="monetary" class="oe_subtotal_footer_separator"/>
+                                </group>
+                                <group string="Pricing Audit Metadata">
+                                    <field name="pricing_rule_id"/>
+                                    <field name="pricing_calculated_at"/>
+                                    <field name="is_pricing_confirmed"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Page 5: Operational Audit & Timestamps -->
+                        <page string="Lifecycle Audit" name="audit">
+                            <group col="2">
+                                <group string="Booking Milestones">
+                                    <field name="quoted_at"/>
+                                    <field name="confirmed_at"/>
+                                    <field name="assigned_at"/>
+                                    <field name="en_route_pickup_at"/>
+                                    <field name="picked_up_at"/>
+                                </group>
+                                <group string="Delivery Milestones">
+                                    <field name="in_transit_at"/>
+                                    <field name="near_delivery_at"/>
+                                    <field name="delivered_at"/>
+                                </group>
+                            </group>
+                            <group string="Exceptions &amp; Cancellation" invisible="not cancelled_at and not exception_at">
+                                <group string="Cancellation Details" invisible="not cancelled_at">
+                                    <field name="cancelled_at"/>
+                                    <field name="cancelled_by"/>
+                                    <field name="cancellation_reason"/>
+                                </group>
+                                <group string="Exception Details" invisible="not exception_at">
+                                    <field name="exception_at"/>
+                                    <field name="exception_reason"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Shipment Search View ────────────────────────────────────────── -->
+    <record id="view_zconnect_shipment_search" model="ir.ui.view">
+        <field name="name">zconnect.shipment.search</field>
+        <field name="model">zconnect.shipment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Reference"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="pickup_address"/>
+                <field name="delivery_address"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Quoted" name="quoted" domain="[('state', '=', 'quoted')]"/>
+                <filter string="Awaiting Payment" name="awaiting_payment" domain="[('state', '=', 'awaiting_payment')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="In Transit" name="in_transit" domain="[('state', 'in', ('assigned', 'en_route_pickup', 'picked_up', 'in_transit', 'near_delivery'))]"/>
+                <filter string="Delivered" name="delivered" domain="[('state', '=', 'delivered')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <filter string="Exceptions" name="exception" domain="[('state', '=', 'exception')]"/>
+                <separator/>
+                <filter string="Paid" name="paid" domain="[('payment_state', '=', 'paid')]"/>
+                <filter string="Unpaid" name="unpaid" domain="[('payment_state', '=', 'unpaid')]"/>
+                <group>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Customer" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                    <filter string="Vehicle Category" name="group_vehicle_category" context="{'group_by': 'vehicle_category'}"/>
+                    <filter string="Payment Status" name="group_payment_state" context="{'group_by': 'payment_state'}"/>
+                    <filter string="Creation Date" name="group_create_date" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── Action ──────────────────────────────────────────────────────── -->
+    <record id="action_zconnect_shipment" model="ir.actions.act_window">
+        <field name="name">Shipments</field>
+        <field name="res_model">zconnect.shipment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_zconnect_shipment_search"/>
+        <field name="context">{'search_default_confirmed': 0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Book your first Zimbabwe Connect shipment
+            </p>
+            <p>
+                Enter pickup and delivery locations, specify cargo details, select a vehicle category,
+                and calculate fare quotes with automated pricing snapshots.
+            </p>
+        </field>
+    </record>
+
+</odoo>

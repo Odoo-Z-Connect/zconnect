@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sample ZConnect Customer Partner -->
+        <record id="partner_demo_zconnect_customer_1" model="res.partner">
+            <field name="name">Farai Moyo (Harare Shippers)</field>
+            <field name="is_company" eval="True"/>
+            <field name="street">15 Nelson Mandela Avenue</field>
+            <field name="city">Harare</field>
+            <field name="country_id" ref="base.zw"/>
+            <field name="phone">+263 77 123 4567</field>
+            <field name="email">farai.moyo@harareshippers.co.zw</field>
+            <field name="zconnect_is_customer" eval="True"/>
+        </record>
+
+        <!-- Sample Standard Contact (Not marked as ZConnect Customer) -->
+        <record id="partner_demo_standard_contact" model="res.partner">
+            <field name="name">Standard Vendor Supplies</field>
+            <field name="is_company" eval="True"/>
+            <field name="street">44 Samora Machel Avenue</field>
+            <field name="city">Harare</field>
+            <field name="country_id" ref="base.zw"/>
+            <field name="phone">+263 242 700000</field>
+            <field name="email">info@standardsupplies.co.zw</field>
+            <field name="zconnect_is_customer" eval="False"/>
+        </record>
+    </data>
+</odoo>

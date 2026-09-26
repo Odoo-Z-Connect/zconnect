@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Drivers only see their own PODs -->
+        <record id="rule_zconnect_pod_driver" model="ir.rule">
+            <field name="name">ZConnect POD Driver</field>
+            <field name="model_id" ref="model_zconnect_pod"/>
+            <field name="domain_force">[('driver_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="groups" eval="[(4, ref('zconnect_base.group_zconnect_driver'))]"/>
+        </record>
+        
+        <!-- Managers see all PODs -->
+        <record id="rule_zconnect_pod_manager" model="ir.rule">
+            <field name="name">ZConnect POD Manager</field>
+            <field name="model_id" ref="model_zconnect_pod"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('zconnect_base.group_zconnect_manager')), (4, ref('zconnect_base.group_zconnect_admin')), (4, ref('zconnect_base.group_zconnect_dispatcher')), (4, ref('zconnect_base.group_zconnect_finance'))]"/>
+        </record>
+    </data>
+</odoo>

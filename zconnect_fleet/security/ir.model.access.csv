@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fleet_vehicle_zconnect_dispatcher,fleet.vehicle zconnect dispatcher,fleet.model_fleet_vehicle,zconnect_base.group_zconnect_dispatcher,1,1,0,0
+access_fleet_vehicle_zconnect_manager,fleet.vehicle zconnect manager,fleet.model_fleet_vehicle,zconnect_base.group_zconnect_manager,1,1,1,1
+access_fleet_vehicle_zconnect_admin,fleet.vehicle zconnect admin,fleet.model_fleet_vehicle,zconnect_base.group_zconnect_admin,1,1,1,1
+access_fleet_vehicle_zconnect_driver,fleet.vehicle zconnect driver,fleet.model_fleet_vehicle,zconnect_base.group_zconnect_driver,1,0,0,0
+access_fleet_vehicle_zconnect_finance,fleet.vehicle zconnect finance,fleet.model_fleet_vehicle,zconnect_base.group_zconnect_finance,1,0,0,0

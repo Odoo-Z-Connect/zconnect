@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ── Demo Pricing Rules ──────────────────────────────────────── -->
+        <record id="demo_pricing_motorcycle" model="zconnect.pricing.rule">
+            <field name="name">Standard Motorcycle Tariff (Harare)</field>
+            <field name="vehicle_category">motorcycle</field>
+            <field name="base_fare">2.00</field>
+            <field name="price_per_km">0.50</field>
+            <field name="price_per_kg">0.20</field>
+            <field name="minimum_fare">3.50</field>
+            <field name="effective_from" eval="DateTime.today().strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="description">Standard rate for express motorcycle courier documents and small parcels (under 20kg).</field>
+        </record>
+
+        <record id="demo_pricing_sedan" model="zconnect.pricing.rule">
+            <field name="name">Standard Sedan / Hatchback Tariff</field>
+            <field name="vehicle_category">sedan</field>
+            <field name="base_fare">4.00</field>
+            <field name="price_per_km">0.80</field>
+            <field name="price_per_kg">0.25</field>
+            <field name="minimum_fare">6.00</field>
+            <field name="effective_from" eval="DateTime.today().strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="description">Standard rate for passenger vehicle deliveries up to 150kg.</field>
+        </record>
+
+        <record id="demo_pricing_pickup" model="zconnect.pricing.rule">
+            <field name="name">Standard Pickup / Bakkie Tariff</field>
+            <field name="vehicle_category">pickup</field>
+            <field name="base_fare">7.50</field>
+            <field name="price_per_km">1.20</field>
+            <field name="price_per_kg">0.35</field>
+            <field name="minimum_fare">12.00</field>
+            <field name="effective_from" eval="DateTime.today().strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="description">Standard 1-tonne bakkie rate for medium bulk freight and hardware deliveries.</field>
+        </record>
+
+        <record id="demo_pricing_van" model="zconnect.pricing.rule">
+            <field name="name">Standard Cargo Van Tariff</field>
+            <field name="vehicle_category">van</field>
+            <field name="base_fare">10.00</field>
+            <field name="price_per_km">1.50</field>
+            <field name="price_per_kg">0.40</field>
+            <field name="minimum_fare">15.00</field>
+            <field name="effective_from" eval="DateTime.today().strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="description">Enclosed high-volume delivery van rate for FMCG and retail replenishment.</field>
+        </record>
+
+    </data>
+</odoo>

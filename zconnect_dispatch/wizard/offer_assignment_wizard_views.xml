@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_zconnect_dispatch_offer_wizard_form" model="ir.ui.view">
+        <field name="name">zconnect.dispatch.offer.wizard.form</field>
+        <field name="model">zconnect.dispatch.offer.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Offer Assignment">
+                <group>
+                    <field name="shipment_id"/>
+                    <field name="driver_id" options="{'no_create': True}"/>
+                    <field name="vehicle_id" options="{'no_create': True}"/>
+                </group>
+                <footer>
+                    <button name="action_offer" type="object" string="Offer Assignment" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_zconnect_dispatch_offer_wizard" model="ir.actions.act_window">
+        <field name="name">Offer Assignment</field>
+        <field name="res_model">zconnect.dispatch.offer.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

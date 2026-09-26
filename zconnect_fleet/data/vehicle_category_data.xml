@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--
+            Vehicle categories for Zimbabwe Connect pricing and dispatch.
+            noupdate="1": administrators can customise via UI without risk
+            of being overwritten on module upgrade.
+        -->
+    </data>
+</odoo>

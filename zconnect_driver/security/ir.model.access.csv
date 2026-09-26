@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zconnect_driver_admin,zconnect.driver admin,model_zconnect_driver,zconnect_base.group_zconnect_admin,1,1,1,1
+access_zconnect_driver_manager,zconnect.driver manager,model_zconnect_driver,zconnect_base.group_zconnect_manager,1,1,1,0
+access_zconnect_driver_dispatcher,zconnect.driver dispatcher,model_zconnect_driver,zconnect_base.group_zconnect_dispatcher,1,1,0,0
+access_zconnect_driver_finance,zconnect.driver finance,model_zconnect_driver,zconnect_base.group_zconnect_finance,1,0,0,0
+access_zconnect_driver_driver,zconnect.driver driver,model_zconnect_driver,zconnect_base.group_zconnect_driver,1,1,0,0
+access_zconnect_driver_document_admin,zconnect.driver.document admin,model_zconnect_driver_document,zconnect_base.group_zconnect_admin,1,1,1,1
+access_zconnect_driver_document_manager,zconnect.driver.document manager,model_zconnect_driver_document,zconnect_base.group_zconnect_manager,1,1,1,1
+access_zconnect_driver_document_dispatcher,zconnect.driver.document dispatcher,model_zconnect_driver_document,zconnect_base.group_zconnect_dispatcher,1,1,1,0
+access_zconnect_driver_document_driver,zconnect.driver.document driver,model_zconnect_driver_document,zconnect_base.group_zconnect_driver,1,0,0,0
+access_zconnect_driver_document_finance,zconnect.driver.document finance,model_zconnect_driver_document,zconnect_base.group_zconnect_finance,1,0,0,0

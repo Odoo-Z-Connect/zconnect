@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zconnect_pod_customer,zconnect.pod.customer,model_zconnect_pod,zconnect_base.group_zconnect_customer,0,0,0,0
+access_zconnect_pod_driver,zconnect.pod.driver,model_zconnect_pod,zconnect_base.group_zconnect_driver,1,1,1,0
+access_zconnect_pod_admin,zconnect.pod.admin,model_zconnect_pod,zconnect_base.group_zconnect_admin,1,1,1,1
+access_zconnect_pod_manager,zconnect.pod.manager,model_zconnect_pod,zconnect_base.group_zconnect_manager,1,1,1,0
+access_zconnect_pod_dispatcher,zconnect.pod.dispatcher,model_zconnect_pod,zconnect_base.group_zconnect_dispatcher,1,1,1,0
+access_zconnect_pod_finance,zconnect.pod.finance,model_zconnect_pod,zconnect_base.group_zconnect_finance,1,0,0,0

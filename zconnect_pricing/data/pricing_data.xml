@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ── Default Pricing Zones ───────────────────────────────────── -->
+        <record id="zone_harare_urban" model="zconnect.pricing.zone">
+            <field name="name">Harare Urban &amp; CBD</field>
+            <field name="code">HRE-URBAN</field>
+            <field name="surcharge">0.0</field>
+            <field name="description">Standard municipal boundary for Harare Central Business District and inner suburbs.</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="zone_harare_outskirts" model="zconnect.pricing.zone">
+            <field name="name">Harare Outskirts &amp; Peri-Urban</field>
+            <field name="code">HRE-OUTSKIRTS</field>
+            <field name="surcharge">5.0</field>
+            <field name="description">Surrounding growth points: Chitungwiza, Ruwa, Norton, Epworth.</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="zone_intercity_corridor" model="zconnect.pricing.zone">
+            <field name="name">Intercity National Highway Corridor</field>
+            <field name="code">ZWE-INTERCITY</field>
+            <field name="surcharge">15.0</field>
+            <field name="description">Long-haul transit routes: Harare-Bulawayo, Harare-Mutare, Harare-Masvingo.</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

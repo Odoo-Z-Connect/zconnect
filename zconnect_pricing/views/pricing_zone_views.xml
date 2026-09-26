@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Pricing Zone List View ──────────────────────────────────────── -->
+    <record id="view_zconnect_pricing_zone_list" model="ir.ui.view">
+        <field name="name">zconnect.pricing.zone.list</field>
+        <field name="model">zconnect.pricing.zone</field>
+        <field name="arch" type="xml">
+            <list string="Pricing Zones" decoration-muted="not active">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="surcharge"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Pricing Zone Form View ──────────────────────────────────────── -->
+    <record id="view_zconnect_pricing_zone_form" model="ir.ui.view">
+        <field name="name">zconnect.pricing.zone.form</field>
+        <field name="model">zconnect.pricing.zone</field>
+        <field name="arch" type="xml">
+            <form string="Pricing Zone">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name" string="Zone Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Harare Urban Zone"/>
+                        </h1>
+                    </div>
+                    <group col="2">
+                        <group string="Zone Details">
+                            <field name="code" placeholder="e.g. HRE-URBAN"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Surcharge">
+                            <field name="surcharge" widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Zone Description &amp; Boundaries">
+                        <field name="description" placeholder="Describe operational coverage or boundary limits..." nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Pricing Zone Search View ────────────────────────────────────── -->
+    <record id="view_zconnect_pricing_zone_search" model="ir.ui.view">
+        <field name="name">zconnect.pricing.zone.search</field>
+        <field name="model">zconnect.pricing.zone</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── Action ──────────────────────────────────────────────────────── -->
+    <record id="action_zconnect_pricing_zone" model="ir.actions.act_window">
+        <field name="name">Pricing Zones</field>
+        <field name="res_model">zconnect.pricing.zone</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_zconnect_pricing_zone_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first pricing zone
+            </p>
+            <p>
+                Configure service areas and geographic surcharge zones for location-based delivery pricing.
+            </p>
+        </field>
+    </record>
+
+</odoo>

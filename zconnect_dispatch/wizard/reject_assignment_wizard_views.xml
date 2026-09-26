@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_zconnect_dispatch_reject_wizard_form" model="ir.ui.view">
+        <field name="name">zconnect.dispatch.reject.wizard.form</field>
+        <field name="model">zconnect.dispatch.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reject Assignment">
+                <group>
+                    <field name="assignment_id" invisible="1"/>
+                    <field name="rejection_reason" placeholder="Please provide a reason for rejecting this assignment..."/>
+                </group>
+                <footer>
+                    <button name="action_reject" type="object" string="Confirm Rejection" class="btn-danger"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

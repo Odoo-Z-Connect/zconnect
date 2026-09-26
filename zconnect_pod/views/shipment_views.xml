@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_zconnect_shipment_form_inherit_pod" model="ir.ui.view">
+        <field name="name">zconnect.shipment.form.inherit.pod</field>
+        <field name="model">zconnect.shipment</field>
+        <field name="inherit_id" ref="zconnect_shipment.view_zconnect_shipment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook position="inside">
+                    <page string="Proof of Delivery" invisible="state not in ('near_delivery', 'delivered')">
+                        <group>
+                            <field name="pod_id"/>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

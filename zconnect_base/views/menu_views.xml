@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top-Level Root Application Menu -->
+    <menuitem id="menu_zconnect_root"
+              name="ZConnect"
+              sequence="25"
+              web_icon="zconnect_base,static/description/icon.png"
+              groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"/>
+
+    <!-- Customers Shortcut Menu -->
+    <menuitem id="menu_zconnect_customers"
+              name="Customers"
+              parent="menu_zconnect_root"
+              action="contacts.action_contacts"
+              sequence="10"
+              groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"/>
+
+    <!-- Configuration Menu Header -->
+    <menuitem id="menu_zconnect_config"
+              name="Configuration"
+              parent="menu_zconnect_root"
+              sequence="100"
+              groups="zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"/>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shipment_form_payment" model="ir.ui.view">
+        <field name="name">zconnect.shipment.form.payment</field>
+        <field name="model">zconnect.shipment</field>
+        <field name="inherit_id" ref="zconnect_shipment.view_zconnect_shipment_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Invoice and Payment buttons -->
+            <xpath expr="//header" position="inside">
+                <button name="action_create_invoice" type="object" string="Create Invoice" class="oe_highlight" invisible="invoice_id or state != 'confirmed'"/>
+                <button name="action_start_payment" type="object" string="Start Payment / Pay Online" class="oe_highlight" invisible="payment_state in ('paid', 'pending') or state != 'confirmed'"/>
+            </xpath>
+
+            <!-- Add button box if missing, or just place the smart button -->
+            <xpath expr="//sheet/widget[1]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="%(account.action_move_out_invoice_type)d" type="action" class="oe_stat_button" icon="fa-pencil-square-o" invisible="not invoice_id" context="{'search_default_id': invoice_id}">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Invoice</span>
+                        </div>
+                    </button>
+                </div>
+            </xpath>
+
+            <!-- Add Fields to existing Payment group -->
+            <xpath expr="//field[@name='is_pricing_confirmed']" position="after">
+                <field name="invoice_id" widget="many2one"/>
+                <field name="payment_transaction_id" widget="many2one"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
