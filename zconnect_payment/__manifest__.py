@@ -18,10 +18,10 @@
         'account_payment'
     ],
     'data': [
+        'views/payment_paynow_templates.xml',
         'data/payment_provider_data.xml',
         'views/shipment_payment_views.xml',
         'views/payment_provider_views.xml',
-        'views/payment_paynow_templates.xml',
     ],
     'installable': True,
     'application': False,
