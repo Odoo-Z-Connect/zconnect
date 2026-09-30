@@ -10,6 +10,7 @@
                         string="Offer Assignment"
                         class="btn-primary"
                         groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"
+                        context="{'default_shipment_id': id}"
                         invisible="state != 'confirmed'"/>
                         
                 <button name="action_start_pickup" type="object"

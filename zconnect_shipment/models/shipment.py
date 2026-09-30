@@ -19,6 +19,7 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
+import requests
 from odoo.addons.zconnect_fleet.models.fleet_vehicle import ZCONNECT_VEHICLE_CATEGORY
 
 
@@ -395,6 +396,21 @@ class ZconnectShipment(models.Model):
                 if lon and not (-180.0 <= lon <= 180.0):
                     raise ValidationError(_('%(p)s longitude %(v)s is invalid (must be between -180 and 180).', p=prefix, v=lon))
 
+    @api.onchange('pickup_latitude', 'pickup_longitude', 'delivery_latitude', 'delivery_longitude')
+    def _onchange_coordinates_calc_distance(self):
+        for rec in self:
+            if rec.pickup_latitude and rec.pickup_longitude and rec.delivery_latitude and rec.delivery_longitude:
+                try:
+                    api_key = self.env['ir.config_parameter'].sudo().get_param('zconnect.google_maps_api_key', 'AIzaSyCxVvPpOrhUw2O0-PwSfy6BaFIGfiFHBr8')
+                    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?origins={rec.pickup_latitude},{rec.pickup_longitude}&destinations={rec.delivery_latitude},{rec.delivery_longitude}&key={api_key}"
+                    resp = requests.get(url, timeout=5)
+                    data = resp.json()
+                    if data.get('status') == 'OK' and data['rows'][0]['elements'][0]['status'] == 'OK':
+                        distance_meters = data['rows'][0]['elements'][0]['distance']['value']
+                        rec.distance_km = distance_meters / 1000.0
+                except Exception as e:
+                    pass
+
     # ── ORM Overrides ────────────────────────────────────────────────────────
 
     @api.model_create_multi
@@ -409,7 +425,7 @@ class ZconnectShipment(models.Model):
             if vals.get('customer_id'):
                 customer = self.env['res.partner'].browse(vals['customer_id'])
                 if not customer.zconnect_is_customer:
-                    customer.write({'zconnect_is_customer': True})
+                    customer.sudo().write({'zconnect_is_customer': True})
         return super().create(vals_list)
 
     def write(self, vals):

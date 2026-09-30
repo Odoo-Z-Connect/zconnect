@@ -5,7 +5,7 @@
         <record id="rule_driver_own_profile" model="ir.rule">
             <field name="name">ZConnect Driver: own profile only</field>
             <field name="model_id" ref="model_zconnect_driver"/>
-            <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
             <field name="groups" eval="[Command.link(ref('zconnect_base.group_zconnect_driver'))]"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -25,7 +25,7 @@
         <record id="rule_driver_own_documents" model="ir.rule">
             <field name="name">ZConnect Driver: own documents only</field>
             <field name="model_id" ref="model_zconnect_driver_document"/>
-            <field name="domain_force">[('driver_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="domain_force">[('driver_id.user_id', '=', user.id)]</field>
             <field name="groups" eval="[Command.link(ref('zconnect_base.group_zconnect_driver'))]"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>

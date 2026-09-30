@@ -4,7 +4,7 @@ class OfferAssignmentWizard(models.TransientModel):
     _name = 'zconnect.dispatch.offer.wizard'
     _description = 'Offer Assignment Wizard'
 
-    shipment_id = fields.Many2one('zconnect.shipment', string='Shipment', required=True, readonly=True)
+    shipment_id = fields.Many2one('zconnect.shipment', string='Shipment', required=True)
     driver_id = fields.Many2one('zconnect.driver', string='Driver', required=True, domain="[('verification_status', '=', 'verified'), ('availability_status', '=', 'available')]")
     vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', required=True, domain="[('zconnect_operational_status', '=', 'available')]")
 

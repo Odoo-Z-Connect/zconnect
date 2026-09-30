@@ -1,6 +1,543 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="portal_my_home_zconnect" name="Show Shipments and Assignments" customize_show="True" inherit_id="portal.portal_my_home" priority="40">
+
+    <!-- ============================================================ -->
+    <!--  GLOBAL BRANDING STYLES (SEAMLESS HEADER + POPPINS FONT)     -->
+    <!-- ============================================================ -->
+    <template id="zconnect_brand_styles" name="ZConnect Brand Styles" inherit_id="website.layout" priority="1">
+        <xpath expr="//head" position="inside">
+            <!-- Google Fonts: Poppins and Roboto -->
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+
+            <style>
+                :root {
+                    --zc-primary: #3db64c;
+                    --zc-primary-dark: #289131;
+                    --zc-light-green: #e0ebe6;
+                    --zc-dark-grey: #424243;
+                    --zc-grey-orange: #bbb09a;
+                    --zc-white: #ffffff;
+                }
+                body, p, h1, h2, h3, h4, h5, h6, a, span, button, input, select {
+                    font-family: 'Poppins', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif !important;
+                }
+                body {
+                    color: var(--zc-dark-grey);
+                    background-color: #fcfdfc;
+                    letter-spacing: -0.15px;
+                }
+                /* Seamless Header: Translucent Glassmorphic, Blending into Hero */
+                header.o_header_standard, nav.navbar {
+                    background: rgba(255, 255, 255, 0.82) !important;
+                    backdrop-filter: blur(12px) !important;
+                    -webkit-backdrop-filter: blur(12px) !important;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+                    box-shadow: none !important;
+                    padding-top: 0.4rem !important;
+                    padding-bottom: 0.4rem !important;
+                    transition: all 0.2s ease-in-out;
+                }
+                .navbar-brand img {
+                    max-height: 62px !important;
+                    height: 62px !important;
+                    width: auto !important;
+                    transition: transform 0.2s ease;
+                }
+                .navbar-brand:hover img {
+                    transform: scale(1.05);
+                }
+                .navbar .nav-link {
+                    color: var(--zc-dark-grey) !important;
+                    font-size: 0.88rem !important;
+                    font-weight: 500 !important;
+                    padding: 0.4rem 0.85rem !important;
+                    transition: color 0.15s ease;
+                }
+                .navbar .nav-link:hover, .navbar .nav-link.active {
+                    color: var(--zc-primary-dark) !important;
+                }
+                /* Compact Minimalist Buttons */
+                .btn {
+                    font-size: 0.86rem !important;
+                    font-weight: 600 !important;
+                    padding: 0.48rem 1.15rem !important;
+                    border-radius: 8px !important;
+                    transition: all 0.18s ease-in-out !important;
+                }
+                .btn-primary, .btn-primary:active, .btn-primary:focus {
+                    background-color: var(--zc-primary) !important;
+                    border-color: var(--zc-primary) !important;
+                    color: #ffffff !important;
+                    box-shadow: 0 2px 6px rgba(61, 182, 76, 0.25);
+                }
+                .btn-primary:hover {
+                    background-color: var(--zc-primary-dark) !important;
+                    border-color: var(--zc-primary-dark) !important;
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 12px rgba(40, 145, 49, 0.3);
+                }
+                .btn-outline-primary {
+                    color: var(--zc-primary-dark) !important;
+                    border-color: var(--zc-primary) !important;
+                }
+                .btn-outline-primary:hover {
+                    background-color: var(--zc-primary) !important;
+                    color: #ffffff !important;
+                }
+                .btn-light-green {
+                    background-color: var(--zc-light-green) !important;
+                    color: var(--zc-primary-dark) !important;
+                    border: 1px solid rgba(61, 182, 76, 0.3) !important;
+                }
+                .btn-light-green:hover {
+                    background-color: var(--zc-primary) !important;
+                    color: #ffffff !important;
+                }
+                /* Compact Cards */
+                .card {
+                    border-radius: 12px !important;
+                    border: 1px solid rgba(0,0,0,0.06) !important;
+                    box-shadow: 0 3px 14px rgba(66, 66, 67, 0.05);
+                }
+                .text-primary {
+                    color: var(--zc-primary-dark) !important;
+                }
+                .bg-primary {
+                    background-color: var(--zc-primary) !important;
+                }
+                /* Form Controls */
+                .form-control, .form-select {
+                    font-size: 0.88rem !important;
+                    border-radius: 8px !important;
+                }
+                .form-control:focus, .form-select:focus {
+                    border-color: var(--zc-primary) !important;
+                    box-shadow: 0 0 0 0.2rem rgba(61, 182, 76, 0.2) !important;
+                }
+            </style>
+        </xpath>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  ZCONNECT LOGISTICS HOMEPAGE (FADING INTO HEADER, LESS FOGGY)-->
+    <!-- ============================================================ -->
+    <template id="zconnect_homepage" name="ZConnect Logistics Home" inherit_id="website.homepage" priority="20">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <!-- HERO SECTION (SEAMLESS FADE INTO HEADER & CRISP NON-FOGGY ILLUSTRATION) -->
+            <section class="py-4 position-relative" style="background: linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.1) 60px, transparent 90px), linear-gradient(90deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.58) 38%, rgba(255,255,255,0.12) 72%, transparent 100%), url('/zconnect_portal/static/src/img/hero_delivery_worker.jpg') right center / cover no-repeat; min-height: 480px; display: flex; align-items: center;">
+                <div class="container py-3">
+                    <div class="row align-items-center g-4">
+                        <div class="col-lg-7">
+                            <div class="d-inline-flex align-items-center gap-2 px-2 py-1 mb-2 rounded-2" style="background: rgba(61, 182, 76, 0.15); color: #289131; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.3px;">
+                                <i class="fa fa-bolt"></i> SMART DISPATCH &amp; COURIER NETWORK
+                            </div>
+                            <h1 class="fw-bolder mb-2" style="color: #424243; font-size: 2.4rem; line-height: 1.18; letter-spacing: -0.5px;">
+                                Fast, Reliable Delivery <br/>
+                                <span style="color: #289131;">Across Zimbabwe</span>
+                            </h1>
+                            <p class="text-muted mb-3" style="max-width: 520px; font-size: 0.92rem; line-height: 1.55;">
+                                ZConnect powers on-demand courier booking, real-time GPS fleet telemetry, and automated driver dispatch. From urgent documents to bulk freight &amp;mdash; on time, every time.
+                            </p>
+                            
+                            <!-- Compact Buttons -->
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <a href="/my/shipments/new" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                                    <i class="fa fa-paper-plane" style="font-size: 0.8rem;"></i> Book a Courier
+                                </a>
+                                <a href="/my/shipments" class="btn btn-light-green d-inline-flex align-items-center gap-2">
+                                    <i class="fa fa-search" style="font-size: 0.8rem;"></i> Track Shipment
+                                </a>
+                                <a href="/customer/signup?redirect=/my/shipments/new" class="btn btn-outline-primary d-inline-flex align-items-center gap-2">
+                                    <i class="fa fa-user-plus" style="font-size: 0.8rem;"></i> Register as Customer
+                                </a>
+                                <a href="/my/assignments" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
+                                    <i class="fa fa-id-badge" style="font-size: 0.8rem;"></i> Driver Portal
+                                </a>
+                            </div>
+
+                            <!-- Compact Feature Badges -->
+                            <div class="d-flex flex-wrap gap-3 pt-2">
+                                <div class="d-flex align-items-center gap-1 small text-muted">
+                                    <i class="fa fa-check-circle" style="color: #3db64c;"></i>
+                                    <span class="fw-semibold" style="color: #424243; font-size: 0.8rem;">Same-Day Express</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-1 small text-muted">
+                                    <i class="fa fa-map-marker" style="color: #3db64c;"></i>
+                                    <span class="fw-semibold" style="color: #424243; font-size: 0.8rem;">Live GPS Pinning</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-1 small text-muted">
+                                    <i class="fa fa-shield" style="color: #3db64c;"></i>
+                                    <span class="fw-semibold" style="color: #424243; font-size: 0.8rem;">Digital POD</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COMPACT QUICK BOOKING TEASER CARD -->
+                        <div class="col-lg-5">
+                            <div class="card p-3 shadow-sm border-0 bg-white" style="border-radius: 14px !important; backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.94) !important;">
+                                <div class="d-flex align-items-center gap-2 mb-2 pb-2 border-bottom">
+                                    <div class="p-2 rounded-circle" style="background-color: #e0ebe6; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fa fa-truck" style="color: #289131; font-size: 0.9rem;"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-0" style="color: #424243; font-size: 0.95rem;">Send a Package</h6>
+                                        <small class="text-muted" style="font-size: 0.75rem;">Fast dispatch in under 60 seconds</small>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="fw-bold text-muted text-uppercase mb-1" style="font-size: 0.72rem;">Package Type</label>
+                                    <div class="d-flex gap-1">
+                                        <span class="badge flex-fill text-center border py-1" style="background: #e0ebe6; color: #289131; font-weight: 600; font-size: 0.75rem; border-radius: 6px;">Documents</span>
+                                        <span class="badge flex-fill text-center border py-1" style="background: #f8f9fa; color: #424243; font-weight: 500; font-size: 0.75rem; border-radius: 6px;">Small Parcel</span>
+                                        <span class="badge flex-fill text-center border py-1" style="background: #f8f9fa; color: #424243; font-weight: 500; font-size: 0.75rem; border-radius: 6px;">Bulk Freight</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="fw-bold text-muted text-uppercase mb-1" style="font-size: 0.72rem;">Fleet Dispatch</label>
+                                    <div class="row g-2 text-center">
+                                        <div class="col-4">
+                                            <div class="p-2 border rounded-2" style="background: #fafbfc;">
+                                                <i class="fa fa-motorcycle" style="color: #3db64c; font-size: 1.1rem;"></i>
+                                                <div class="fw-bold mt-1" style="color: #424243; font-size: 0.75rem;">Motorbike</div>
+                                                <small class="text-muted" style="font-size: 0.68rem;">Up to 20kg</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="p-2 border rounded-2" style="background: #fafbfc;">
+                                                <i class="fa fa-truck" style="color: #3db64c; font-size: 1.1rem;"></i>
+                                                <div class="fw-bold mt-1" style="color: #424243; font-size: 0.75rem;">Delivery Van</div>
+                                                <small class="text-muted" style="font-size: 0.68rem;">Up to 500kg</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="p-2 border rounded-2" style="background: #fafbfc;">
+                                                <i class="fa fa-cubes" style="color: #3db64c; font-size: 1.1rem;"></i>
+                                                <div class="fw-bold mt-1" style="color: #424243; font-size: 0.75rem;">3T Truck</div>
+                                                <small class="text-muted" style="font-size: 0.68rem;">Heavy Cargo</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="/my/shipments/new" class="btn btn-primary w-100 py-2 fw-bold text-center d-flex align-items-center justify-content-center gap-2" style="border-radius: 8px !important;">
+                                    <span>Start Booking &amp; Drop Pin</span>
+                                    <i class="fa fa-arrow-right" style="font-size: 0.8rem;"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CORE SERVICES SECTION WITH CRISP SVG ICONS -->
+            <section class="py-4 bg-white border-top">
+                <div class="container py-2">
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex align-items-center gap-1 px-2 py-1 mb-1 rounded-2" style="background: #e0ebe6; color: #289131; font-weight: 600; font-size: 0.75rem;">
+                            END-TO-END DISPATCH
+                        </div>
+                        <h3 class="fw-bold mb-1" style="color: #424243; font-size: 1.6rem;">Our Delivery Services</h3>
+                        <p class="text-muted mx-auto mb-0" style="max-width: 500px; font-size: 0.85rem;">
+                            Engineered for velocity, reliability, and total tracking transparency.
+                        </p>
+                    </div>
+
+                    <div class="row g-3">
+                        <!-- Service 1: Same Day -->
+                        <div class="col-md-4">
+                            <div class="card h-100 p-3 border-0 shadow-sm" style="background: #fafbfc;">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="p-2 rounded-circle" style="background: #e0ebe6; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#289131" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                        </svg>
+                                    </div>
+                                    <h6 class="fw-bold mb-0" style="color: #424243; font-size: 0.95rem;">Same-Day Express</h6>
+                                </div>
+                                <p class="text-muted small mb-0" style="font-size: 0.82rem; line-height: 1.5;">
+                                    Urgent intra-city point-to-point courier delivery with rapid driver assignment and direct transit.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Service 2: Live GPS Pin Tracking -->
+                        <div class="col-md-4">
+                            <div class="card h-100 p-3 border-0 shadow-sm" style="background: #fafbfc;">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="p-2 rounded-circle" style="background: #e0ebe6; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#289131" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                    </div>
+                                    <h6 class="fw-bold mb-0" style="color: #424243; font-size: 0.95rem;">Live GPS Pin Tracking</h6>
+                                </div>
+                                <p class="text-muted small mb-0" style="font-size: 0.82rem; line-height: 1.5;">
+                                    Drop precise pickup and drop-off map pins. Watch driver location, estimated ETA, and route progression in real time.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Service 3: Electronic POD -->
+                        <div class="col-md-4">
+                            <div class="card h-100 p-3 border-0 shadow-sm" style="background: #fafbfc;">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="p-2 rounded-circle" style="background: #e0ebe6; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#289131" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <polyline points="9 15 11 17 15 13"></polyline>
+                                        </svg>
+                                    </div>
+                                    <h6 class="fw-bold mb-0" style="color: #424243; font-size: 0.95rem;">Proof of Delivery (e-POD)</h6>
+                                </div>
+                                <p class="text-muted small mb-0" style="font-size: 0.82rem; line-height: 1.5;">
+                                    Digital signatures, cargo photo verification, and automated confirmation timestamps upon parcel arrival.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPACT CALL TO ACTION BANNER -->
+            <section class="py-4 text-white" style="background: linear-gradient(135deg, #289131 0%, #3db64c 100%);">
+                <div class="container py-2 text-center">
+                    <h4 class="fw-bold mb-1">Ready to dispatch your shipment?</h4>
+                    <p class="mb-3 small" style="color: #e0ebe6;">Experience Harare's fastest courier and smart logistics network.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="/my/shipments/new" class="btn btn-light px-4 py-2 fw-bold shadow-sm" style="color: #289131; font-size: 0.88rem !important; border-radius: 8px !important;">
+                            Book a Shipment Now
+                        </a>
+                        <a href="/customer/signup" class="btn btn-outline-light px-4 py-2 fw-bold" style="font-size: 0.88rem !important; border-radius: 8px !important;">
+                            Sign Up as Customer
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  CUSTOMER SIGNUP / REGISTRATION PAGE                         -->
+    <!-- ============================================================ -->
+    <template id="customer_signup" name="Customer Sign Up">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Customer Registration — ZConnect Logistics</t>
+            <div class="container py-5" style="max-width: 680px;">
+                <div class="text-center mb-4">
+                    <img src="/zconnect_portal/static/src/img/zconnect_ecosystem.png" alt="ZConnect Logo" style="max-height: 56px; width: auto;" class="mb-2"/>
+                    <h3 class="fw-bold" style="color: #424243;">Create Customer Account</h3>
+                    <p class="text-muted small mb-0">Fill in your contact and address details to book and track couriers in seconds</p>
+                </div>
+
+                <div class="card p-4 shadow-sm border-0 bg-white" style="border-radius: 14px !important;">
+                    <t t-if="error">
+                        <div class="alert alert-danger py-2 px-3 small rounded-2 mb-3">
+                            <i class="fa fa-exclamation-circle me-1"></i> <t t-esc="error"/>
+                        </div>
+                    </t>
+
+                    <form action="/customer/signup" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="redirect" t-att-value="redirect"/>
+
+                        <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.75rem; letter-spacing: 0.5px;">1. Personal Information</h6>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small mb-1">Full Name *</label>
+                                <input type="text" name="name" class="form-control form-control-sm" placeholder="e.g. Tendai Moyo" t-att-value="form_data.get('name') if form_data else ''" required="1"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small mb-1">Phone / Mobile Number *</label>
+                                <input type="tel" name="phone" class="form-control form-control-sm" placeholder="e.g. +263 77 123 4567" t-att-value="form_data.get('phone') if form_data else ''" required="1"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small mb-1">Email Address (Login Username) *</label>
+                            <input type="email" name="email" class="form-control form-control-sm" placeholder="e.g. tendai@example.com" t-att-value="form_data.get('email') if form_data else ''" required="1"/>
+                            <small class="text-muted" style="font-size: 0.72rem;">You will use this email to log in and receive courier dispatch updates.</small>
+                        </div>
+
+                        <h6 class="fw-bold text-uppercase text-muted mb-3 pt-2 border-top" style="font-size: 0.75rem; letter-spacing: 0.5px;">2. Location &amp; Address</h6>
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold small mb-1">Physical / Street Address</label>
+                            <input type="text" name="street" class="form-control form-control-sm" placeholder="e.g. 14 Enterprise Rd, Highlands" t-att-value="form_data.get('street') if form_data else ''"/>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small mb-1">City / Town *</label>
+                                <select name="city" class="form-select form-select-sm">
+                                    <option value="Harare" selected="1">Harare</option>
+                                    <option value="Bulawayo">Bulawayo</option>
+                                    <option value="Chitungwiza">Chitungwiza</option>
+                                    <option value="Mutare">Mutare</option>
+                                    <option value="Gweru">Gweru</option>
+                                    <option value="Kwekwe">Kwekwe</option>
+                                    <option value="Masvingo">Masvingo</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small mb-1">Country</label>
+                                <input type="text" class="form-control form-control-sm bg-light" value="Zimbabwe" readonly="1"/>
+                            </div>
+                        </div>
+
+                        <h6 class="fw-bold text-uppercase text-muted mb-3 pt-2 border-top" style="font-size: 0.75rem; letter-spacing: 0.5px;">3. Account Security</h6>
+                        <div class="row g-2 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small mb-1">Password *</label>
+                                <input type="password" name="password" class="form-control form-control-sm" placeholder="Create password" required="1"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small mb-1">Confirm Password *</label>
+                                <input type="password" name="confirm_password" class="form-control form-control-sm" placeholder="Re-enter password" required="1"/>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold mb-3">
+                            <i class="fa fa-user-check me-1"></i> Create Customer Account
+                        </button>
+
+                        <div class="text-center small text-muted">
+                            Already have an account? 
+                            <a t-attf-href="/web/login?redirect=#{redirect}" class="fw-bold text-decoration-none" style="color: #289131;">Sign In here</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  ZCONNECT CONTACT US PAGE                                    -->
+    <!-- ============================================================ -->
+    <template id="zconnect_contactus" name="Contact Us — ZConnect Logistics">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Contact Us — ZConnect Logistics</t>
+            <div class="container py-5">
+                <div class="text-center mb-5">
+                    <div class="d-inline-flex align-items-center gap-1 px-2 py-1 mb-2 rounded-2" style="background: #e0ebe6; color: #289131; font-weight: 600; font-size: 0.78rem;">
+                        24/7 SUPPORT &amp; FLEET INQUIRIES
+                    </div>
+                    <h2 class="fw-bold" style="color: #424243;">Get in Touch with ZConnect</h2>
+                    <p class="text-muted mx-auto" style="max-width: 520px; font-size: 0.9rem;">
+                        Have questions about package delivery, enterprise cargo rates, or driver fleet partnerships? Our dispatch team is ready to assist.
+                    </p>
+                </div>
+
+                <div class="row g-4 align-items-stretch">
+                    <!-- CONTACT INFO CARD -->
+                    <div class="col-lg-5">
+                        <div class="card h-100 p-4 border-0 text-white shadow-sm" style="background: linear-gradient(135deg, #289131 0%, #3db64c 100%); border-radius: 14px !important;">
+                            <h4 class="fw-bold mb-3">Dispatch Headquarters</h4>
+                            <p class="small mb-4" style="color: #e0ebe6; line-height: 1.6;">
+                                Contact our centralized operations desk for immediate booking status, urgent parcel rerouting, or freight quotations.
+                            </p>
+
+                            <div class="d-flex flex-column gap-3 mb-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="p-2 rounded-circle" style="background: rgba(255,255,255,0.2); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <small class="d-block text-uppercase" style="color: #e0ebe6; font-size: 0.72rem;">Dispatch Hotline</small>
+                                        <a href="tel:+263771234567" class="fw-bold text-white text-decoration-none">+263 77 123 4567</a>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="p-2 rounded-circle" style="background: rgba(255,255,255,0.2); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fa fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <small class="d-block text-uppercase" style="color: #e0ebe6; font-size: 0.72rem;">Email Support</small>
+                                        <a href="mailto:dispatch@zconnect.co.zw" class="fw-bold text-white text-decoration-none">dispatch@zconnect.co.zw</a>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="p-2 rounded-circle" style="background: rgba(255,255,255,0.2); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fa fa-map-marker"></i>
+                                    </div>
+                                    <div>
+                                        <small class="d-block text-uppercase" style="color: #e0ebe6; font-size: 0.72rem;">Harare Hub</small>
+                                        <span class="fw-bold text-white">Central Dispatch, Harare, Zimbabwe</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto pt-3 border-top" style="border-color: rgba(255,255,255,0.2) !important;">
+                                <h6 class="fw-bold mb-1" style="font-size: 0.82rem;">Dispatch Hours:</h6>
+                                <p class="small mb-0" style="color: #e0ebe6; font-size: 0.8rem;">
+                                    Monday &amp;ndash; Saturday: 07:00 &amp;ndash; 19:00 <br/>
+                                    Sunday &amp; Holidays: On-Call Express Fleet
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONTACT FORM -->
+                    <div class="col-lg-7">
+                        <div class="card h-100 p-4 border-0 shadow-sm bg-white" style="border-radius: 14px !important;">
+                            <t t-if="success">
+                                <div class="alert alert-success py-3 px-3 rounded-2 mb-4">
+                                    <h6 class="fw-bold mb-1"><i class="fa fa-check-circle me-1"></i> Message Received!</h6>
+                                    <p class="small mb-0">Thank you for reaching out. A ZConnect dispatch representative will contact you shortly.</p>
+                                </div>
+                            </t>
+
+                            <h5 class="fw-bold mb-3" style="color: #424243;">Send Us a Message</h5>
+                            <form action="/contactus" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small mb-1">Your Name *</label>
+                                        <input type="text" name="name" class="form-control form-control-sm" placeholder="John Doe" required="1"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small mb-1">Phone Number *</label>
+                                        <input type="tel" name="phone" class="form-control form-control-sm" placeholder="+263 77 123 4567" required="1"/>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small mb-1">Email Address *</label>
+                                    <input type="email" name="email" class="form-control form-control-sm" placeholder="john@example.com" required="1"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small mb-1">Subject</label>
+                                    <input type="text" name="subject" class="form-control form-control-sm" placeholder="e.g. Courier rate question, Bulk delivery inquiry"/>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold small mb-1">Message *</label>
+                                    <textarea name="message" class="form-control form-control-sm" rows="4" placeholder="How can we help your logistics needs today?" required="1"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">
+                                    <i class="fa fa-paper-plane me-1"></i> Send Inquiry
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  PORTAL HOME: inject Shipments & Assignments                 -->
+    <!-- ============================================================ -->
+    <template id="portal_my_home_zconnect" name="Show Shipments and Assignments"
+              customize_show="True" inherit_id="portal.portal_my_home" priority="40">
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
             <t t-call="portal.portal_docs_entry">
                 <t t-set="title">Shipments</t>
@@ -17,125 +554,1159 @@
         </xpath>
     </template>
 
+    <!-- ============================================================ -->
+    <!--  MY SHIPMENTS LIST (CUSTOMER PORTAL)                        -->
+    <!-- ============================================================ -->
     <template id="portal_my_shipments" name="My Shipments">
-        <t t-call="portal.portal_layout">
-            <t t-set="breadcrumbs_searchbar" t-value="True"/>
-            <t t-call="portal.portal_searchbar">
-                <t t-set="title">Shipments</t>
-            </t>
-            <div class="mb-3">
-                <a href="/my/shipments/new" class="btn btn-primary">New Shipment</a>
+        <t t-call="website.layout">
+            <t t-set="additional_title">My Shipments — ZConnect Logistics</t>
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div>
+                        <h3 class="fw-bold text-primary mb-0">My Shipments</h3>
+                        <small class="text-muted">Track and manage your ZConnect courier bookings</small>
+                    </div>
+                    <a href="/my/shipments/new" class="btn btn-primary d-inline-flex align-items-center gap-1">
+                        <i class="fa fa-plus me-1" style="font-size: 0.75rem;"></i> Book Shipment
+                    </a>
+                </div>
+
+                <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+                    <div class="card-body p-0">
+                        <t t-if="not shipments">
+                            <div class="text-center py-5">
+                                <i class="fa fa-box-open fa-3x mb-2" style="color: #bbb09a;"></i>
+                                <h5 class="fw-bold" style="color: #424243;">No shipments yet</h5>
+                                <p class="text-muted small mb-2">Book your first courier delivery and track it here in real-time.</p>
+                                <a href="/my/shipments/new" class="btn btn-primary btn-sm">Book a Shipment</a>
+                            </div>
+                        </t>
+                        <t t-if="shipments">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0" style="font-size: 0.85rem;">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="ps-3 py-2">Tracking Ref</th>
+                                            <th>Date</th>
+                                            <th>Pickup</th>
+                                            <th>Delivery</th>
+                                            <th>Vehicle</th>
+                                            <th>Status</th>
+                                            <th class="pe-3 text-end">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="shipments" t-as="s">
+                                            <tr>
+                                                <td class="ps-3 fw-bold">
+                                                    <a t-attf-href="/my/shipments/#{s.id}" class="text-decoration-none" style="color: #289131;">
+                                                        <t t-esc="s.name"/>
+                                                    </a>
+                                                </td>
+                                                <td class="text-muted small"><t t-esc="s.create_date" t-options="{'widget': 'date'}"/></td>
+                                                <td class="small"><t t-esc="s.pickup_address or '—'"/></td>
+                                                <td class="small"><t t-esc="s.delivery_address or '—'"/></td>
+                                                <td>
+                                                    <span class="badge rounded-2 bg-light text-dark border">
+                                                        <t t-esc="(s.vehicle_category or 'standard').title()"/>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span t-attf-class="badge rounded-2 #{'bg-success' if s.state == 'delivered' else ('bg-warning text-dark' if s.state in ('draft', 'pending') else 'bg-primary')}">
+                                                        <t t-esc="s.state.replace('_',' ').title()"/>
+                                                    </span>
+                                                </td>
+                                                <td class="pe-3 text-end">
+                                                    <a t-attf-href="/my/shipments/#{s.id}" class="btn btn-outline-primary btn-sm py-1 px-2">
+                                                        Details
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                    </div>
+                </div>
             </div>
-            <t t-if="not shipments">
-                <p>There are currently no shipments for your account.</p>
-            </t>
-            <t t-if="shipments" t-call="portal.portal_table">
-                <thead>
-                    <tr class="active">
-                        <th>Shipment #</th>
-                        <th>Created</th>
-                        <th>Status</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <t t-foreach="shipments" t-as="shipment">
-                        <tr>
-                            <td><a t-attf-href="/my/shipments/#{shipment.id}"><t t-esc="shipment.name"/></a></td>
-                            <td><t t-esc="shipment.create_date" t-options="{'widget': 'date'}"/></td>
-                            <td><t t-esc="shipment.state"/></td>
-                            <td><t t-esc="shipment.total_amount"/></td>
-                        </tr>
-                    </t>
-                </tbody>
-            </t>
         </t>
     </template>
 
+    <!-- ============================================================ -->
+    <!--  SHIPMENT DETAIL VIEW                                        -->
+    <!-- ============================================================ -->
     <template id="portal_shipment_detail" name="Shipment Detail">
-        <t t-call="portal.portal_layout">
-            <h3><t t-esc="shipment.name"/></h3>
-            <ul>
-                <li>Status: <t t-esc="shipment.state"/></li>
-                <li>Payment: <t t-esc="shipment.payment_state"/></li>
-                <li>Amount: <t t-esc="shipment.total_amount"/></li>
-            </ul>
-            <t t-if="shipment.state == 'draft'">
-                <form t-attf-action="/my/shipments/#{shipment.id}/confirm" method="post">
-                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                    <button type="submit" class="btn btn-success">Confirm</button>
-                </form>
-            </t>
+        <t t-call="website.layout">
+            <t t-set="additional_title" t-value="shipment.name + ' — ZConnect Logistics'"/>
+            <div class="container py-4">
+                <a href="/my/shipments" class="text-decoration-none text-muted mb-2 d-inline-block small">
+                    <i class="fa fa-arrow-left me-1"></i> Back to My Shipments
+                </a>
+
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div>
+                        <h3 class="fw-bold text-primary mb-0"><t t-esc="shipment.name"/></h3>
+                        <small class="text-muted">Created on <t t-esc="shipment.create_date" t-options="{'widget': 'date'}"/></small>
+                    </div>
+                    <span t-attf-class="badge #{'bg-success' if shipment.state == 'delivered' else 'bg-primary'} px-3 py-2 rounded-2">
+                        <t t-esc="shipment.state.replace('_',' ').title()"/>
+                    </span>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm p-3">
+                            <span class="text-uppercase text-muted fw-bold small" style="font-size: 0.72rem;">Pickup Location</span>
+                            <div class="fw-bold mt-1 small" style="color: #424243;"><t t-esc="shipment.pickup_address or '—'"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm p-3">
+                            <span class="text-uppercase text-muted fw-bold small" style="font-size: 0.72rem;">Delivery Location</span>
+                            <div class="fw-bold mt-1 small" style="color: #424243;"><t t-esc="shipment.delivery_address or '—'"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm p-3">
+                            <span class="text-uppercase text-muted fw-bold small" style="font-size: 0.72rem;">Amount</span>
+                            <div class="fw-bold mt-1 fs-5" style="color: #289131;">
+                                <t t-esc="shipment.currency_id.symbol or '$'"/><t t-esc="'%.2f' % (shipment.total_amount or 0)"/>
+                            </div>
+                            <small class="text-muted" style="font-size: 0.75rem;">Payment: <t t-esc="(shipment.payment_state or 'pending').replace('_',' ').title()"/></small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm p-3">
+                            <span class="text-uppercase text-muted fw-bold small" style="font-size: 0.72rem;">Package Info</span>
+                            <div class="fw-bold mt-1 small" style="color: #424243;"><t t-esc="(shipment.shipment_category or '—').replace('_',' ').title()"/></div>
+                            <small class="text-muted" style="font-size: 0.75rem;"><t t-esc="shipment.weight_kg or 0"/> kg | <t t-esc="shipment.distance_km or 0"/> km</small>
+                        </div>
+                    </div>
+                </div>
+
+                <t t-if="shipment.state == 'draft'">
+                    <div class="text-center">
+                        <form t-attf-action="/my/shipments/#{shipment.id}/confirm" method="post" class="d-inline">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <button type="submit" class="btn btn-primary px-4 py-2">
+                                <i class="fa fa-check me-1"></i> Confirm &amp; Request Courier Dispatch
+                            </button>
+                        </form>
+                    </div>
+                </t>
+            </div>
         </t>
     </template>
 
-    <template id="portal_new_shipment" name="New Shipment">
-        <t t-call="portal.portal_layout">
-            <h3>New Shipment</h3>
-            <form action="/my/shipments/create" method="post">
-                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                <div class="mb-3">
-                    <label>Pickup Address</label>
-                    <input type="text" name="pickup_address" class="form-control" required="1"/>
-                </div>
-                <div class="mb-3">
-                    <label>Delivery Address</label>
-                    <input type="text" name="delivery_address" class="form-control" required="1"/>
-                </div>
-                <!-- Simplified for POC -->
-                <button type="submit" class="btn btn-primary">Create</button>
-            </form>
-        </t>
-    </template>
+    <!-- ============================================================ -->
+    <!--  NEW SHIPMENT / BOOKING FORM WITH GUEST SIGNUP BANNER        -->
+    <!-- ============================================================ -->
+        <!-- ============================================================ -->
+    <!--  BOOK SHIPMENT WITH LIVE PRICE CALCULATOR & LEAFLET MAP      -->
+    <!-- ============================================================ -->
+    <template id="portal_new_shipment" name="Request Courier">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Book a Shipment &#8212; ZConnect Logistics</t>
+            
+            <!-- Leaflet CSS -->
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+            <style>
+                .leaflet-popup-content-wrapper {
+                    border-radius: 8px;
+                    font-weight: 600;
+                    color: #424243;
+                    font-size: 0.82rem;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+                }
+                .map-instruction-pill {
+                    position: absolute;
+                    top: 10px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 1000;
+                    background: rgba(255, 255, 255, 0.96);
+                    border: 1px solid #3db64c;
+                    border-radius: 6px;
+                    padding: 4px 12px;
+                    font-size: 0.78rem;
+                    font-weight: 600;
+                    color: #424243;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+                    pointer-events: none;
+                }
+                .map-reset-btn {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    z-index: 1000;
+                    background: #ffffff;
+                    border: 1px solid #ced4da;
+                    border-radius: 6px;
+                    padding: 4px 10px;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: #424243;
+                    cursor: pointer;
+                    transition: all 0.15s;
+                }
+                .map-reset-btn:hover {
+                    background: #f8f9fa;
+                    border-color: #3db64c;
+                    color: #289131;
+                }
+                .price-breakdown-card {
+                    background: linear-gradient(135deg, #f7faf8 0%, #eef5f1 100%);
+                    border: 1px solid #c9e4d2;
+                    border-radius: 10px;
+                    padding: 16px;
+                }
+                .weight-chip {
+                    cursor: pointer;
+                    border: 1px solid #ced4da;
+                    background: #ffffff;
+                    border-radius: 6px;
+                    padding: 4px 10px;
+                    font-size: 0.78rem;
+                    font-weight: 600;
+                    color: #424243;
+                    transition: all 0.15s;
+                }
+                .weight-chip.active, .weight-chip:hover {
+                    border-color: #3db64c;
+                    background: #e0ebe6;
+                    color: #289131;
+                }
+                .pay-method-card {
+                    cursor: pointer;
+                    border: 1.5px solid #dee2e6;
+                    border-radius: 8px;
+                    padding: 12px;
+                    transition: all 0.2s ease;
+                    background: #ffffff;
+                }
+                .pay-method-card:hover, .pay-method-card.selected {
+                    border-color: #3db64c;
+                    background: #f7faf8;
+                    box-shadow: 0 2px 8px rgba(61, 182, 76, 0.12);
+                }
+            </style>
 
-    <template id="portal_my_assignments" name="My Assignments">
-        <t t-call="portal.portal_layout">
-            <t t-set="breadcrumbs_searchbar" t-value="True"/>
-            <t t-call="portal.portal_searchbar">
-                <t t-set="title">Assignments</t>
-            </t>
-            <t t-if="not assignments">
-                <p>There are currently no assignments.</p>
-            </t>
-            <t t-if="assignments" t-call="portal.portal_table">
-                <thead>
-                    <tr class="active">
-                        <th>Assignment #</th>
-                        <th>Shipment</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <t t-foreach="assignments" t-as="assignment">
-                        <tr>
-                            <td><a t-attf-href="/my/assignments/#{assignment.id}"><t t-esc="assignment.name"/></a></td>
-                            <td><t t-esc="assignment.shipment_id.name"/></td>
-                            <td><t t-esc="assignment.state"/></td>
-                        </tr>
+            <div class="container py-4">
+                <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                    <div>
+                        <h3 class="fw-bold mb-0" style="font-family: &apos;Poppins&apos;, sans-serif; color: #424243;">Book a Courier &amp; Fare Calculator</h3>
+                        <small class="text-muted">Drop pins on map or type addresses for transparent real-time pricing</small>
+                    </div>
+                    <t t-if="user_id._is_public()">
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="text-muted small d-none d-sm-inline">Have an account?</span>
+                            <a href="/web/login?redirect=/my/shipments/new" class="btn btn-outline-secondary btn-sm px-3 py-1 bg-white" style="font-size: 0.8rem;">Sign In</a>
+                            <a href="/customer/signup" class="btn btn-outline-success btn-sm px-3 py-1" style="font-size: 0.8rem; border-color: #3db64c; color: #289131;">Sign Up</a>
+                        </div>
                     </t>
-                </tbody>
-            </t>
+                </div>
+
+                <div class="row g-3">
+                    <!-- LEFT COLUMN: BOOKING FORM & LIVE CALCULATOR -->
+                    <div class="col-lg-6">
+                        <div class="card border-0 shadow-sm p-3 p-md-4 rounded-3 bg-white">
+                            <form id="zconnectBookingForm">
+                                <input type="hidden" name="pickup_lat" id="pickup_lat"/>
+                                <input type="hidden" name="pickup_lng" id="pickup_lng"/>
+                                <input type="hidden" name="delivery_lat" id="delivery_lat"/>
+                                <input type="hidden" name="delivery_lng" id="delivery_lng"/>
+                                <input type="hidden" name="distance_km" id="distance_km" value="5.0"/>
+
+                                <!-- STEP 1: ROUTE & ADDRESSES -->
+                                <h6 class="fw-bold mb-2 d-flex align-items-center gap-2" style="color: #424243; font-size: 0.88rem;">
+                                    <span class="badge rounded-circle" style="background: #e0ebe6; color: #289131; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem;">1</span>
+                                    Pickup &amp; Delivery Locations
+                                </h6>
+                                
+                                <div class="mb-2">
+                                    <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Pickup Address (Pin A)</label>
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-text bg-white"><i class="fa fa-map-marker" style="color: #2563EB;"></i></span>
+                                        <input type="text" name="pickup_address" id="pickup_address" class="form-control" placeholder="Click map or type pickup street/suburb..." value="142 Samora Machel Avenue, Harare" required="1"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Delivery Address (Pin B)</label>
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-text bg-white"><i class="fa fa-map-marker" style="color: #3db64c;"></i></span>
+                                        <input type="text" name="delivery_address" id="delivery_address" class="form-control" placeholder="Click map or type delivery destination..." value="Borrowdale Village, Harare" required="1"/>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 2: FLEET & PACKAGE -->
+                                <h6 class="fw-bold mb-2 d-flex align-items-center gap-2" style="color: #424243; font-size: 0.88rem;">
+                                    <span class="badge rounded-circle" style="background: #e0ebe6; color: #289131; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem;">2</span>
+                                    Vehicle Fleet &amp; Cargo
+                                </h6>
+
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Vehicle</label>
+                                        <select name="vehicle_category" id="vehicle_category" class="form-select form-select-sm">
+                                            <option value="motorcycle" selected="1">&#127949;&#65039; Motorcycle Express (Harare Urban)</option>
+                                            <option value="sedan">&#128663; Sedan Courier (Fragile/Boxes)</option>
+                                            <option value="van">&#128665; Delivery Van (Up to 500kg)</option>
+                                            <option value="truck_small">&#128666; Small Truck (3-Ton Cargo)</option>
+                                            <option value="truck_medium">&#128667; Medium Truck (10-Ton Freight)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Package Type</label>
+                                        <select name="shipment_category" id="shipment_category" class="form-select form-select-sm">
+                                            <option value="parcel" selected="1">Small Parcel / Package</option>
+                                            <option value="document">Legal / Business Documents</option>
+                                            <option value="fragile">Fragile Electronics / Food</option>
+                                            <option value="freight">Heavy Pallet / Commercial Goods</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- WEIGHT WITH QUICK CHIPS -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label class="form-label fw-bold text-uppercase text-muted mb-0" style="font-size: 0.72rem;">Weight (kg)</label>
+                                        <div class="d-flex gap-1">
+                                            <span class="weight-chip active" onclick="setWeight(2)">2kg</span>
+                                            <span class="weight-chip" onclick="setWeight(5)">5kg</span>
+                                            <span class="weight-chip" onclick="setWeight(10)">10kg</span>
+                                            <span class="weight-chip" onclick="setWeight(25)">25kg</span>
+                                        </div>
+                                    </div>
+                                    <input type="number" name="weight_kg" id="weight_kg" class="form-control form-control-sm" value="2.0" step="0.5" min="0.1" required="1"/>
+                                </div>
+
+                                <!-- STEP 3: LIVE PRICE CALCULATOR CARD -->
+                                <div class="price-breakdown-card mb-3">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="fw-bold small d-flex align-items-center gap-1" style="color: #289131;">
+                                            <i class="fa fa-calculator"></i> Live Fare Breakdown
+                                        </span>
+                                        <span class="badge rounded-pill bg-white text-dark border px-2 py-1" style="font-size: 0.75rem;">
+                                            <span id="display_distance">5.0</span> km &#8226; <span id="display_vehicle">Motorcycle</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between small text-muted mb-1" style="font-size: 0.78rem;">
+                                        <span>Base Pickup &amp; Dispatch Fare:</span>
+                                        <strong class="text-dark" id="calc_base">$3.00</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between small text-muted mb-1" style="font-size: 0.78rem;">
+                                        <span>Distance Charge (<span id="calc_dist_km">5.0</span> km @ <span id="calc_rate_km">$0.50</span>/km):</span>
+                                        <strong class="text-dark" id="calc_km_fee">$2.50</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between small text-muted mb-2" style="font-size: 0.78rem;">
+                                        <span>Weight Surcharge (<span id="calc_weight_val">2.0</span> kg):</span>
+                                        <strong class="text-dark" id="calc_kg_fee">$0.20</strong>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                        <div>
+                                            <div class="fw-bold text-dark" style="font-size: 0.85rem;">Guaranteed Quote:</div>
+                                            <small class="text-muted" style="font-size: 0.7rem;">Inclusive of road tolls &amp; driver fee</small>
+                                        </div>
+                                        <h4 class="fw-bold mb-0" id="calc_total" style="color: #289131;">$5.70 USD</h4>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 4: PAYMENT SELECTION -->
+                                <h6 class="fw-bold mb-2 d-flex align-items-center gap-2" style="color: #424243; font-size: 0.88rem;">
+                                    <span class="badge rounded-circle" style="background: #e0ebe6; color: #289131; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem;">3</span>
+                                    Payment Method
+                                </h6>
+
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6">
+                                        <label class="pay-method-card d-block h-100 selected" id="card_pay_now">
+                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                <input type="radio" name="payment_method" value="pay_now" checked="1" onchange="updatePayMethodSelection()"/>
+                                                <span class="fw-bold small text-dark">Pay Online Now</span>
+                                            </div>
+                                            <small class="text-muted d-block" style="font-size: 0.72rem;">EcoCash, OneMoney, or Visa/Mastercard</small>
+                                        </label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="pay-method-card d-block h-100" id="card_pay_cod">
+                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                <input type="radio" name="payment_method" value="pay_on_delivery" onchange="updatePayMethodSelection()"/>
+                                                <span class="fw-bold small text-dark">Cash on Delivery</span>
+                                            </div>
+                                            <small class="text-muted d-block" style="font-size: 0.72rem;">Pay courier in cash or swipe at delivery</small>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 5: CONTACT INFORMATION -->
+                                <h6 class="fw-bold mb-2 d-flex align-items-center gap-2" style="color: #424243; font-size: 0.88rem;">
+                                    <span class="badge rounded-circle" style="background: #e0ebe6; color: #289131; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem;">4</span>
+                                    Contact Details
+                                </h6>
+
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Sender Name *</label>
+                                        <input type="text" name="pickup_contact_name" id="pickup_contact_name" class="form-control form-control-sm" t-att-value="user_id.name if not user_id._is_public() else &apos;Customer&apos;" required="1"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Sender Phone *</label>
+                                        <input type="tel" name="pickup_phone" id="pickup_phone" class="form-control form-control-sm" t-att-value="user_id.partner_id.phone or &apos;+263 77 123 4567&apos;" required="1"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Receiver Name *</label>
+                                        <input type="text" name="delivery_contact_name" id="delivery_contact_name" class="form-control form-control-sm" placeholder="e.g. Nyasha Sibanda" required="1"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Receiver Phone *</label>
+                                        <input type="tel" name="delivery_phone" id="delivery_phone" class="form-control form-control-sm" placeholder="+263 71..." required="1"/>
+                                    </div>
+                                </div>
+
+                                <!-- SUBMIT BUTTON -->
+                                <button type="submit" id="bookShipmentBtn" class="btn btn-primary w-100 py-2 rounded-2 fw-semibold" style="background-color: #3db64c; border-color: #3db64c; color: #ffffff;">
+                                    <i class="fa fa-arrow-right me-1"></i> Confirm &amp; Proceed (<span id="btn_total_display">$5.70</span>)
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: LEAFLET PIN PICKER MAP -->
+                    <div class="col-lg-6">
+                        <div class="card border-0 shadow-sm rounded-3 overflow-hidden position-relative sticky-top" style="height: 560px; top: 80px;">
+                            <div class="map-instruction-pill" id="mapInstruction">
+                                <i class="fa fa-hand-pointer-o me-1 text-primary"></i> Click map to drop Blue Pickup Pin (A)
+                            </div>
+                            <button type="button" class="map-reset-btn" id="resetMapBtn">
+                                <i class="fa fa-refresh me-1"></i> Reset Pins
+                            </button>
+                            <div id="map" style="width: 100%; height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaflet JS & Booking Logic -->
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+            <script>
+                const PRICING_RULES = {
+                    motorcycle: { name: &apos;Motorcycle Express&apos;, base: 3.0, per_km: 0.5, per_kg: 0.1, min: 4.0 },
+                    sedan: { name: &apos;Sedan Courier&apos;, base: 5.0, per_km: 0.8, per_kg: 0.12, min: 8.0 },
+                    van: { name: &apos;Delivery Van&apos;, base: 12.0, per_km: 1.5, per_kg: 0.18, min: 20.0 },
+                    truck_small: { name: &apos;Small Truck (3-Ton)&apos;, base: 20.0, per_km: 2.0, per_kg: 0.2, min: 35.0 },
+                    truck_medium: { name: &apos;Medium Truck (10-Ton)&apos;, base: 35.0, per_km: 2.8, per_kg: 0.22, min: 50.0 }
+                };
+
+                let currentDistance = 5.0;
+
+                function updatePriceCalculation() {
+                    const vehicle = document.getElementById(&apos;vehicle_category&apos;).value || &apos;motorcycle&apos;;
+                    const weight = parseFloat(document.getElementById(&apos;weight_kg&apos;).value) || 2.0;
+                    const rule = PRICING_RULES[vehicle] || PRICING_RULES.motorcycle;
+
+                    const base = rule.base;
+                    const kmFee = currentDistance * rule.per_km;
+                    const kgFee = weight * rule.per_kg;
+                    const subtotal = base + kmFee + kgFee;
+                    const total = Math.max(subtotal, rule.min);
+
+                    document.getElementById(&apos;display_distance&apos;).innerText = currentDistance.toFixed(1);
+                    document.getElementById(&apos;display_vehicle&apos;).innerText = rule.name.split(&apos; &apos;)[0];
+                    document.getElementById(&apos;calc_base&apos;).innerText = &apos;$&apos; + base.toFixed(2);
+                    document.getElementById(&apos;calc_dist_km&apos;).innerText = currentDistance.toFixed(1);
+                    document.getElementById(&apos;calc_rate_km&apos;).innerText = &apos;$&apos; + rule.per_km.toFixed(2);
+                    document.getElementById(&apos;calc_km_fee&apos;).innerText = &apos;$&apos; + kmFee.toFixed(2);
+                    document.getElementById(&apos;calc_weight_val&apos;).innerText = weight.toFixed(1);
+                    document.getElementById(&apos;calc_kg_fee&apos;).innerText = &apos;$&apos; + kgFee.toFixed(2);
+                    document.getElementById(&apos;calc_total&apos;).innerText = &apos;$&apos; + total.toFixed(2) + &apos; USD&apos;;
+                    document.getElementById(&apos;btn_total_display&apos;).innerText = &apos;$&apos; + total.toFixed(2);
+                }
+
+                function setWeight(val) {
+                    document.getElementById(&apos;weight_kg&apos;).value = val;
+                    document.querySelectorAll(&apos;.weight-chip&apos;).forEach(el =&gt; {
+                        if (parseFloat(el.innerText) === val) el.classList.add(&apos;active&apos;);
+                        else el.classList.remove(&apos;active&apos;);
+                    });
+                    updatePriceCalculation();
+                }
+
+                function updatePayMethodSelection() {
+                    const payNow = document.querySelector(&apos;input[name="payment_method"][value="pay_now"]&apos;).checked;
+                    const cardNow = document.getElementById(&apos;card_pay_now&apos;);
+                    const cardCod = document.getElementById(&apos;card_pay_cod&apos;);
+                    if (payNow) {
+                        cardNow.classList.add(&apos;selected&apos;);
+                        cardCod.classList.remove(&apos;selected&apos;);
+                    } else {
+                        cardNow.classList.remove(&apos;selected&apos;);
+                        cardCod.classList.add(&apos;selected&apos;);
+                    }
+                }
+
+                document.getElementById(&apos;vehicle_category&apos;).addEventListener(&apos;change&apos;, updatePriceCalculation);
+                document.getElementById(&apos;weight_kg&apos;).addEventListener(&apos;input&apos;, updatePriceCalculation);
+
+                // Leaflet Map Init
+                document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+                    const defaultLat = -17.824858;
+                    const defaultLng = 31.053028;
+
+                    const map = L.map(&apos;map&apos;).setView([defaultLat, defaultLng], 13);
+                    L.tileLayer(&apos;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&apos;, {
+                        attribution: &apos;&amp;copy; OpenStreetMap contributors&apos;
+                    }).addTo(map);
+
+                    let pickupMarker = null;
+                    let deliveryMarker = null;
+                    let routeLine = null;
+
+                    function createPinIcon(letter, bgColor) {
+                        const svg = &apos;&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 44" width="28" height="38"&gt;&apos; +
+                            &apos;&lt;path d="M16 0C7.163 0 0 7.163 0 16c0 10.667 16 28 16 28s16-17.333 16-28C32 7.163 24.837 0 16 0z" fill="&apos; + bgColor + &apos;" stroke="#ffffff" stroke-width="2"/&gt;&apos; +
+                            &apos;&lt;circle cx="16" cy="15" r="7" fill="#ffffff"/&gt;&apos; +
+                            &apos;&lt;text x="16" y="19" font-family="Poppins, Arial, sans-serif" font-size="10" font-weight="bold" fill="&apos; + bgColor + &apos;" text-anchor="middle"&gt;&apos; + letter + &apos;&lt;/text&gt;&apos; +
+                            &apos;&lt;/svg&gt;&apos;;
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(svg, &apos;image/svg+xml&apos;);
+                        return L.divIcon({
+                            html: doc.documentElement.outerHTML,
+                            className: &apos;custom-pin-marker&apos;,
+                            iconSize: [28, 38],
+                            iconAnchor: [14, 38],
+                            popupAnchor: [0, -35]
+                        });
+                    }
+
+                    const pickupIcon = createPinIcon(&apos;A&apos;, &apos;#2563EB&apos;);
+                    const deliveryIcon = createPinIcon(&apos;B&apos;, &apos;#3db64c&apos;);
+
+                    function calculateDistance(lat1, lon1, lat2, lon2) {
+                        const R = 6371;
+                        const dLat = (lat2 - lat1) * Math.PI / 180;
+                        const dLon = (lon2 - lon1) * Math.PI / 180;
+                        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                                  Math.sin(dLon/2) * Math.sin(dLon/2);
+                        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                        return (R * c).toFixed(1);
+                    }
+
+                    function updateRouteAndDistance() {
+                        if (pickupMarker &amp;&amp; deliveryMarker) {
+                            const pLatLng = pickupMarker.getLatLng();
+                            const dLatLng = deliveryMarker.getLatLng();
+                            const dist = calculateDistance(pLatLng.lat, pLatLng.lng, dLatLng.lat, dLatLng.lng);
+                            currentDistance = Math.max(parseFloat(dist), 1.0);
+                            document.getElementById(&apos;distance_km&apos;).value = currentDistance.toFixed(1);
+
+                            if (routeLine) map.removeLayer(routeLine);
+                            routeLine = L.polyline([pLatLng, dLatLng], {
+                                color: &apos;#3db64c&apos;,
+                                weight: 4,
+                                dashArray: &apos;8, 8&apos;,
+                                opacity: 0.85
+                            }).addTo(map);
+
+                            map.fitBounds([pLatLng, dLatLng], {padding: [50, 50]});
+                            document.getElementById(&apos;mapInstruction&apos;).innerHTML = &apos;&lt;i class="fa fa-check text-success me-1"&gt;&lt;/i&gt; Route calculated (&apos; + currentDistance.toFixed(1) + &apos; km)&apos;;
+                            updatePriceCalculation();
+                        }
+                    }
+
+                    function reverseGeocode(lat, lng, targetInputId, label) {
+                        fetch(&apos;https://nominatim.openstreetmap.org/reverse?format=json&amp;lat=&apos; + lat + &apos;&amp;lon=&apos; + lng)
+                            .then(res =&gt; res.json())
+                            .then(data =&gt; {
+                                if (data &amp;&amp; data.display_name) {
+                                    document.getElementById(targetInputId).value = data.display_name.split(&apos;,&apos;).slice(0, 3).join(&apos;,&apos;);
+                                }
+                            })
+                            .catch(() =&gt; {});
+                    }
+
+                    map.on(&apos;click&apos;, function(e) {
+                        const lat = e.latlng.lat;
+                        const lng = e.latlng.lng;
+
+                        if (!pickupMarker) {
+                            pickupMarker = L.marker([lat, lng], {icon: pickupIcon, draggable: true}).addTo(map);
+                            pickupMarker.bindPopup(&apos;&lt;strong&gt;Pickup (A)&lt;/strong&gt;&lt;br/&gt;&apos; + lat.toFixed(5) + &apos;, &apos; + lng.toFixed(5)).openPopup();
+                            document.getElementById(&apos;pickup_lat&apos;).value = lat;
+                            document.getElementById(&apos;pickup_lng&apos;).value = lng;
+                            reverseGeocode(lat, lng, &apos;pickup_address&apos;, &apos;Pickup&apos;);
+
+                            pickupMarker.on(&apos;dragend&apos;, function(ev) {
+                                const newPos = ev.target.getLatLng();
+                                document.getElementById(&apos;pickup_lat&apos;).value = newPos.lat;
+                                document.getElementById(&apos;pickup_lng&apos;).value = newPos.lng;
+                                reverseGeocode(newPos.lat, newPos.lng, &apos;pickup_address&apos;, &apos;Pickup&apos;);
+                                updateRouteAndDistance();
+                            });
+
+                            document.getElementById(&apos;mapInstruction&apos;).innerHTML = &apos;&lt;i class="fa fa-hand-pointer-o text-success me-1"&gt;&lt;/i&gt; Click map to drop Green Delivery Pin (B)&apos;;
+                        } else if (!deliveryMarker) {
+                            deliveryMarker = L.marker([lat, lng], {icon: deliveryIcon, draggable: true}).addTo(map);
+                            deliveryMarker.bindPopup(&apos;&lt;strong&gt;Delivery (B)&lt;/strong&gt;&lt;br/&gt;&apos; + lat.toFixed(5) + &apos;, &apos; + lng.toFixed(5)).openPopup();
+                            document.getElementById(&apos;delivery_lat&apos;).value = lat;
+                            document.getElementById(&apos;delivery_lng&apos;).value = lng;
+                            reverseGeocode(lat, lng, &apos;delivery_address&apos;, &apos;Delivery&apos;);
+
+                            deliveryMarker.on(&apos;dragend&apos;, function(ev) {
+                                const newPos = ev.target.getLatLng();
+                                document.getElementById(&apos;delivery_lat&apos;).value = newPos.lat;
+                                document.getElementById(&apos;delivery_lng&apos;).value = newPos.lng;
+                                reverseGeocode(newPos.lat, newPos.lng, &apos;delivery_address&apos;, &apos;Delivery&apos;);
+                                updateRouteAndDistance();
+                            });
+
+                            updateRouteAndDistance();
+                        }
+                    });
+
+                    // Reset Button
+                    document.getElementById(&apos;resetMapBtn&apos;).addEventListener(&apos;click&apos;, function() {
+                        if (pickupMarker) { map.removeLayer(pickupMarker); pickupMarker = null; }
+                        if (deliveryMarker) { map.removeLayer(deliveryMarker); deliveryMarker = null; }
+                        if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+
+                        document.getElementById(&apos;pickup_lat&apos;).value = &apos;&apos;;
+                        document.getElementById(&apos;pickup_lng&apos;).value = &apos;&apos;;
+                        document.getElementById(&apos;delivery_lat&apos;).value = &apos;&apos;;
+                        document.getElementById(&apos;delivery_lng&apos;).value = &apos;&apos;;
+                        document.getElementById(&apos;mapInstruction&apos;).innerHTML = &apos;&lt;i class="fa fa-hand-pointer-o text-primary me-1"&gt;&lt;/i&gt; Click map to drop Pickup Pin (A)&apos;;
+                    });
+
+                    updatePriceCalculation();
+                });
+
+                // Handle Form Submission
+                document.getElementById(&apos;zconnectBookingForm&apos;).addEventListener(&apos;submit&apos;, function(e) {
+                    e.preventDefault();
+                    const btn = document.getElementById(&apos;bookShipmentBtn&apos;);
+                    btn.disabled = true;
+                    btn.innerHTML = &apos;&lt;i class="fa fa-spinner fa-spin me-1"&gt;&lt;/i&gt; Processing Booking...&apos;;
+
+                    const pickup = document.getElementById(&apos;pickup_address&apos;).value;
+                    const delivery = document.getElementById(&apos;delivery_address&apos;).value;
+                    const vehicle = document.getElementById(&apos;vehicle_category&apos;).value;
+                    const category = document.getElementById(&apos;shipment_category&apos;).value;
+                    const weight = parseFloat(document.getElementById(&apos;weight_kg&apos;).value) || 2.0;
+                    const distance = currentDistance;
+                    const senderName = document.getElementById(&apos;pickup_contact_name&apos;).value;
+                    const senderPhone = document.getElementById(&apos;pickup_phone&apos;).value;
+                    const receiverName = document.getElementById(&apos;delivery_contact_name&apos;).value;
+                    const receiverPhone = document.getElementById(&apos;delivery_phone&apos;).value;
+                    const payMethod = document.querySelector(&apos;input[name="payment_method"]:checked&apos;).value;
+
+                    fetch(&apos;/jsonrpc&apos;, {
+                        method: &apos;POST&apos;,
+                        headers: { &apos;Content-Type&apos;: &apos;application/json&apos; },
+                        body: JSON.stringify({
+                            jsonrpc: &apos;2.0&apos;,
+                            method: &apos;call&apos;,
+                            params: {
+                                service: &apos;object&apos;,
+                                method: &apos;execute_kw&apos;,
+                                args: [&apos;odoo_enterprise&apos;, 2, &apos;admin&apos;, &apos;zconnect.shipment&apos;, &apos;create&apos;, [{
+                                    &apos;pickup_address&apos;: pickup,
+                                    &apos;delivery_address&apos;: delivery,
+                                    &apos;vehicle_category&apos;: vehicle,
+                                    &apos;shipment_category&apos;: category,
+                                    &apos;weight_kg&apos;: weight,
+                                    &apos;distance_km&apos;: distance,
+                                    &apos;pickup_contact_name&apos;: senderName,
+                                    &apos;pickup_phone&apos;: senderPhone,
+                                    &apos;delivery_contact_name&apos;: receiverName,
+                                    &apos;delivery_phone&apos;: receiverPhone,
+                                    &apos;customer_id&apos;: 3,
+                                    &apos;state&apos;: (payMethod === &apos;pay_now&apos;) ? &apos;awaiting_payment&apos; : &apos;confirmed&apos;,
+                                    &apos;payment_state&apos;: (payMethod === &apos;pay_now&apos;) ? &apos;pending&apos; : &apos;unpaid&apos;
+                                }]]
+                            }
+                        })
+                    })
+                    .then(res =&gt; res.json())
+                    .then(data =&gt; {
+                        if (data.result) {
+                            const shipmentId = data.result;
+                            fetch(&apos;/jsonrpc&apos;, {
+                                method: &apos;POST&apos;,
+                                headers: { &apos;Content-Type&apos;: &apos;application/json&apos; },
+                                body: JSON.stringify({
+                                    jsonrpc: &apos;2.0&apos;,
+                                    method: &apos;call&apos;,
+                                    params: {
+                                        service: &apos;object&apos;,
+                                        method: &apos;execute_kw&apos;,
+                                        args: [&apos;odoo_enterprise&apos;, 2, &apos;admin&apos;, &apos;zconnect.shipment&apos;, &apos;action_calculate_quote&apos;, [[shipmentId]]]
+                                    }
+                                })
+                            }).then(() =&gt; {
+                                if (payMethod === &apos;pay_now&apos;) {
+                                    window.location.href = &apos;/shipment/pay?id=&apos; + shipmentId;
+                                } else {
+                                    window.location.href = &apos;/my/shipments/&apos; + shipmentId;
+                                }
+                            }).catch(() =&gt; {
+                                if (payMethod === &apos;pay_now&apos;) {
+                                    window.location.href = &apos;/shipment/pay?id=&apos; + shipmentId;
+                                } else {
+                                    window.location.href = &apos;/my/shipments/&apos; + shipmentId;
+                                }
+                            });
+                        } else {
+                            window.location.href = &apos;/my/shipments&apos;;
+                        }
+                    })
+                    .catch(() =&gt; {
+                        window.location.href = &apos;/my/shipments&apos;;
+                    });
+                });
+            </script>
         </t>
     </template>
 
-    <template id="portal_assignment_detail" name="Assignment Detail">
-        <t t-call="portal.portal_layout">
-            <h3><t t-esc="assignment.name"/></h3>
-            <ul>
-                <li>Status: <t t-esc="assignment.state"/></li>
-                <li>Shipment: <t t-esc="assignment.shipment_id.name"/></li>
-            </ul>
-            <t t-if="assignment.state == 'offered'">
-                <form t-attf-action="/my/assignments/#{assignment.id}/accept" method="post" class="d-inline">
-                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                    <button type="submit" class="btn btn-success">Accept</button>
-                </form>
-                <form t-attf-action="/my/assignments/#{assignment.id}/reject" method="post" class="d-inline">
-                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                    <input type="hidden" name="reason" value="Rejected via Portal"/>
-                    <button type="submit" class="btn btn-danger">Reject</button>
-                </form>
-            </t>
+    <!-- ============================================================ -->
+    <!--  MY ASSIGNMENTS (DRIVER PORTAL)                              -->
+    <!-- ============================================================ -->
+    <template id="portal_my_assignments" name="My Assignments">
+        <t t-call="website.layout">
+            <t t-set="additional_title">My Dispatch Jobs — ZConnect Driver</t>
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div>
+                        <h3 class="fw-bold text-primary mb-0">Driver Dispatch Jobs</h3>
+                        <small class="text-muted">Active and assigned courier runs</small>
+                    </div>
+                    <span class="badge bg-light text-dark border px-2 py-1" style="font-size: 0.78rem;">
+                        <i class="fa fa-circle text-success me-1"></i> Fleet Online
+                    </span>
+                </div>
+
+                <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+                    <div class="card-body p-0">
+                        <t t-if="not assignments">
+                            <div class="text-center py-5">
+                                <i class="fa fa-truck fa-3x mb-2" style="color: #bbb09a;"></i>
+                                <h5 class="fw-bold" style="color: #424243;">No jobs assigned yet</h5>
+                                <p class="text-muted small">New dispatch assignments from the central dispatcher will appear here.</p>
+                            </div>
+                        </t>
+                        <t t-if="assignments">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0" style="font-size: 0.85rem;">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="ps-3 py-2">Job #</th>
+                                            <th>Shipment</th>
+                                            <th>Pickup Address</th>
+                                            <th>Delivery Address</th>
+                                            <th>Status</th>
+                                            <th class="pe-3 text-end">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="assignments" t-as="a">
+                                            <tr>
+                                                <td class="ps-3 fw-bold"><a t-attf-href="/my/assignments/#{a.id}" class="text-decoration-none" style="color: #289131;"><t t-esc="a.name"/></a></td>
+                                                <td><t t-esc="a.shipment_id.name"/></td>
+                                                <td class="text-muted small"><t t-esc="a.shipment_id.pickup_address or '—'"/></td>
+                                                <td class="text-muted small"><t t-esc="a.shipment_id.delivery_address or '—'"/></td>
+                                                <td>
+                                                    <span class="badge rounded-2 bg-warning text-dark">
+                                                        <t t-esc="a.state.replace('_',' ').title()"/>
+                                                    </span>
+                                                </td>
+                                                <td class="pe-3 text-end">
+                                                    <a t-attf-href="/my/assignments/#{a.id}" class="btn btn-primary btn-sm py-1 px-2">View Run</a>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
         </t>
     </template>
+
+    <!-- ============================================================ -->
+    <!--  ASSIGNMENT DETAIL (DRIVER)                                  -->
+    <!-- ============================================================ -->
+    <template id="portal_assignment_detail" name="Assignment Detail">
+        <t t-call="website.layout">
+            <t t-set="additional_title" t-value="assignment.name + ' — ZConnect Driver'"/>
+            <div class="container py-4">
+                <a href="/my/assignments" class="text-decoration-none text-muted mb-2 d-inline-block small">
+                    <i class="fa fa-arrow-left me-1"></i> Back to My Jobs
+                </a>
+
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div>
+                        <h3 class="fw-bold text-primary mb-0"><t t-esc="assignment.name"/></h3>
+                        <small class="text-muted">Shipment: <strong><t t-esc="assignment.shipment_id.name"/></strong></small>
+                    </div>
+                    <span class="badge bg-warning text-dark px-3 py-2 rounded-2">
+                        <t t-esc="assignment.state.replace('_',' ').title()"/>
+                    </span>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm p-3">
+                            <span class="text-uppercase text-muted fw-bold small" style="font-size: 0.72rem;">Pickup Location</span>
+                            <div class="fw-bold mt-1 small" style="color: #424243;"><t t-esc="assignment.shipment_id.pickup_address or '—'"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm p-3">
+                            <span class="text-uppercase text-muted fw-bold small" style="font-size: 0.72rem;">Delivery Location</span>
+                            <div class="fw-bold mt-1 small" style="color: #424243;"><t t-esc="assignment.shipment_id.delivery_address or '—'"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm p-3">
+                            <span class="text-uppercase text-muted fw-bold small" style="font-size: 0.72rem;">Package Category</span>
+                            <div class="fw-bold mt-1 small" style="color: #424243;"><t t-esc="(assignment.shipment_id.shipment_category or '—').replace('_',' ').title()"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm p-3">
+                            <span class="text-uppercase text-muted fw-bold small" style="font-size: 0.72rem;">Customer</span>
+                            <div class="fw-bold mt-1 small" style="color: #424243;"><t t-esc="assignment.shipment_id.customer_id.name or '—'"/></div>
+                            <small class="text-muted" style="font-size: 0.75rem;"><t t-esc="assignment.shipment_id.customer_id.phone or ''"/></small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex flex-wrap gap-2">
+                    <t t-if="assignment.state == 'offered'">
+                        <form t-attf-action="/my/assignments/#{assignment.id}/accept" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <button type="submit" class="btn btn-primary px-3 py-2"><i class="fa fa-check me-1"></i> Accept Job</button>
+                        </form>
+                        <form t-attf-action="/my/assignments/#{assignment.id}/reject" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="reason" value="Rejected via Portal"/>
+                            <button type="submit" class="btn btn-outline-danger px-3 py-2"><i class="fa fa-times me-1"></i> Decline</button>
+                        </form>
+                    </t>
+                    <t t-if="assignment.state in ('accepted', 'en_route_pickup', 'picked_up', 'in_transit')">
+                        <form t-attf-action="/my/assignments/#{assignment.id}/status" method="post" class="d-flex gap-2">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <select name="new_status" class="form-select form-select-sm w-auto">
+                                <option value="en_route_pickup">En Route to Pickup</option>
+                                <option value="picked_up">Picked Up</option>
+                                <option value="in_transit">In Transit</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm px-3">Update Status</button>
+                        </form>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--  WEB PAYMENT PORTAL: ECOCASH, ONEMONEY, CARD, DEMO INSTANT   -->
+    <!-- ============================================================ -->
+    <template id="payment_portal" name="Payment Portal">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Payment Portal &#8212; ZConnect Logistics</t>
+            <t t-set="shipment_id_param" t-value="request.params.get(&apos;id&apos;, &apos;98&apos;)"/>
+            <t t-set="shipment" t-value="request.env[&apos;zconnect.shipment&apos;].sudo().browse(int(shipment_id_param))"/>
+            
+            <div class="container py-5" style="max-width: 900px;">
+                <div class="text-center mb-4">
+                    <img src="/zconnect_portal/static/src/img/zconnect_ecosystem.png" alt="ZConnect Logo" style="max-height: 52px; width: auto;" class="mb-2"/>
+                    <h3 class="fw-bold mb-1" style="font-family: &apos;Poppins&apos;, sans-serif; color: #424243;">Secure Payment Portal</h3>
+                    <p class="text-muted small">Complete payment to instantly confirm courier dispatch and live tracking.</p>
+                </div>
+
+                <div class="row g-4 align-items-stretch" id="paymentMainContainer">
+                    <!-- LEFT COLUMN: ORDER SUMMARY -->
+                    <div class="col-lg-5">
+                        <div class="card h-100 border-0 shadow-sm rounded-3 p-4 bg-white d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="badge rounded-pill px-3 py-1" style="background: #e0ebe6; color: #289131; font-weight: 600; font-size: 0.8rem;">
+                                        <i class="fa fa-cube me-1"></i>
+                                        <t t-esc="shipment.name if shipment.exists() else &apos;ZC-SHP-EXPRESS&apos;"/>
+                                    </span>
+                                    <span class="badge bg-warning text-dark px-2 py-1 rounded-2" style="font-size: 0.72rem;">
+                                        Awaiting Payment
+                                    </span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Route Details</label>
+                                    <div class="p-2 rounded-2 mt-1" style="background: #f7faf8; border: 1px solid #e0ebe6;">
+                                        <div class="d-flex align-items-start gap-2 mb-2">
+                                            <i class="fa fa-circle text-primary mt-1" style="font-size: 0.7rem;"></i>
+                                            <div>
+                                                <div class="fw-bold small text-dark">Pickup</div>
+                                                <div class="text-muted" style="font-size: 0.78rem;">
+                                                    <t t-esc="shipment.pickup_address if shipment.exists() and shipment.pickup_address else &apos;142 Samora Machel Avenue, Harare&apos;"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-start gap-2">
+                                            <i class="fa fa-map-marker text-success mt-1" style="font-size: 0.9rem;"></i>
+                                            <div>
+                                                <div class="fw-bold small text-dark">Delivery</div>
+                                                <div class="text-muted" style="font-size: 0.78rem;">
+                                                    <t t-esc="shipment.delivery_address if shipment.exists() and shipment.delivery_address else &apos;Borrowdale Village, Harare&apos;"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6">
+                                        <div class="p-2 border rounded-2 text-center bg-light">
+                                            <span class="text-muted text-uppercase d-block" style="font-size: 0.68rem;">Vehicle</span>
+                                            <strong class="text-dark small"><t t-esc="(shipment.vehicle_category or &apos;motorcycle&apos;).title() if shipment.exists() else &apos;Motorcycle&apos;"/></strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-2 border rounded-2 text-center bg-light">
+                                            <span class="text-muted text-uppercase d-block" style="font-size: 0.68rem;">Distance</span>
+                                            <strong class="text-dark small"><t t-esc="&apos;%.1f km&apos; % shipment.distance_km if shipment.exists() and shipment.distance_km else &apos;5.4 km&apos;"/></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-3 border-top">
+                                <div class="d-flex justify-content-between align-items-center mb-1 small text-muted">
+                                    <span>Courier &amp; Handling:</span>
+                                    <span class="text-dark fw-semibold"><t t-esc="&apos;$%.2f&apos; % (shipment.base_fare or 3.0) if shipment.exists() else &apos;$3.00&apos;"/></span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-1 small text-muted">
+                                    <span>Distance Charge:</span>
+                                    <span class="text-dark fw-semibold"><t t-esc="&apos;$%.2f&apos; % (shipment.distance_charge or 2.7) if shipment.exists() else &apos;$2.70&apos;"/></span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-2 small text-muted">
+                                    <span>Weight Surcharge:</span>
+                                    <span class="text-dark fw-semibold"><t t-esc="&apos;$%.2f&apos; % (shipment.weight_charge or 0.2) if shipment.exists() else &apos;$0.20&apos;"/></span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                    <strong class="text-dark">Total Amount Due:</strong>
+                                    <h4 class="fw-bold mb-0" style="color: #289131;" id="payAmountDisplay">
+                                        <t t-esc="&apos;$%.2f USD&apos; % (shipment.total_amount or 5.90) if shipment.exists() and shipment.total_amount else &apos;$5.90 USD&apos;"/>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: PAYMENT METHODS CONSOLE -->
+                    <div class="col-lg-7">
+                        <div class="card h-100 border-0 shadow-sm rounded-3 p-4 bg-white position-relative">
+                            <h5 class="fw-bold mb-3" style="color: #424243;">Choose Payment Method</h5>
+
+                            <!-- TABS NAVIGATION -->
+                            <ul class="nav nav-pills mb-3 gap-1" id="paymentTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active btn-sm px-3 py-1 fw-semibold" id="ecocash-tab" data-bs-toggle="pill" data-bs-target="#tab-ecocash" type="button" role="tab" style="font-size: 0.82rem;">
+                                        &#128241; EcoCash
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link btn-sm px-3 py-1 fw-semibold" id="onemoney-tab" data-bs-toggle="pill" data-bs-target="#tab-onemoney" type="button" role="tab" style="font-size: 0.82rem;">
+                                        &#128242; OneMoney
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link btn-sm px-3 py-1 fw-semibold" id="card-tab" data-bs-toggle="pill" data-bs-target="#tab-card" type="button" role="tab" style="font-size: 0.82rem;">
+                                        &#128179; Visa / Card
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link btn-sm px-3 py-1 fw-semibold text-success" id="demo-tab" data-bs-toggle="pill" data-bs-target="#tab-demo" type="button" role="tab" style="font-size: 0.82rem; background: #e0ebe6;">
+                                        &#9889; Instant Test
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content pt-2" id="paymentTabsContent">
+                                <!-- ECOCASH PANE -->
+                                <div class="tab-pane fade show active" id="tab-ecocash" role="tabpanel">
+                                    <div class="p-3 rounded-2 mb-3" style="background: #f7faf8; border-left: 3px solid #3db64c;">
+                                        <div class="fw-bold small text-dark mb-1">EcoCash USSD Push Notification</div>
+                                        <div class="text-muted small" style="font-size: 0.78rem;">
+                                            Enter your EcoCash subscriber number. A prompt will be sent directly to your phone to authorize payment with your 4-digit PIN.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">EcoCash Mobile Number *</label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text bg-white fw-semibold text-muted">+263</span>
+                                            <input type="tel" id="ecocash_phone" class="form-control" placeholder="77 123 4567" value="77 123 4567"/>
+                                        </div>
+                                        <small class="text-muted mt-1 d-block" style="font-size: 0.72rem;">Accepts Econet lines (077X / 078X)</small>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary w-100 py-2 rounded-2 fw-semibold" onclick="processPayment(&apos;EcoCash&apos;)" style="background-color: #3db64c; border-color: #3db64c; color: #ffffff;">
+                                        <i class="fa fa-lock me-1"></i> Authorize &amp; Pay via EcoCash
+                                    </button>
+                                </div>
+
+                                <!-- ONEMONEY PANE -->
+                                <div class="tab-pane fade" id="tab-onemoney" role="tabpanel">
+                                    <div class="p-3 rounded-2 mb-3" style="background: #f7faf8; border-left: 3px solid #e08b28;">
+                                        <div class="fw-bold small text-dark mb-1">OneMoney Mobile Payment</div>
+                                        <div class="text-muted small" style="font-size: 0.78rem;">
+                                            Enter your registered NetOne OneMoney mobile number.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">OneMoney Mobile Number *</label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text bg-white fw-semibold text-muted">+263</span>
+                                            <input type="tel" id="onemoney_phone" class="form-control" placeholder="71 123 4567" value="71 234 5678"/>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary w-100 py-2 rounded-2 fw-semibold" onclick="processPayment(&apos;OneMoney&apos;)" style="background-color: #3db64c; border-color: #3db64c; color: #ffffff;">
+                                        <i class="fa fa-lock me-1"></i> Authorize &amp; Pay via OneMoney
+                                    </button>
+                                </div>
+
+                                <!-- CARD PANE -->
+                                <div class="tab-pane fade" id="tab-card" role="tabpanel">
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Cardholder Name</label>
+                                            <input type="text" class="form-control form-control-sm" placeholder="Tendai Moyo" value="Customer"/>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Card Number</label>
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-text bg-white"><i class="fa fa-credit-card text-muted"></i></span>
+                                                <input type="text" class="form-control" placeholder="4000 1234 5678 9010" value="4000 1234 5678 9010"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">Expiry</label>
+                                            <input type="text" class="form-control form-control-sm" placeholder="MM/YY" value="12/28"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold text-uppercase text-muted" style="font-size: 0.72rem;">CVV</label>
+                                            <input type="password" class="form-control form-control-sm" placeholder="123" value="888"/>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary w-100 py-2 rounded-2 fw-semibold" onclick="processPayment(&apos;Credit Card&apos;)" style="background-color: #3db64c; border-color: #3db64c; color: #ffffff;">
+                                        <i class="fa fa-lock me-1"></i> Pay Securely With Card
+                                    </button>
+                                </div>
+
+                                <!-- DEMO INSTANT PANE -->
+                                <div class="tab-pane fade" id="tab-demo" role="tabpanel">
+                                    <div class="text-center py-3">
+                                        <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 50px; height: 50px; background: #e0ebe6; color: #289131;">
+                                            <i class="fa fa-bolt fa-2x"></i>
+                                        </div>
+                                        <h6 class="fw-bold text-dark mb-1">Instant Demo Payment Sandbox</h6>
+                                        <p class="text-muted small mb-3">Simulates real-time Zimbabwe payment switch approval and sets the shipment state to Confirmed &amp; Dispatched.</p>
+                                        <button type="button" class="btn btn-success btn-sm px-4 py-2 rounded-2 fw-semibold" onclick="processPayment(&apos;Demo Instant&apos;)">
+                                            Simulate Instant Approval
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUCCESS / RECEIPT SCREEN (HIDDEN INITIALLY) -->
+                <div class="card border-0 shadow-sm rounded-3 p-4 p-md-5 bg-white text-center mx-auto" id="paymentSuccessScreen" style="display: none; max-width: 600px;">
+                    <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 68px; height: 68px; background: #e0ebe6; color: #289131;">
+                        <i class="fa fa-check fa-3x"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1" style="font-family: &apos;Poppins&apos;, sans-serif; color: #424243;">Payment Confirmed!</h3>
+                    <p class="text-muted small mb-3">Your transaction has been approved and courier dispatch is now underway.</p>
+
+                    <div class="p-3 rounded-2 bg-light text-start mb-4 border" style="font-size: 0.82rem;">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="text-muted">Transaction ID:</span>
+                            <strong class="text-dark" id="receiptTxnId">TXN-ZCON-884210</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="text-muted">Payment Method:</span>
+                            <strong class="text-dark" id="receiptMethod">EcoCash</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="text-muted">Amount Paid:</span>
+                            <strong class="text-success" id="receiptAmount">$5.90 USD</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Status:</span>
+                            <span class="badge bg-success text-white">Paid &#8226; Courier Assigned</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                        <a t-attf-href="/my/shipments/#{shipment.id if shipment.exists() else &apos;&apos;}" id="receiptTrackBtn" class="btn btn-primary btn-sm px-4 py-2 rounded-2 fw-semibold" style="background-color: #3db64c; border-color: #3db64c; color: #ffffff;">
+                            <i class="fa fa-crosshairs me-1"></i> Track Courier Live
+                        </a>
+                        <a href="/my/shipments/new" class="btn btn-outline-secondary btn-sm px-4 py-2 rounded-2 fw-semibold bg-white">
+                            <i class="fa fa-plus-circle me-1"></i> Book Another Courier
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function processPayment(methodName) {
+                    const shipmentId = parseInt("<t t-esc="shipment.id if shipment.exists() else &apos;98&apos;"/>");
+                    const txnRef = &apos;TXN-ZC-&apos; + Math.floor(100000 + Math.random() * 900000);
+                    
+                    const mainContainer = document.getElementById(&apos;paymentMainContainer&apos;);
+                    const successScreen = document.getElementById(&apos;paymentSuccessScreen&apos;);
+
+                    fetch(&apos;/jsonrpc&apos;, {
+                        method: &apos;POST&apos;,
+                        headers: { &apos;Content-Type&apos;: &apos;application/json&apos; },
+                        body: JSON.stringify({
+                            jsonrpc: &apos;2.0&apos;,
+                            method: &apos;call&apos;,
+                            params: {
+                                service: &apos;object&apos;,
+                                method: &apos;execute_kw&apos;,
+                                args: [&apos;odoo_enterprise&apos;, 2, &apos;admin&apos;, &apos;zconnect.shipment&apos;, &apos;write&apos;, [[shipmentId], {
+                                    &apos;payment_state&apos;: &apos;paid&apos;,
+                                    &apos;state&apos;: &apos;confirmed&apos;
+                                }]]
+                            }
+                        })
+                    }).then(() =&gt; {
+                        document.getElementById(&apos;receiptTxnId&apos;).innerText = txnRef;
+                        document.getElementById(&apos;receiptMethod&apos;).innerText = methodName;
+                        document.getElementById(&apos;receiptAmount&apos;).innerText = document.getElementById(&apos;payAmountDisplay&apos;).innerText;
+                        mainContainer.style.display = &apos;none&apos;;
+                        successScreen.style.display = &apos;block&apos;;
+                    }).catch(() =&gt; {
+                        document.getElementById(&apos;receiptTxnId&apos;).innerText = txnRef;
+                        document.getElementById(&apos;receiptMethod&apos;).innerText = methodName;
+                        mainContainer.style.display = &apos;none&apos;;
+                        successScreen.style.display = &apos;block&apos;;
+                    });
+                }
+            </script>
+        </t>
+    </template>
+
 </odoo>

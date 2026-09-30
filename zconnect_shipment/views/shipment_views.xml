@@ -78,11 +78,14 @@
                     <widget name="web_ribbon" title="Delivered" bg_color="text-bg-success" invisible="state != 'delivered'"/>
                     <widget name="web_ribbon" title="Exception" bg_color="text-bg-warning" invisible="state != 'exception'"/>
 
-                    <div class="oe_title">
-                        <label for="name" string="Shipment Reference"/>
-                        <h1>
-                            <field name="name" readonly="1"/>
-                        </h1>
+                    <div class="oe_title d-flex align-items-center gap-4">
+                        <object type="text/html" data="/zconnect_dashboard/static/src/lottie/player.html?src=/zconnect_dashboard/static/src/lottie/motorcycle.json" style="width: 150px; height: 150px; border: none; overflow: hidden;"></object>
+                        <div>
+                            <label for="name" string="Shipment Reference"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
                     </div>
 
                     <group col="2">
@@ -257,11 +260,30 @@
         </field>
     </record>
 
+    <!-- ── Shipment Map View ────────────────────────────────────────── -->
+    <!-- ── Shipment Map View ────────────────────────────────────────── -->
+    <!--
+    <record id="view_zconnect_shipment_map" model="ir.ui.view">
+        <field name="name">zconnect.shipment.map</field>
+        <field name="model">zconnect.shipment</field>
+        <field name="arch" type="xml">
+            <map res_partner="customer_id" routing="true" hide_name="true">
+                <field name="name" string="Shipment"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="pickup_address"/>
+                <field name="delivery_address"/>
+                <field name="state"/>
+                <field name="total_amount"/>
+            </map>
+        </field>
+    </record>
+    -->
+
     <!-- ── Action ──────────────────────────────────────────────────────── -->
     <record id="action_zconnect_shipment" model="ir.actions.act_window">
         <field name="name">Shipments</field>
         <field name="res_model">zconnect.shipment</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,map,form</field>
         <field name="search_view_id" ref="view_zconnect_shipment_search"/>
         <field name="context">{'search_default_confirmed': 0}</field>
         <field name="help" type="html">

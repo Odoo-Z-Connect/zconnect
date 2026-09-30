@@ -99,124 +99,118 @@
                     </div>
 
                     <!-- ========================================== -->
-                    <!-- 2. TOP KPI CARDS (4 VIBRANT ENTERPRISE CARDS)-->
+                    <!-- 2. TOP KPI CARDS (COMPACT & SOLID VIBRANT) -->
                     <!-- ========================================== -->
-                    <!-- ========================================== -->
-                    <!-- 2. TOP KPI CARDS (PREMIUM SAAS REDESIGN)  -->
-                    <!-- ========================================== -->
-                    <div class="row g-4 mb-5">
-                        <!-- Card 1: Total Shipments -->
-                        <div class="col-12 col-md-6 col-xl-3">
-                            <div class="zc-card zc-kpi-card zc-kpi-indigo cursor-pointer h-100 shadow-sm" tabindex="0" role="button" aria-label="View Total Shipments" t-on-click="() => this.openShipments()">
-                                <div class="d-flex justify-content-between align-items-start mb-4">
-                                    <div class="zc-icon-badge zc-badge-indigo shadow-sm d-flex align-items-center justify-content-center">
-                                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/>
-                                            <path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/>
-                                        </svg>
+                    <div class="row g-3 mb-4">
+                        <!-- Card 1: Total Shipments - Solid Royal Blue -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="zc-solid-kpi-card zc-solid-blue cursor-pointer h-100" tabindex="0" role="button" aria-label="View Total Shipments" t-on-click="() => this.openShipments()">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="zc-solid-badge">
+                                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/>
+                                                <path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/>
+                                            </svg>
+                                        </div>
+                                        <span class="zc-solid-label">TOTAL SHIPMENTS</span>
                                     </div>
-                                    <span class="zc-kpi-arrow d-flex align-items-center justify-content-center rounded-circle">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <span class="zc-solid-arrow">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/>
                                         </svg>
                                     </span>
                                 </div>
-                                <div class="zc-kpi-content mt-2">
-                                    <div class="zc-kpi-label text-muted fw-bold tracking-wide">TOTAL SHIPMENTS</div>
-                                    <div class="zc-kpi-number text-dark my-1"><t t-esc="state.data.kpis.total_shipments"/></div>
-                                </div>
-                                <div class="zc-kpi-footer d-flex align-items-center mt-4 pt-3 border-top">
-                                    <span class="zc-kpi-subtext text-muted small"><span class="fw-semibold text-dark"><t t-esc="state.data.kpis.total_shipments"/></span> shipments this period</span>
+                                <div class="zc-solid-number"><t t-esc="state.data.kpis.total_shipments"/></div>
+                                <div class="zc-solid-footer">
+                                    <span><strong class="text-white"><t t-esc="state.data.kpis.total_shipments"/></strong> shipments this period</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card 2: Active Shipments -->
-                        <div class="col-12 col-md-6 col-xl-3">
-                            <div class="zc-card zc-kpi-card zc-kpi-blue cursor-pointer h-100 shadow-sm" tabindex="0" role="button" aria-label="View Active Shipments" t-on-click="() => this.openActiveShipments()">
-                                <div class="d-flex justify-content-between align-items-start mb-4">
-                                    <div class="zc-icon-badge zc-badge-blue shadow-sm d-flex align-items-center justify-content-center">
-                                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
-                                            <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
-                                            <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"/>
-                                        </svg>
+                        <!-- Card 2: Active Shipments - Solid Vibrant Cyan/Cobalt -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="zc-solid-kpi-card zc-solid-cyan cursor-pointer h-100" tabindex="0" role="button" aria-label="View Active Shipments" t-on-click="() => this.openActiveShipments()">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="zc-solid-badge">
+                                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+                                                <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+                                                <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"/>
+                                            </svg>
+                                        </div>
+                                        <span class="zc-solid-label">ACTIVE SHIPMENTS</span>
                                     </div>
-                                    <span class="zc-kpi-arrow d-flex align-items-center justify-content-center rounded-circle">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <span class="zc-solid-arrow">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/>
                                         </svg>
                                     </span>
                                 </div>
-                                <div class="zc-kpi-content mt-2">
-                                    <div class="zc-kpi-label text-muted fw-bold tracking-wide">ACTIVE SHIPMENTS</div>
-                                    <div class="zc-kpi-number text-dark my-1"><t t-esc="state.data.kpis.active_shipments"/></div>
-                                </div>
-                                <div class="zc-kpi-footer d-flex align-items-center mt-4 pt-3 border-top">
-                                    <span class="zc-status-indicator bg-primary rounded-circle me-2" style="width: 8px; height: 8px;"></span>
-                                    <span class="zc-kpi-subtext text-muted small"><span class="fw-semibold text-primary"><t t-esc="state.data.kpis.active_shipments"/></span> currently in movement</span>
+                                <div class="zc-solid-number"><t t-esc="state.data.kpis.active_shipments"/></div>
+                                <div class="zc-solid-footer">
+                                    <span><strong class="text-white"><t t-esc="state.data.kpis.active_shipments"/></strong> currently in movement</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card 3: In Transit -->
-                        <div class="col-12 col-md-6 col-xl-3">
-                            <div class="zc-card zc-kpi-card zc-kpi-amber cursor-pointer h-100 shadow-sm" tabindex="0" role="button" aria-label="View In Transit Shipments" t-on-click="() => this.openInTransit()">
-                                <div class="d-flex justify-content-between align-items-start mb-4">
-                                    <div class="zc-icon-badge zc-badge-amber shadow-sm d-flex align-items-center justify-content-center">
-                                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M3 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
-                                            <path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/>
-                                            <path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5"/>
-                                        </svg>
+                        <!-- Card 3: In Transit - Solid Vibrant Amber -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="zc-solid-kpi-card zc-solid-amber cursor-pointer h-100" tabindex="0" role="button" aria-label="View In Transit Shipments" t-on-click="() => this.openInTransit()">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="zc-solid-badge">
+                                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+                                                <path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/>
+                                                <path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5"/>
+                                            </svg>
+                                        </div>
+                                        <span class="zc-solid-label">IN TRANSIT</span>
                                     </div>
-                                    <span class="zc-kpi-arrow d-flex align-items-center justify-content-center rounded-circle">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <span class="zc-solid-arrow">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/>
                                         </svg>
                                     </span>
                                 </div>
-                                <div class="zc-kpi-content mt-2">
-                                    <div class="zc-kpi-label text-muted fw-bold tracking-wide">IN TRANSIT</div>
-                                    <div class="zc-kpi-number text-dark my-1"><t t-esc="state.data.kpis.in_transit_total"/></div>
-                                </div>
-                                <div class="zc-kpi-footer d-flex align-items-center mt-4 pt-3 border-top">
-                                    <span class="zc-status-indicator bg-warning rounded-circle me-2" style="width: 8px; height: 8px;"></span>
-                                    <span class="zc-kpi-subtext text-muted small"><span class="fw-semibold text-warning"><t t-esc="state.data.kpis.in_transit_total"/></span> shipments on route</span>
+                                <div class="zc-solid-number"><t t-esc="state.data.kpis.in_transit_total"/></div>
+                                <div class="zc-solid-footer">
+                                    <span><strong class="text-white"><t t-esc="state.data.kpis.in_transit_total"/></strong> shipment on route</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card 4: Delivered -->
-                        <div class="col-12 col-md-6 col-xl-3">
-                            <div class="zc-card zc-kpi-card zc-kpi-green cursor-pointer h-100 shadow-sm" tabindex="0" role="button" aria-label="View Delivered Shipments" t-on-click="() => this.openDelivered()">
-                                <div class="d-flex justify-content-between align-items-start mb-4">
-                                    <div class="zc-icon-badge zc-badge-green shadow-sm d-flex align-items-center justify-content-center">
-                                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
-                                            <path d="M9 12l2 2l4 -4"/>
-                                        </svg>
+                        <!-- Card 4: Delivered - Solid Emerald Green -->
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="zc-solid-kpi-card zc-solid-green cursor-pointer h-100" tabindex="0" role="button" aria-label="View Delivered Shipments" t-on-click="() => this.openDelivered()">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="zc-solid-badge">
+                                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+                                                <path d="M9 12l2 2l4 -4"/>
+                                            </svg>
+                                        </div>
+                                        <span class="zc-solid-label">DELIVERED</span>
                                     </div>
-                                    <span class="zc-kpi-arrow d-flex align-items-center justify-content-center rounded-circle">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <span class="zc-solid-arrow">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/>
                                         </svg>
                                     </span>
                                 </div>
-                                <div class="zc-kpi-content mt-2">
-                                    <div class="zc-kpi-label text-muted fw-bold tracking-wide">DELIVERED</div>
-                                    <div class="zc-kpi-number text-dark my-1"><t t-esc="state.data.kpis.delivered"/></div>
-                                </div>
-                                <div class="zc-kpi-footer d-flex align-items-center mt-4 pt-3 border-top">
-                                    <span class="zc-status-indicator bg-success rounded-circle me-2" style="width: 8px; height: 8px;"></span>
-                                    <span class="zc-kpi-subtext text-muted small"><span class="fw-semibold text-success"><t t-esc="state.data.kpis.delivered"/></span> successfully fulfilled</span>
+                                <div class="zc-solid-number"><t t-esc="state.data.kpis.delivered"/></div>
+                                <div class="zc-solid-footer">
+                                    <span><strong class="text-white"><t t-esc="state.data.kpis.delivered"/></strong> successfully fulfilled</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- ========================================== -->
-                    <!-- 3. FINANCIAL OVERVIEW (IF AUTHORIZED)     -->
+                    <!-- 3. FINANCIAL OVERVIEW (CONSISTENT CARDS)   -->
                     <!-- ========================================== -->
                     <t t-if="state.data.has_finance_access">
                         <div class="zc-card mb-4">
@@ -236,77 +230,77 @@
                             <div class="row g-3">
                                 <!-- Box 1: Revenue / Paid -->
                                 <div class="col-12 col-sm-6 col-xl-3">
-                                    <div class="zc-fin-card zc-fin-green cursor-pointer h-100" t-on-click="() => this.openInvoices()">
+                                    <div class="zc-fin-card cursor-pointer h-100" t-on-click="() => this.openInvoices()">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="zc-fin-label">Revenue / Paid</span>
-                                            <div class="zc-icon-badge zc-badge-green zc-badge-sm">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <div class="zc-fin-badge-solid zc-fbs-green">
+                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                     <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2"/>
                                                     <path d="M12 3v3m0 12v3"/>
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div class="zc-fin-amount zc-text-green">
+                                        <div class="zc-fin-amount">
                                             <t t-esc="state.data.financial.currency"/><t t-esc="this.formatCurrency(state.data.financial.paid_revenue)"/>
                                         </div>
-                                        <div class="zc-fin-sub">Paid &amp; settled shipments</div>
+                                        <div class="zc-fin-sub text-success fw-medium">Paid &amp; settled shipments</div>
                                     </div>
                                 </div>
 
                                 <!-- Box 2: Outstanding -->
                                 <div class="col-12 col-sm-6 col-xl-3">
-                                    <div class="zc-fin-card zc-fin-amber cursor-pointer h-100" t-on-click="() => this.openAwaitingPayment()">
+                                    <div class="zc-fin-card cursor-pointer h-100" t-on-click="() => this.openAwaitingPayment()">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="zc-fin-label">Outstanding</span>
-                                            <div class="zc-icon-badge zc-badge-amber zc-badge-sm">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <div class="zc-fin-badge-solid zc-fbs-amber">
+                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                     <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M12 7v5l3 3"/>
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div class="zc-fin-amount zc-text-amber">
+                                        <div class="zc-fin-amount">
                                             <t t-esc="state.data.financial.currency"/><t t-esc="this.formatCurrency(state.data.financial.outstanding)"/>
                                         </div>
-                                        <div class="zc-fin-sub">Awaiting customer payment</div>
+                                        <div class="zc-fin-sub text-warning fw-medium">Awaiting customer payment</div>
                                     </div>
                                 </div>
 
                                 <!-- Box 3: Failed Payments -->
                                 <div class="col-12 col-sm-6 col-xl-3">
-                                    <div class="zc-fin-card zc-fin-red cursor-pointer h-100" t-on-click="() => this.openAwaitingPayment()">
+                                    <div class="zc-fin-card cursor-pointer h-100" t-on-click="() => this.openAwaitingPayment()">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="zc-fin-label">Failed Payments</span>
-                                            <div class="zc-icon-badge zc-badge-red zc-badge-sm">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <div class="zc-fin-badge-solid zc-fbs-red">
+                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                     <path d="M12 9v4"/><path d="M12 17h.01"/>
                                                     <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"/>
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div class="zc-fin-amount zc-text-red">
+                                        <div class="zc-fin-amount">
                                             <t t-esc="state.data.financial.failed_payments"/>
                                         </div>
-                                        <div class="zc-fin-sub">Payment failures requiring action</div>
+                                        <div class="zc-fin-sub text-muted">Payment failures requiring action</div>
                                     </div>
                                 </div>
 
                                 <!-- Box 4: Total Invoiced -->
                                 <div class="col-12 col-sm-6 col-xl-3">
-                                    <div class="zc-fin-card zc-fin-indigo cursor-pointer h-100" t-on-click="() => this.openInvoices()">
+                                    <div class="zc-fin-card cursor-pointer h-100" t-on-click="() => this.openInvoices()">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="zc-fin-label">Total Invoiced</span>
-                                            <div class="zc-icon-badge zc-badge-indigo zc-badge-sm">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <div class="zc-fin-badge-solid zc-fbs-indigo">
+                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                     <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
                                                     <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
                                                     <path d="M9 7l1 0"/><path d="M9 13l6 0"/><path d="M9 17l6 0"/>
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div class="zc-fin-amount zc-text-indigo">
+                                        <div class="zc-fin-amount">
                                             <t t-esc="state.data.financial.currency"/><t t-esc="this.formatCurrency(state.data.financial.invoiced_total)"/>
                                         </div>
-                                        <div class="zc-fin-sub">Total billed customer invoices</div>
+                                        <div class="zc-fin-sub text-primary fw-medium">Total billed customer invoices</div>
                                     </div>
                                 </div>
                             </div>
@@ -314,199 +308,92 @@
                     </t>
 
                     <!-- ========================================== -->
-                    <!-- 4. MAIN ANALYTICS: ACTIVITY & LIVE FLEET   -->
+                    <!-- 4. VISUAL ANALYTICS: LINE GRAPH & DONUT    -->
                     <!-- ========================================== -->
-                    <div class="row g-4 mb-4">
-                        <!-- Left Column: Shipment Activity Chart -->
-                        <div class="col-12 col-xl-6">
+                    <div class="row g-3 mb-4">
+                        <!-- Left 7 cols: Line Graph (Shipment Volume & Velocity) -->
+                        <div class="col-12 col-xl-7">
                             <div class="zc-card h-100 d-flex flex-column">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
                                     <div>
-                                        <h2 class="zc-section-title mb-0">Shipment Activity</h2>
-                                        <span class="zc-section-sub">Bookings and deliveries over the selected period</span>
+                                        <h2 class="zc-section-title mb-0">Shipment Volume Trends</h2>
+                                        <span class="zc-section-sub">Bookings vs fulfilled deliveries over time</span>
                                     </div>
-                                    <!-- Legend -->
-                                    <div class="zc-chart-legend">
-                                        <span class="zc-legend-item"><span class="zc-dot zc-dot-bookings"/> Bookings</span>
-                                        <span class="zc-legend-item"><span class="zc-dot zc-dot-delivered"/> Delivered</span>
+                                    <!-- Legend Pills -->
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="zc-legend-pill">
+                                            <span class="zc-legend-dot" style="background-color: #2563EB;"/> Booked
+                                        </span>
+                                        <span class="zc-legend-pill">
+                                            <span class="zc-legend-dot" style="background-color: #059669;"/> Delivered
+                                        </span>
                                     </div>
                                 </div>
 
-                                <!-- Chart SVG Canvas -->
-                                <div class="zc-chart-wrapper my-auto py-2">
-                                    <t t-if="!this.hasChartData(state.data.chart_data)">
-                                        <div class="text-center py-4 text-muted">
-                                            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#94A3B8" stroke-width="1.6" class="mb-2">
-                                                <path d="M3 3v18h18"/><path d="M20 18v3"/><path d="M16 16v5"/><path d="M12 13v8"/><path d="M8 16v5"/>
-                                            </svg>
-                                            <div class="fw-semibold text-dark" style="font-size: 13px;">No shipment activity recorded</div>
-                                            <div class="text-muted" style="font-size: 12px;">Activity will show as shipments are booked and delivered</div>
-                                        </div>
-                                    </t>
-                                    <t t-else="">
-                                        <svg viewBox="0 0 600 150" class="w-100" preserveAspectRatio="none" style="height: 150px;">
-                                            <defs>
-                                                <linearGradient id="zcBookingGrad" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="0%" stop-color="#4F46E5" stop-opacity="0.14"/>
-                                                    <stop offset="100%" stop-color="#4F46E5" stop-opacity="0.00"/>
-                                                </linearGradient>
-                                                <linearGradient id="zcDelivGrad" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="0%" stop-color="#10B981" stop-opacity="0.14"/>
-                                                    <stop offset="100%" stop-color="#10B981" stop-opacity="0.00"/>
-                                                </linearGradient>
-                                            </defs>
-                                            <!-- Horizontal Grid Lines -->
-                                            <line x1="30" y1="25" x2="570" y2="25" class="zc-chart-grid"/>
-                                            <line x1="30" y1="65" x2="570" y2="65" class="zc-chart-grid"/>
-                                            <line x1="30" y1="105" x2="570" y2="105" class="zc-chart-grid"/>
-                                            <line x1="30" y1="125" x2="570" y2="125" class="zc-chart-grid"/>
-
-                                            <!-- Area Fill Under Curves -->
-                                            <polygon t-att-points="this.getSvgAreaPoints(state.data.chart_data.shipments, state.data.chart_data.max_val, 600, 150)" fill="url(#zcBookingGrad)"/>
-                                            <polygon t-att-points="this.getSvgAreaPoints(state.data.chart_data.delivered, state.data.chart_data.max_val, 600, 150)" fill="url(#zcDelivGrad)"/>
-
-                                            <!-- Bookings Polyline -->
-                                            <polyline t-att-points="this.getSvgPoints(state.data.chart_data.shipments, state.data.chart_data.max_val, 600, 150)" class="zc-line-bookings"/>
-
-                                            <!-- Delivered Polyline -->
-                                            <polyline t-att-points="this.getSvgPoints(state.data.chart_data.delivered, state.data.chart_data.max_val, 600, 150)" class="zc-line-delivered"/>
-
-                                            <!-- Discrete Point Markers -->
-                                            <t t-foreach="this.getPointCoords(state.data.chart_data.shipments, state.data.chart_data.max_val, 600, 150)" t-as="pt" t-key="'bk_' + pt.idx">
-                                                <circle t-att-cx="pt.cx" t-att-cy="pt.cy" r="3.5" fill="#ffffff" stroke="#4F46E5" stroke-width="2"/>
-                                            </t>
-                                            <t t-foreach="this.getPointCoords(state.data.chart_data.delivered, state.data.chart_data.max_val, 600, 150)" t-as="pt" t-key="'dl_' + pt.idx">
-                                                <circle t-att-cx="pt.cx" t-att-cy="pt.cy" r="3.5" fill="#ffffff" stroke="#10B981" stroke-width="2"/>
-                                            </t>
-                                        </svg>
-                                    </t>
+                                <!-- Responsive Chart Container -->
+                                <div class="zc-chart-container position-relative flex-grow-1" style="min-height: 220px; width: 100%;">
+                                    <canvas t-ref="lineChartCanvas" class="w-100" style="max-height: 220px;"/>
                                 </div>
 
-                                <!-- X-Axis Date Labels -->
-                                <div class="d-flex justify-content-between px-3 zc-chart-xaxis pt-2 border-top">
-                                    <t t-foreach="state.data.chart_data.labels" t-as="lbl" t-key="lbl_index">
-                                        <span><t t-esc="lbl"/></span>
-                                    </t>
+                                <!-- Footer metric summary -->
+                                <div class="d-flex justify-content-between align-items-center pt-2 mt-2 border-top text-muted small">
+                                    <span>Current Scope: <strong class="text-dark"><t t-esc="state.dateFilter.toUpperCase()"/></strong></span>
+                                    <span>Peak Volume: <strong class="text-primary"><t t-esc="state.data.chart_data.max_val"/> shipments</strong></span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Right Column: Live Operations / Fleet Capacity -->
-                        <div class="col-12 col-xl-6">
+                        <!-- Right 5 cols: Donut / Pie Chart (Status Distribution) -->
+                        <div class="col-12 col-xl-5">
                             <div class="zc-card h-100 d-flex flex-column">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <div>
-                                        <h2 class="zc-section-title mb-0">Live Operations</h2>
-                                        <span class="zc-section-sub">Driver and vehicle operational capacity</span>
+                                        <h2 class="zc-section-title mb-0">Status Breakdown</h2>
+                                        <span class="zc-section-sub">Order distribution across lifecycle stages</span>
                                     </div>
-                                    <span class="zc-card-link cursor-pointer" t-on-click="() => this.openDrivers()">
-                                        Manage fleet
-                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/>
-                                        </svg>
-                                    </span>
+                                    <span class="badge bg-light text-dark border px-2 py-1"><t t-esc="state.data.kpis.total_shipments"/> Orders</span>
                                 </div>
 
-                                <!-- 4 Operational Tiles (Drivers & Vehicles) -->
-                                <div class="row g-2 mb-3">
-                                    <div class="col-6 col-sm-3">
-                                        <div class="zc-ops-tile zc-ops-green cursor-pointer h-100" t-on-click="() => this.openDrivers('available')">
-                                            <div class="zc-icon-badge zc-badge-green zc-badge-sm mb-2">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
-                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/>
-                                                </svg>
+                                <div class="row align-items-center flex-grow-1 my-auto g-2">
+                                    <!-- Donut Chart with Centered Metric -->
+                                    <div class="col-12 col-sm-6 text-center">
+                                        <div class="zc-donut-wrapper mx-auto">
+                                            <canvas t-ref="pieChartCanvas" width="180" height="180"/>
+                                            <div class="zc-donut-center">
+                                                <span class="zc-donut-number"><t t-esc="state.data.kpis.total_shipments"/></span>
+                                                <span class="zc-donut-label">TOTAL</span>
                                             </div>
-                                            <div class="zc-ops-label">AVAILABLE DRIVERS</div>
-                                            <div class="zc-ops-val zc-text-green"><t t-esc="state.data.drivers.available"/></div>
-                                            <div class="zc-ops-sub">Ready for tasks</div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-sm-3">
-                                        <div class="zc-ops-tile zc-ops-orange cursor-pointer h-100" t-on-click="() => this.openDrivers('busy')">
-                                            <div class="zc-icon-badge zc-badge-orange zc-badge-sm mb-2">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
-                                                </svg>
-                                            </div>
-                                            <div class="zc-ops-label">BUSY DRIVERS</div>
-                                            <div class="zc-ops-val zc-text-orange"><t t-esc="state.data.drivers.busy"/></div>
-                                            <div class="zc-ops-sub">Currently on job</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-sm-3">
-                                        <div class="zc-ops-tile zc-ops-blue cursor-pointer h-100" t-on-click="() => this.openVehicles('available')">
-                                            <div class="zc-icon-badge zc-badge-blue zc-badge-sm mb-2">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
-                                                    <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"/><path d="M3 9l4 0"/>
-                                                </svg>
-                                            </div>
-                                            <div class="zc-ops-label">AVAILABLE VEHICLES</div>
-                                            <div class="zc-ops-val zc-text-blue"><t t-esc="state.data.vehicles.available"/></div>
-                                            <div class="zc-ops-sub">Ready to deploy</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-sm-3">
-                                        <div class="zc-ops-tile zc-ops-purple cursor-pointer h-100" t-on-click="() => this.openVehicles('busy')">
-                                            <div class="zc-icon-badge zc-badge-purple zc-badge-sm mb-2">
-                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
-                                                    <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"/>
-                                                </svg>
-                                            </div>
-                                            <div class="zc-ops-label">BUSY VEHICLES</div>
-                                            <div class="zc-ops-val zc-text-purple"><t t-esc="state.data.vehicles.busy"/></div>
-                                            <div class="zc-ops-sub">In use or service</div>
+
+                                    <!-- Legend with percentages -->
+                                    <div class="col-12 col-sm-6">
+                                        <div class="d-flex flex-column gap-1">
+                                            <t t-foreach="state.data.pie_data" t-as="item" t-key="item.code">
+                                                <t t-if="item.count > 0">
+                                                    <div class="zc-pie-legend-item cursor-pointer" t-on-click="() => this.openShipments(item.code !== 'other' ? item.code : false)">
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <span class="zc-pie-legend-dot" t-attf-style="background-color: #{item.color};"/>
+                                                            <span class="zc-pie-legend-name"><t t-esc="item.label"/></span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <span class="zc-pie-legend-count"><t t-esc="item.count"/></span>
+                                                            <span class="zc-pie-legend-pct"><t t-esc="item.percent"/>%</span>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </t>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Operational Metric Shortcuts Row -->
-                                <div class="row g-2 pt-2 border-top mt-auto">
-                                    <div class="col-6 col-sm-3">
-                                        <div class="zc-metric-shortcut cursor-pointer" t-on-click="() => this.openAssignments()">
-                                            <div class="zc-ms-label">Assignments</div>
-                                            <div class="d-flex align-items-baseline justify-content-between mt-1">
-                                                <span class="zc-ms-num"><t t-esc="state.data.active_assignments_count"/></span>
-                                                <span class="zc-ms-arrow">View <i class="fa fa-arrow-right ms-1"/></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-sm-3">
-                                        <div class="zc-metric-shortcut cursor-pointer" t-on-click="() => this.openActiveShipments()">
-                                            <div class="zc-ms-label">Active Orders</div>
-                                            <div class="d-flex align-items-baseline justify-content-between mt-1">
-                                                <span class="zc-ms-num"><t t-esc="state.data.kpis.active_shipments"/></span>
-                                                <span class="zc-ms-arrow">View <i class="fa fa-arrow-right ms-1"/></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-sm-3">
-                                        <div class="zc-metric-shortcut cursor-pointer" t-on-click="() => this.openNearDelivery()">
-                                            <div class="zc-ms-label">Near Delivery</div>
-                                            <div class="d-flex align-items-baseline justify-content-between mt-1">
-                                                <span class="zc-ms-num"><t t-esc="state.data.kpis.near_delivery"/></span>
-                                                <span class="zc-ms-arrow">View <i class="fa fa-arrow-right ms-1"/></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-sm-3">
-                                        <div class="zc-metric-shortcut cursor-pointer" t-on-click="() => this.openExceptions()">
-                                            <div class="zc-ms-label">Exceptions</div>
-                                            <div class="d-flex align-items-baseline justify-content-between mt-1">
-                                                <span t-attf-class="zc-ms-num #{state.data.kpis.exceptions > 0 ? 'text-danger' : 'text-success'}">
-                                                    <t t-esc="state.data.kpis.exceptions"/>
-                                                </span>
-                                                <span class="zc-ms-arrow">View <i class="fa fa-arrow-right ms-1"/></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="pt-2 mt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="text-muted small">Fulfillment Rate: <strong class="text-success"><t t-esc="this.getFulfillRate()"/>%</strong></span>
+                                    <span class="zc-card-link cursor-pointer" t-on-click="() => this.openShipments()">All Shipments &gt;</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <!-- ========================================== -->
                     <!-- 5. SHIPMENT PIPELINE STEPPER               -->
                     <!-- ========================================== -->
@@ -770,7 +657,7 @@
                                                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                     <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/>
                                                 </svg>
-                                                <span class="fw-semibold text-dark">All operations are running normally</span>
+                                                <span class="fw-semibold text-white">All operations are running normally</span>
                                             </div>
                                             <span class="zc-pill zc-pill-delivered">Clear</span>
                                         </div>
@@ -876,3 +763,8 @@
         </div>
     </t>
 </templates>
+
+
+
+
+

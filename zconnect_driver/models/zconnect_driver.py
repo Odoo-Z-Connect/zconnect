@@ -81,6 +81,15 @@ class ZconnectDriver(models.Model):
              'Do not duplicate those fields here.',
     )
 
+    user_id = fields.Many2one(
+        'res.users',
+        string='System User',
+        ondelete='set null',
+        tracking=True,
+        help='The system user account linked to this driver profile. '
+             'Used for portal login, assignment dispatching, and mobile app access.'
+    )
+
     # Convenience computed fields that expose partner identity without duplication.
     name = fields.Char(related='partner_id.name', string='Driver Name', store=True, readonly=True)
     phone = fields.Char(related='partner_id.phone', string='Phone', readonly=True)

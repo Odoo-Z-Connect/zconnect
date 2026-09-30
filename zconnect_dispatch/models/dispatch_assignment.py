@@ -13,6 +13,19 @@ class DispatchAssignment(models.Model):
     driver_id = fields.Many2one('zconnect.driver', string='Driver', required=True, readonly=True)
     vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', required=True, readonly=True)
     
+    # Related Shipment Fields
+    pickup_address = fields.Char(related='shipment_id.pickup_address', string='Pickup Address', readonly=True)
+    pickup_contact_name = fields.Char(related='shipment_id.pickup_contact_name', string='Contact Name', readonly=True)
+    pickup_contact_phone = fields.Char(related='shipment_id.pickup_contact_phone', string='Contact Phone', readonly=True)
+    delivery_address = fields.Char(related='shipment_id.delivery_address', string='Delivery Address', readonly=True)
+    delivery_contact_name = fields.Char(related='shipment_id.delivery_contact_name', string='Del. Contact Name', readonly=True)
+    delivery_contact_phone = fields.Char(related='shipment_id.delivery_contact_phone', string='Del. Contact Phone', readonly=True)
+    shipment_category = fields.Selection(related='shipment_id.shipment_category', string='Category', readonly=True)
+    shipment_description = fields.Text(related='shipment_id.description', string='Description', readonly=True)
+    payment_status = fields.Selection(related='shipment_id.payment_state', string='Payment Status', readonly=True)
+    weight_kg = fields.Float(related='shipment_id.weight_kg', string='Weight (kg)', readonly=True)
+    volume_cbm = fields.Float(related='shipment_id.volume_cbm', string='Volume (m³)', readonly=True)
+    
     state = fields.Selection([
         ('draft', 'Draft'),
         ('offered', 'Offered'),
@@ -92,8 +105,8 @@ class DispatchAssignment(models.Model):
             })
             
             # Establish operational relationship
-            record.driver_id.availability_status = 'unavailable'
-            record.vehicle_id.zconnect_operational_status = 'assigned'
+            record.driver_id.sudo().availability_status = 'unavailable'
+            record.vehicle_id.sudo().zconnect_operational_status = 'assigned'
             
             record.message_post(
                 body=_('Assignment accepted by driver %s.') % record.driver_id.name,
@@ -156,7 +169,7 @@ class DispatchAssignment(models.Model):
                 ('id', '!=', record.id)
             ])
             if other_driver_assignments == 0:
-                record.driver_id.availability_status = 'available'
+                record.driver_id.sudo().availability_status = 'available'
                 
             # Check for other active assignments for the vehicle
             other_vehicle_assignments = self.search_count([
@@ -165,9 +178,20 @@ class DispatchAssignment(models.Model):
                 ('id', '!=', record.id)
             ])
             if other_vehicle_assignments == 0:
-                record.vehicle_id.zconnect_operational_status = 'available'
+                record.vehicle_id.sudo().zconnect_operational_status = 'available'
                 
             record.message_post(
                 body=_('Assignment completed.'),
                 subtype_xmlid='mail.mt_note',
             )
+
+    def action_view_shipment(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Shipment'),
+            'res_model': 'zconnect.shipment',
+            'view_mode': 'form',
+            'res_id': self.shipment_id.id,
+            'target': 'current',
+        }

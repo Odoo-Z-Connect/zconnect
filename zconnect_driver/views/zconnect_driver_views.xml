@@ -79,6 +79,7 @@
                     <group col="2">
                         <group string="Identity">
                             <field name="partner_id" options="{'no_quick_create': True}"/>
+                            <field name="user_id" options="{'no_quick_create': True}"/>
                             <field name="phone" readonly="1"/>
                             <field name="email" readonly="1"/>
                             <field name="national_id"/>

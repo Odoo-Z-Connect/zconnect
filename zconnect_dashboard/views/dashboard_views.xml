@@ -11,6 +11,4 @@
               name="Dashboard"
               parent="zconnect_base.menu_zconnect_root"
               action="action_zconnect_dashboard"
-              sequence="5"
-              groups="zconnect_base.group_zconnect_dispatcher,zconnect_base.group_zconnect_manager,zconnect_base.group_zconnect_admin"/>
 </odoo>

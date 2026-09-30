@@ -11,6 +11,11 @@
                     <field name="state" widget="statusbar" statusbar_visible="draft,offered,accepted,completed"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_shipment" class="oe_stat_button" icon="fa-truck" invisible="not shipment_id">
+                            <field name="shipment_id" widget="statinfo" string="Shipment"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <h1>
                             <field name="name"/>
@@ -32,7 +37,34 @@
                     <group invisible="state != 'rejected'">
                         <field name="rejection_reason"/>
                     </group>
+                    <notebook>
+                        <page string="Shipment Details" name="shipment_details">
+                            <group>
+                                <group string="Pickup Information">
+                                    <field name="pickup_address" string="Pickup Address"/>
+                                    <field name="pickup_contact_name" string="Contact Name"/>
+                                    <field name="pickup_contact_phone" string="Contact Phone" widget="phone"/>
+                                </group>
+                                <group string="Delivery Information">
+                                    <field name="delivery_address" string="Delivery Address"/>
+                                    <field name="delivery_contact_name" string="Contact Name"/>
+                                    <field name="delivery_contact_phone" string="Contact Phone" widget="phone"/>
+                                </group>
+                            </group>
+                            <group string="Cargo Information">
+                                <group>
+                                    <field name="shipment_category" string="Category"/>
+                                    <field name="shipment_description" string="Description"/>
+                                    <field name="payment_status" string="Payment Status" widget="badge" decoration-danger="payment_status == 'unpaid'" decoration-warning="payment_status == 'pending'" decoration-success="payment_status == 'paid'"/>
+                                </group>
+                                <group>
+                                    <field name="weight_kg" string="Weight (kg)"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>

@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Offer Assignment">
                 <group>
-                    <field name="shipment_id"/>
+                    <field name="shipment_id" readonly="1"/>
                     <field name="driver_id" options="{'no_create': True}"/>
                     <field name="vehicle_id" options="{'no_create': True}"/>
                 </group>
