@@ -78,14 +78,11 @@
                     <widget name="web_ribbon" title="Delivered" bg_color="text-bg-success" invisible="state != 'delivered'"/>
                     <widget name="web_ribbon" title="Exception" bg_color="text-bg-warning" invisible="state != 'exception'"/>
 
-                    <div class="oe_title d-flex align-items-center gap-4">
-                        <object type="text/html" data="/zconnect_dashboard/static/src/lottie/player.html?src=/zconnect_dashboard/static/src/lottie/motorcycle.json" style="width: 150px; height: 150px; border: none; overflow: hidden;"></object>
-                        <div>
-                            <label for="name" string="Shipment Reference"/>
-                            <h1>
-                                <field name="name" readonly="1"/>
-                            </h1>
-                        </div>
+                    <div class="oe_title">
+                        <label for="name" string="Shipment Reference"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
                     </div>
 
                     <group col="2">
@@ -260,24 +257,18 @@
         </field>
     </record>
 
-    <!-- ── Shipment Map View ────────────────────────────────────────── -->
-    <!-- ── Shipment Map View ────────────────────────────────────────── -->
-    <!--
+    <!-- ── Map View ────────────────────────────────────────────────────── -->
     <record id="view_zconnect_shipment_map" model="ir.ui.view">
         <field name="name">zconnect.shipment.map</field>
         <field name="model">zconnect.shipment</field>
         <field name="arch" type="xml">
-            <map res_partner="customer_id" routing="true" hide_name="true">
-                <field name="name" string="Shipment"/>
+            <map res_partner="customer_id" routing="True">
                 <field name="customer_id" string="Customer"/>
-                <field name="pickup_address"/>
-                <field name="delivery_address"/>
-                <field name="state"/>
-                <field name="total_amount"/>
+                <field name="name" string="Shipment"/>
+                <field name="state" string="State"/>
             </map>
         </field>
     </record>
-    -->
 
     <!-- ── Action ──────────────────────────────────────────────────────── -->
     <record id="action_zconnect_shipment" model="ir.actions.act_window">
