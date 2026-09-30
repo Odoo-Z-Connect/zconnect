@@ -14,6 +14,30 @@ The architecture was intentionally designed around a micro-addon structure withi
 
 ---
 
+## 1.1 System Showcase
+
+### Customer Web Portal
+![ZConnect Homepage](docs/images/zconnect-homepage.png)
+*Modern, responsive landing page reflecting ZConnect's brand identity.*
+
+![Customer Book Shipment](docs/images/zconnect-shipment.png)
+*Streamlined customer portal for quoting and booking shipments.*
+
+![My Shipments](docs/images/zconnect-myshipment.png)
+*Customer portal dashboard tracking active and historical shipments.*
+
+![Contact Us](docs/images/zconnect-contact-us.png)
+*Integrated customer support and contact forms.*
+
+### Dispatch Operations (Backend)
+![ZConnect Dispatch Dashboard](docs/images/zconnect-admin-dash.png)
+*Real-time dispatch overview and KPI tracking for operations managers.*
+
+![Operations Analytics](docs/images/zconnect-admin-dash2.png)
+*Granular analytics and operational volume metrics.*
+
+---
+
 ## 2. Project Background & Proposal Traceability
 While the original offline proposal document was not physically present in the standard repository paths during this audit, the architectural intent has been reverse-engineered and mapped to the verified implementation.
 
