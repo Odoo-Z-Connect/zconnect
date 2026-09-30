@@ -216,4 +216,4 @@ The `zconnect.pod` module relies heavily on `ir.attachment` for signature and ph
 3. **Live Payment Gateways**: Swapping the demo payment flow in `zconnect_portal/controllers/portal.py` with actual Paynow API SDK calls using valid merchant keys.
 
 ---
-*End of Technical Documentation. Document generated to fulfill the 20-page depth requirement covering architecture, security, API, data modeling, and operational logic.*
+*ZConnect Logistics Platform — Confidential Architectural Reference*
