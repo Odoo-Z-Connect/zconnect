@@ -1125,4 +1125,101 @@
             gap: 12px;
         }
     }
+    // -------------------------------------------------------------
+    // Donut / Pie Chart: Status Breakdown
+    // -------------------------------------------------------------
+    .zc-donut-wrap {
+        position: relative;
+        display: inline-block;
+    }
+
+    .zc-donut-svg {
+        overflow: visible;
+        display: block;
+    }
+
+    .zc-donut-slice {
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        transform-origin: 90px 90px;
+        cursor: default;
+
+        &:hover {
+            opacity: 0.82;
+            transform: scale(1.04);
+        }
+    }
+
+    .zc-donut-total-num {
+        font-family: var(--zc-font);
+        font-size: 26px;
+        font-weight: 800;
+        fill: var(--zc-text);
+        letter-spacing: -0.03em;
+    }
+
+    .zc-donut-total-sub {
+        font-family: var(--zc-font);
+        font-size: 11px;
+        font-weight: 600;
+        fill: var(--zc-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    // Legend rows (right of donut)
+    .zc-donut-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-width: 0;
+        max-width: 220px;
+    }
+
+    .zc-donut-legend-item {
+        display: grid;
+        grid-template-columns: 10px 1fr auto auto;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: background-color 0.15s ease;
+        cursor: default;
+
+        &:hover {
+            background-color: var(--zc-surface-soft);
+        }
+    }
+
+    .zc-donut-legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: inline-block;
+    }
+
+    .zc-donut-legend-label {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--zc-text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+    }
+
+    .zc-donut-legend-val {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--zc-text);
+        text-align: right;
+    }
+
+    .zc-donut-legend-pct {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--zc-text-muted);
+        text-align: right;
+        min-width: 32px;
+    }
 }

@@ -1,0 +1,180 @@
+{
+  "info": {
+    "name": "ZConnect Odoo API",
+    "description": "API collection for ZConnect Flutter application interacting with Odoo backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {\n    \"db\": \"odoo_enterprise\",\n    \"login\": \"driver@example.com\",\n    \"password\": \"admin\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {\n    \"name\": \"Jane Doe\",\n    \"login\": \"jane@example.com\",\n    \"password\": \"secret123\",\n    \"phone\": \"+263771234567\",\n    \"account_type\": \"customer\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/auth/signup",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "auth", "signup"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customer - Shipments",
+      "item": [
+        {
+          "name": "Get My Shipments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/shipments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "shipments"]
+            }
+          }
+        },
+        {
+          "name": "Create Shipment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {\n    \"pickup_address\": \"Harare CBD\",\n    \"delivery_address\": \"Avondale\",\n    \"vehicle_category\": \"motorcycle\",\n    \"weight_kg\": 2.5\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/shipments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "shipments"]
+            }
+          }
+        },
+        {
+          "name": "Confirm Shipment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/shipments/1/confirm",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "shipments", "1", "confirm"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Driver - Assignments",
+      "item": [
+        {
+          "name": "Get My Assignments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/driver/assignments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "driver", "assignments"]
+            }
+          }
+        },
+        {
+          "name": "Accept Assignment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/assignments/1/accept",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "assignments", "1", "accept"]
+            }
+          }
+        },
+        {
+          "name": "Update Shipment Status (En Route/Delivered)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {\n    \"status\": \"en_route_pickup\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/shipments/1/status",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "shipments", "1", "status"]
+            }
+          }
+        },
+        {
+          "name": "Submit POD",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {\n    \"signature_image\": \"base64_string\",\n    \"photo_image\": \"base64_string\",\n    \"notes\": \"Left at front door\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/zconnect/shipments/1/pod",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "zconnect", "shipments", "1", "pod"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8070"
+    }
+  ]
+}
