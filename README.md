@@ -36,6 +36,23 @@ The architecture was intentionally designed around a micro-addon structure withi
 ![Operations Analytics](docs/images/zconnect-admin-dash2.png)
 *Granular analytics and operational volume metrics.*
 
+![Admin Shipments](docs/images/zconnect-admin-shipments.png)
+*Detailed shipment list view with smart status tracking.*
+
+![Dispatch Control](docs/images/zconnect-dispatch.png)
+*Centralized dispatch interface for assignment and route management.*
+
+![Driver Management](docs/images/zconnect-drivers.png)
+*Comprehensive driver profiles and fleet visibility.*
+
+![Pricing Engine](docs/images/zconnect-price-rules.png)
+*Dynamic tariff management and custom pricing rules.*
+
+### Additional Brand Assets
+![ZConnect Main](docs/images/zconnect.png)
+
+![ZConnect Web](docs/images/zconnectw.png)
+
 ---
 
 ## 2. Project Background & Proposal Traceability
